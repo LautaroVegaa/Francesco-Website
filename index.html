@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Francesco Ponte - Artista Contemporáneo</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="#home" data-translate="brand">Francesco Ponte</a>
+            </div>
+            <nav class="nav-menu">
+                <a href="#home" data-translate="nav-home">HOME</a>
+                <a href="#about" data-translate="nav-about">SOBRE MÍ</a>
+                <a href="#projects" data-translate="nav-projects">PROYECTOS</a>
+                <a href="#login" data-translate="nav-login">LOGIN</a>
+                <a href="#search" class="nav-icon">🔍</a>
+                <a href="#contact" class="nav-icon">✉️</a>
+                <div class="cart-container">
+                    <a href="#cart" class="nav-icon">🛒</a>
+                    <span class="cart-counter" id="cartCounter">0</span>
+                </div>
+                <div class="language-switcher">
+                    <span class="lang-btn active" data-lang="es">ES</span>
+                    <span class="lang-separator">|</span>
+                    <span class="lang-btn" data-lang="en">EN</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Carousel Section -->
+        <section id="home" class="hero-section">
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-slide active">
+                        <img src="https://placeholder-image-service.onrender.com/image/600x400?prompt=Modern abstract painting with geometric shapes in warm colors by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Modern abstract painting with geometric shapes in warm colors by Francesco Ponte">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://placeholder-image-service.onrender.com/image/600x400?prompt=Contemporary sculpture artwork with metallic finish by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Contemporary sculpture artwork with metallic finish by Francesco Ponte">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://placeholder-image-service.onrender.com/image/600x400?prompt=Mixed media art piece with bold colors and textures by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Mixed media art piece with bold colors and textures by Francesco Ponte">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://placeholder-image-service.onrender.com/image/600x400?prompt=Minimalist contemporary painting with golden accents by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Minimalist contemporary painting with golden accents by Francesco Ponte">
+                    </div>
+                </div>
+                <button class="carousel-btn prev-btn">‹</button>
+                <button class="carousel-btn next-btn">›</button>
+                <div class="carousel-indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                    <span class="indicator" data-slide="3"></span>
+                </div>
+            </div>
+            <h1 class="hero-title" data-translate="hero-title">FRANCESCO PONTE</h1>
+        </section>
+
+        <!-- Description Section -->
+        <section class="description-section">
+            <div class="container">
+                <p class="artist-description" data-translate="artist-description">
+                    El artista Francesco Ponte combina técnicas tradicionales y contemporáneas para explorar la conexión entre la forma, la luz y la percepción. Su obra busca cuestionar los límites entre lo real y lo imaginado, invitando al espectador a contemplar la esencia detrás de cada objeto.
+                </p>
+                <div class="action-buttons">
+                    <button class="btn-outline" data-translate="btn-show-works">Mostrar obras en la tienda online</button>
+                    <button class="btn-outline" data-translate="btn-website">Sitio web de Francesco Ponte</button>
+                    <button class="btn-outline" data-translate="btn-projects">Proyectos con Francesco Ponte</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="projects" class="gallery-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="gallery-title">TRABAJA EN LÍNEA</h2>
+                <div class="gallery-grid">
+                    <!-- Obra 1 -->
+                    <div class="artwork-card" data-artwork="1">
+                        <div class="artwork-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Abstract expressionist painting with vibrant red and blue colors by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Abstract expressionist painting with vibrant red and blue colors by Francesco Ponte">
+                        </div>
+                        <div class="artwork-info">
+                            <h3 class="artist-name">Francesco Ponte</h3>
+                            <p class="artwork-title" data-translate="artwork-1-title">Reflexiones Urbanas</p>
+                            <p class="artwork-price">1,200 €</p>
+                            <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+                        </div>
+                    </div>
+
+                    <!-- Obra 2 -->
+                    <div class="artwork-card" data-artwork="2">
+                        <div class="artwork-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Contemporary sculpture with geometric forms and metallic surface by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Contemporary sculpture with geometric forms and metallic surface by Francesco Ponte">
+                        </div>
+                        <div class="artwork-info">
+                            <h3 class="artist-name">Francesco Ponte</h3>
+                            <p class="artwork-title" data-translate="artwork-2-title">Formas en Diálogo</p>
+                            <p class="artwork-price">980 €</p>
+                            <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+                        </div>
+                    </div>
+
+                    <!-- Obra 3 -->
+                    <div class="artwork-card" data-artwork="3">
+                        <div class="artwork-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Mixed media artwork with textured surface and golden highlights by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Mixed media artwork with textured surface and golden highlights by Francesco Ponte">
+                        </div>
+                        <div class="artwork-info">
+                            <h3 class="artist-name">Francesco Ponte</h3>
+                            <p class="artwork-title" data-translate="artwork-3-title">Luz y Sombra</p>
+                            <p class="artwork-price">1,500 €</p>
+                            <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+                        </div>
+                    </div>
+
+                    <!-- Obra 4 -->
+                    <div class="artwork-card" data-artwork="4">
+                        <div class="artwork-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Minimalist painting with clean lines and subtle color palette by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Minimalist painting with clean lines and subtle color palette by Francesco Ponte">
+                        </div>
+                        <div class="artwork-info">
+                            <h3 class="artist-name">Francesco Ponte</h3>
+                            <p class="artwork-title" data-translate="artwork-4-title">Esencia Pura</p>
+                            <p class="artwork-price">800 €</p>
+                            <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+                        </div>
+                    </div>
+
+                    <!-- Obra 5 -->
+                    <div class="artwork-card" data-artwork="5">
+                        <div class="artwork-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Contemporary portrait with expressive brushstrokes by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Contemporary portrait with expressive brushstrokes by Francesco Ponte">
+                        </div>
+                        <div class="artwork-info">
+                            <h3 class="artist-name">Francesco Ponte</h3>
+                            <p class="artwork-title" data-translate="artwork-5-title">Alma Expuesta</p>
+                            <p class="artwork-price">1,800 €</p>
+                            <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+                        </div>
+                    </div>
+
+                    <!-- Obra 6 -->
+                    <div class="artwork-card" data-artwork="6">
+                        <div class="artwork-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Abstract landscape painting with dynamic composition by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Abstract landscape painting with dynamic composition by Francesco Ponte">
+                        </div>
+                        <div class="artwork-info">
+                            <h3 class="artist-name">Francesco Ponte</h3>
+                            <p class="artwork-title" data-translate="artwork-6-title">Horizontes Infinitos</p>
+                            <p class="artwork-price">2,200 €</p>
+                            <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+                        </div>
+                    </div>
+
+                    <!-- Obra 7 -->
+                    <div class="artwork-card" data-artwork="7">
+                        <div class="artwork-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Modern still life painting with bold colors by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Modern still life painting with bold colors by Francesco Ponte">
+                        </div>
+                        <div class="artwork-info">
+                            <h3 class="artist-name">Francesco Ponte</h3>
+                            <p class="artwork-title" data-translate="artwork-7-title">Naturaleza Reimaginada</p>
+                            <p class="artwork-price">1,100 €</p>
+                            <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+                        </div>
+                    </div>
+
+                    <!-- Obra 8 -->
+                    <div class="artwork-card" data-artwork="8">
+                        <div class="artwork-image">
+                            <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Contemporary installation art piece with interactive elements by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Contemporary installation art piece with interactive elements by Francesco Ponte">
+                        </div>
+                        <div class="artwork-info">
+                            <h3 class="artist-name">Francesco Ponte</h3>
+                            <p class="artwork-title" data-translate="artwork-8-title">Espacio y Tiempo</p>
+                            <p class="artwork-price">2,800 €</p>
+                            <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Artwork Details -->
+    <div id="artworkModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalTitle"></h2>
+                    <p class="modal-price" id="modalPrice"></p>
+                    <div class="modal-details">
+                        <p><strong data-translate="modal-year">Año:</strong> <span id="modalYear">2024</span></p>
+                        <p><strong data-translate="modal-technique">Técnica:</strong> <span id="modalTechnique" data-translate="modal-technique-value">Óleo sobre lienzo</span></p>
+                        <p><strong data-translate="modal-size">Tamaño:</strong> <span id="modalSize">80 x 60 cm</span></p>
+                        <p><strong data-translate="modal-style">Estilo:</strong> <span id="modalStyle" data-translate="modal-style-value">Arte Contemporáneo</span></p>
+                    </div>
+                    <button class="modal-add-to-cart" data-translate="modal-add-to-cart">AÑADIR A LA CESTA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 data-translate="footer-contact">CONTACTO</h3>
+                    <p>Adriana Galería</p>
+                    <p>Paul-Roosen-Straße 43</p>
+                    <p>22767 Hamburg</p>
+                    <p>+49 (0) 176 755 33 188</p>
+                    <p><a href="mailto:info@francescoponte.com">info@francescoponte.com</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3 data-translate="footer-newsletter">NEWSLETTER</h3>
+                    <p data-translate="footer-newsletter-text">Con nuestro Newsletter no te perderás ninguna exposición. Además, obtienes ofertas especiales y siempre recibes las noticias más actuales.</p>
+                    <button class="newsletter-btn" data-translate="footer-newsletter-btn">¡REGÍSTRATE AHORA!</button>
+                </div>
+                <div class="footer-section">
+                    <h3 data-translate="footer-social">REDES SOCIALES</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">✉️</a>
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">📘</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-links">
+                    <a href="#" data-translate="footer-impressum">Impressum</a>
+                    <a href="#" data-translate="footer-privacy">Datenschutz</a>
+                    <a href="#" data-translate="footer-agb">AGB</a>
+                    <a href="#" data-translate="footer-faq">FAQ</a>
+                    <a href="#" data-translate="footer-shop-info">Shop Info</a>
+                    <a href="#" data-translate="footer-update">UpDate</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
