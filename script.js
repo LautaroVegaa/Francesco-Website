@@ -406,3 +406,110 @@ window.addEventListener('scroll', () => {
         navbar.style.backdropFilter = 'none';
     }
 });
+
+// ---------------------------
+// Modal del carrito de compras
+// ---------------------------
+
+let cartItems = []; // Lista de productos en el carrito
+
+// Función para abrir el modal del carrito
+function openCartModal() {
+    renderCartItems();
+    const cartModal = document.getElementById('cartModal');
+    cartModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+// Función para cerrar el modal del carrito
+function closeCartModal() {
+    const cartModal = document.getElementById('cartModal');
+    cartModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Renderiza los productos dentro del modal
+function renderCartItems() {
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+
+    if (cartItems.length === 0) {
+        cartItemsContainer.innerHTML = '<p style="text-align:center;">Tu carrito está vacío.</p>';
+    } else {
+        cartItems.forEach((item, index) => {
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+                <img src="${item.image}" alt="${item.title[currentLanguage]}">
+                <div class="cart-item-info">
+                    <p class="cart-item-title">${item.title[currentLanguage]}</p>
+                    <p class="cart-item-price">${item.price}</p>
+                </div>
+                <button class="remove-item" data-index="${index}" style="background:none;border:none;font-size:18px;cursor:pointer;color:#C6A200;">🗑️</button>
+            `;
+            cartItemsContainer.appendChild(cartItem);
+            total += parseFloat(item.price.replace('€', '').replace(',', '.'));
+        });
+    }
+
+    cartTotal.textContent = total.toFixed(2) + ' €';
+
+    // Eventos para eliminar productos
+    const removeButtons = document.querySelectorAll('.remove-item');
+    removeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = e.target.getAttribute('data-index');
+            removeFromCart(index);
+        });
+    });
+}
+
+// Elimina un producto del carrito
+function removeFromCart(index) {
+    cartItems.splice(index, 1);
+    cartCount--;
+    if (cartCount < 0) cartCount = 0;
+
+    // Actualizar contador visual
+    const cartCounter = document.getElementById('cartCounter');
+    cartCounter.textContent = cartCount;
+    renderCartItems();
+}
+
+// Modificar addToCart() para incluir datos de la obra
+const originalAddToCart = addToCart;
+addToCart = function(artworkId) {
+    const artwork = artworksData[artworkId];
+    if (artwork) {
+        cartItems.push(artwork);
+    }
+    cartCount++;
+    const cartCounter = document.getElementById('cartCounter');
+    cartCounter.textContent = cartCount;
+    cartCounter.classList.add('show', 'animate');
+
+    setTimeout(() => {
+        cartCounter.classList.remove('animate');
+    }, 600);
+};
+
+// Inicializar modal del carrito
+document.addEventListener('DOMContentLoaded', () => {
+    const cartIcon = document.querySelector('.cart-container a');
+    const closeCartBtn = document.getElementById('closeCart');
+    const cartModal = document.getElementById('cartModal');
+
+    // Abrir modal al hacer clic en el ícono del carrito
+    cartIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        openCartModal();
+    });
+
+    // Cerrar con botón o clic fuera
+    closeCartBtn.addEventListener('click', closeCartModal);
+    cartModal.addEventListener('click', (e) => {
+        if (e.target === cartModal) closeCartModal();
+    });
+});
