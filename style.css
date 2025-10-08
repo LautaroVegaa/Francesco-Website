@@ -766,3 +766,83 @@ body {
 .fade-transition.visible {
     opacity: 1;
 }
+
+/* Ajustes para que el dibujo se vea centrado en el modal */
+.modal-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
+    padding: 20px;
+}
+
+.modal-image img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Mejor visualización de productos en el carrito */
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(198, 162, 0, 0.2);
+    padding: 10px 0;
+    gap: 15px;
+}
+
+.cart-item-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cart-item-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.cart-item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.cart-item-price {
+    color: #555;
+    font-size: 14px;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #C6A200;
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.remove-item:hover {
+    color: #b08f00;
+    transform: scale(1.2);
+}
+
+/* Contorno suave únicamente para el dibujo dentro del modal */
+.modal-image img {
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.12); /* sombra ligera */
+    border: 1px solid rgba(0, 0, 0, 0.05);     /* línea casi imperceptible */
+    background-color: #fff;                    /* evita contraste con fondo */
+}
+
+

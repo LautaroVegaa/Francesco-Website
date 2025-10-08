@@ -48,17 +48,40 @@ const translations = {
     }
 };
 
-// Datos de las obras (sin cambios)
+// Datos de las obras (usando las imágenes locales del proyecto)
 const artworksData = {
-    1: { title: { es: 'Reflexiones Urbanas', en: 'Urban Reflections' }, price: '1,200 €', image: 'https://placeholder-image-service.onrender.com/image/500x500?prompt=Abstract expressionist painting with vibrant red and blue colors by Francesco Ponte' },
-    2: { title: { es: 'Formas en Diálogo', en: 'Forms in Dialogue' }, price: '980 €', image: 'https://placeholder-image-service.onrender.com/image/500x500?prompt=Contemporary sculpture with geometric forms and metallic surface by Francesco Ponte' },
-    3: { title: { es: 'Luz y Sombra', en: 'Light and Shadow' }, price: '1,500 €', image: 'https://placeholder-image-service.onrender.com/image/500x500?prompt=Mixed media artwork with textured surface and golden highlights by Francesco Ponte' },
-    4: { title: { es: 'Esencia Pura', en: 'Pure Essence' }, price: '800 €', image: 'https://placeholder-image-service.onrender.com/image/500x500?prompt=Minimalist painting with clean lines and subtle color palette by Francesco Ponte' },
-    5: { title: { es: 'Alma Expuesta', en: 'Exposed Soul' }, price: '1,800 €', image: 'https://placeholder-image-service.onrender.com/image/500x500?prompt=Contemporary portrait with expressive brushstrokes by Francesco Ponte' },
-    6: { title: { es: 'Horizontes Infinitos', en: 'Infinite Horizons' }, price: '2,200 €', image: 'https://placeholder-image-service.onrender.com/image/500x500?prompt=Abstract landscape painting with dynamic composition by Francesco Ponte' },
-    7: { title: { es: 'Naturaleza Reimaginada', en: 'Reimagined Nature' }, price: '1,100 €', image: 'https://placeholder-image-service.onrender.com/image/500x500?prompt=Modern still life painting with bold colors by Francesco Ponte' },
-    8: { title: { es: 'Espacio y Tiempo', en: 'Space and Time' }, price: '2,800 €', image: 'https://placeholder-image-service.onrender.com/image/500x500?prompt=Contemporary installation art piece with interactive elements by Francesco Ponte' }
+    1: {
+        title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' },
+        price: '1,200 €',
+        image: 'ben-shelton.png'
+    },
+    2: {
+        title: { es: 'Lamine Yamal', en: 'Lamine Yamal' },
+        price: '980 €',
+        image: 'lamine-yamal.png'
+    },
+    3: {
+        title: { es: 'David Goggins', en: 'David Goggins' },
+        price: '1,500 €',
+        image: 'david-goggings.png'
+    },
+    4: {
+        title: { es: 'Leonardo DiCaprio', en: 'Leonardo DiCaprio' },
+        price: '800 €',
+        image: 'leo-dicaprio.png'
+    },
+    5: {
+        title: { es: 'Will Smith', en: 'Will Smith' },
+        price: '1,800 €',
+        image: 'will-smith.png'
+    },
+    6: {
+        title: { es: 'Eminem', en: 'Eminem' },
+        price: '2,200 €',
+        image: 'eminem.png'
+    }
 };
+
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
@@ -164,42 +187,45 @@ function renderCartItems() {
         clearBtn.style.display = 'none';
     } else {
         cartItems.forEach((item, index) => {
+            // Verifica si la imagen es local o remota
+            const imgSrc = item.image.includes('http')
+                ? item.image
+                : `images/${item.image}`;
+
             const cartItem = document.createElement('div');
             cartItem.classList.add('cart-item');
             cartItem.innerHTML = `
-                <img src="${item.image}" alt="${item.title[currentLanguage]}" style="width:60px;height:60px;object-fit:cover;border-radius:5px;">
-                <div class="cart-item-info">
-                    <p class="cart-item-title">${item.title[currentLanguage]}</p>
-                    <p class="cart-item-price">${item.price}</p>
+                <div class="cart-item-left">
+                    <img src="${imgSrc}" alt="${item.title[currentLanguage]}" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <p class="cart-item-title">${item.title[currentLanguage]}</p>
+                        <p class="cart-item-price">${item.price}</p>
+                    </div>
                 </div>
-                <button class="remove-item" data-index="${index}" style="background:none;border:none;font-size:18px;cursor:pointer;color:#C6A200;">🗑️</button>
+                <button class="remove-item" data-index="${index}">🗑️</button>
             `;
             cartItemsContainer.appendChild(cartItem);
 
-            //  Conversión robusta de precios (maneja puntos y comas)
-            let cleanPrice = item.price.replace(/[^\d.,]/g, ''); // eliminar símbolos
-            // Si hay coma y punto (ej. "1.200,50") -> coma decimal
+            // Convertir precio a número
+            let cleanPrice = item.price.replace(/[^\d.,]/g, '');
             if (cleanPrice.includes('.') && cleanPrice.includes(',')) {
                 cleanPrice = cleanPrice.replace(/\./g, '').replace(',', '.');
-            }
-            // Si solo hay coma (ej. "1,200") -> miles
-            else if (cleanPrice.includes(',') && !cleanPrice.includes('.')) {
+            } else if (cleanPrice.includes(',') && !cleanPrice.includes('.')) {
                 cleanPrice = cleanPrice.replace(/,/g, '');
             }
-            // Si solo hay punto (ej. "1200.50") -> decimal válido
             const numericPrice = parseFloat(cleanPrice);
             total += numericPrice;
         });
         clearBtn.style.display = 'block';
     }
 
-    //  Mostrar total correctamente formateado
+    // Mostrar total
     cartTotal.textContent = total.toLocaleString('es-ES', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     }) + ' €';
 
-    // Eventos para eliminar productos
+    // Eventos eliminar producto
     const removeButtons = document.querySelectorAll('.remove-item');
     removeButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -208,6 +234,7 @@ function renderCartItems() {
         });
     });
 }
+
 
 
 function removeFromCart(index) {
@@ -269,12 +296,31 @@ function openModal(artworkId) {
     const modal = document.getElementById('artworkModal');
     const artwork = artworksData[artworkId];
     if (!artwork) return;
-    document.getElementById('modalImage').src = artwork.image;
+
+    // Determinar la ruta correcta
+    const imgSrc = artwork.image.includes('http')
+        ? artwork.image
+        : `images/${artwork.image}`;
+
+    // Configurar la imagen
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = imgSrc;
+    modalImage.alt = artwork.title[currentLanguage];
+    modalImage.style.objectFit = 'contain';
+    modalImage.style.maxHeight = '80vh';
+    modalImage.style.width = 'auto';
+    modalImage.style.margin = '0 auto';
+    modalImage.style.display = 'block';
+
+    // Configurar textos
     document.getElementById('modalTitle').textContent = artwork.title[currentLanguage];
     document.getElementById('modalPrice').textContent = artwork.price;
+
+    // Mostrar modal
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
 }
+
 
 function closeModal() {
     document.getElementById('artworkModal').style.display = 'none';
