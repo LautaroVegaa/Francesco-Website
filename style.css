@@ -233,17 +233,25 @@ body {
     letter-spacing: 2px;
 }
 
-/* Description Section */
-.description-section {
-    padding: 80px 0;
+/* Hero Section - menos espacio debajo del título */
+.hero-section {
+    margin-top: 80px; /* mantiene el espacio para el navbar fijo */
+    padding: 40px 0 20px 0; /* antes 80px — reduce espacio inferior */
     text-align: center;
 }
 
+/* Descripción - sube más cerca del título */
+.description-section {
+    padding-top: 10px; /* antes 40px o 80px — ahora mucho más compacto */
+    padding-bottom: 50px;
+}
+
+/* Texto de descripción */
 .artist-description {
     font-size: 18px;
     line-height: 1.8;
-    max-width: 800px;
-    margin: 0 auto 50px;
+    max-width: 900px;
+    margin: 0 auto 30px;
     color: #333333;
 }
 
