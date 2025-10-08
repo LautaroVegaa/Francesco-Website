@@ -215,6 +215,7 @@
         </div>
     </div>
 
+
     <!-- Cart Modal -->
 <div id="cartModal" class="modal">
     <div class="modal-content">
@@ -223,14 +224,19 @@
             <div class="modal-info" style="flex:1;">
                 <h2 data-translate="cart-title">CARRITO DE COMPRA</h2>
                 <div id="cartItems" class="cart-items"></div>
-                <div class="cart-summary">
+                <div class="cart-summary" style="margin-top:20px;">
                     <p><strong data-translate="cart-total">Total:</strong> <span id="cartTotal">0 €</span></p>
                     <button class="modal-add-to-cart" id="checkoutBtn" data-translate="cart-checkout">FINALIZAR COMPRA</button>
+                    <!-- Nuevo botón Vaciar carrito -->
+                    <button id="clearCartBtn" class="modal-add-to-cart" style="background-color:#000; margin-top:10px;">
+                        🗑️ Vaciar carrito
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
     <!-- Footer -->
