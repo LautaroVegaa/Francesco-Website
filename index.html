@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Francesco Ponte - Artista Contemporáneo</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <!-- Header / Navbar -->
     <header class="navbar">
         <div class="container">
-            <div class="nav-brand">
-                <a href="#home" data-translate="brand">Francesco Ponte</a>
-            </div>
-            <nav class="nav-menu">
+            <div class="nav-links-center">
                 <a href="#home" data-translate="nav-home">HOME</a>
                 <a href="#about" data-translate="nav-about">SOBRE MÍ</a>
                 <a href="#projects" data-translate="nav-projects">PROYECTOS</a>
                 <a href="#login" data-translate="nav-login">LOGIN</a>
-                <a href="#search" class="nav-icon">🔍</a>
-                <a href="#contact" class="nav-icon">✉️</a>
+            </div>
+
+            <div class="nav-controls-right">
+                <a href="#contact" class="nav-icon"><i class="fa-regular fa-envelope"></i></a> 
                 <div class="cart-container">
-                    <a href="#cart" class="nav-icon">🛒</a>
+                    <a href="#cart" class="nav-icon"><i class="fa-solid fa-shopping-bag"></i></a> 
                     <span class="cart-counter" id="cartCounter">0</span>
                 </div>
                 <div class="language-switcher">
@@ -30,67 +30,43 @@
                     <span class="lang-separator">|</span>
                     <span class="lang-btn" data-lang="en">EN</span>
                 </div>
-            </nav>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Hero Carousel Section -->
         <section id="home" class="hero-section">
-            <div class="carousel-container">
-                <div class="carousel">
-                    <div class="carousel-slide active">
-                        <img src="images/ben-shelton.png" alt="Modern abstract painting with geometric shapes in warm colors by Francesco Ponte">
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="/images/lamine-yamal.png" alt="Contemporary sculpture artwork with metallic finish by Francesco Ponte">
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="/images/harry.png" alt="Mixed media art piece with bold colors and textures by Francesco Ponte">
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="/images/david-goggings.png" alt="Minimalist contemporary painting with golden accents by Francesco Ponte">
-                    </div>
-                </div>
-                <button class="carousel-btn prev-btn">‹</button>
-                <button class="carousel-btn next-btn">›</button>
-                <div class="carousel-indicators">
-                    <span class="indicator active" data-slide="0"></span>
-                    <span class="indicator" data-slide="1"></span>
-                    <span class="indicator" data-slide="2"></span>
-                    <span class="indicator" data-slide="3"></span>
-                </div>
+            <div class="hero-text-overlay">
+                 <h1 class="hero-main-title" data-translate="hero-main-title">FRANCESCO PONTE</h1>
+                 <p class="hero-subtitle" data-translate="hero-subtitle">ARTISTA REALISTA</p>
             </div>
-            <h1 class="hero-title" data-translate="hero-title">FRANCESCO PONTE</h1>
         </section>
 
-        <!-- Description Section -->
-        <section class="description-section">
+        <section id="about" class="description-section">
             <div class="container">
-                <p class="artist-description" data-translate="artist-description">
-                    Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista, una disciplina que descubrí como una forma de conectar con el detalle, la paciencia y la emoción detrás de cada trazo.
-                    Me especializo en retratos realistas en blanco y negro realizados con grafito, principalmente de rostros de celebridades. En cada obra busco alcanzar un equilibrio entre la fidelidad a la referencia y mi propia interpretación: no intento copiar la imagen, sino darle vida a través de mi mirada y mi técnica, incorporando matices que reflejan mi esencia como artista.
-                    Además de los retratos, también dibujo peces con el mismo enfoque realista, explorando las texturas, reflejos y contrastes que surgen de la naturaleza.
-                    Mi objetivo es transmitir conocimiento y, al mismo tiempo, provocar una emoción en quien observa mis obras: que cada dibujo logre detener el tiempo por un instante y genere una conexión genuina.
-                    Actualmente me encuentro en la búsqueda de un nuevo horizonte creativo, combinando el hiperrealismo con el surrealismo: piezas que mantienen la precisión técnica del realismo extremo, pero con contenidos imaginativos, simbólicos y conceptuales, que inviten a mirar más allá de lo evidente.
-
-                </p>
-                <div class="action-buttons">
-                    <button class="btn-outline" data-translate="btn-show-works">Mostrar obras en la tienda online</button>
-                    <button class="btn-outline" data-translate="btn-website">Sitio web de Francesco Ponte</button>
-                    <button class="btn-outline" data-translate="btn-projects">Proyectos con Francesco Ponte</button>
+                <div class="description-content">
+                    <div class="artist-photo">
+                        <img src="/images/artist-photo.png" alt="Foto de Francesco Ponte">
+                    </div>
+                    <div class="artist-text">
+                        <h3 class="about-section-title" data-translate="about-title">SOBRE MÍ</h3>
+                        <p class="artist-description" data-translate="artist-description">
+                            Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista, una disciplina que descubrí como una forma de conectar con el detalle, la paciencia y la emoción detrás de cada trazo.
+                            Me especializo en retratos realistas en blanco y negro realizados con grafito, principalmente de rostros de celebridades. En cada obra busco alcanzar un equilibrio entre la fidelidad a la referencia y mi propia interpretación: no intento copiar la imagen, sino darle vida a través de mi mirada y mi técnica, incorporando matices que reflejan mi esencia como artista.
+                            Además de los retratos, también dibujo peces con el mismo enfoque realista, explorando las texturas, reflejos y contrastes que surgen de la naturaleza.
+                            Mi objetivo es transmitir conocimiento y, al mismo tiempo, provocar una emoción en quien observa mis obras: que cada dibujo logre detener el tiempo por un instante y genere una conexión genuina.
+                            Actualmente me encuentro en la búsqueda de un nuevo horizonte creativo, combinando el hiperrealismo con el surrealismo: piezas que mantienen la precisión técnica del realismo extremo, pero con contenidos imaginativos, simbólicos y conceptuales, que inviten a mirar más allá de lo evidente.
+                        </p>
+                    </div>
                 </div>
-            </div>
+                </div>
         </section>
 
-        <!-- Gallery Section -->
         <section id="projects" class="gallery-section">
             <div class="container">
                 <h2 class="section-title" data-translate="gallery-title">TRABAJA EN LÍNEA</h2>
                 <div class="gallery-grid">
-                    <!-- Obra 1 -->
-                    <div class="artwork-card" data-artwork="1">
+                     <div class="artwork-card" data-artwork="1">
                         <div class="artwork-image">
                             <img src="/images/ben-shelton.png" alt="Abstract expressionist painting with vibrant red and blue colors by Francesco Ponte">
                         </div>
@@ -102,7 +78,6 @@
                         </div>
                     </div>
 
-                    <!-- Obra 2 -->
                     <div class="artwork-card" data-artwork="2">
                         <div class="artwork-image">
                             <img src="images/lamine-yamal.png" alt="Contemporary sculpture with geometric forms and metallic surface by Francesco Ponte">
@@ -115,7 +90,6 @@
                         </div>
                     </div>
 
-                    <!-- Obra 3 -->
                     <div class="artwork-card" data-artwork="3">
                         <div class="artwork-image">
                             <img src="/images/david-goggings.png" alt="Mixed media artwork with textured surface and golden highlights by Francesco Ponte">
@@ -128,7 +102,6 @@
                         </div>
                     </div>
 
-                    <!-- Obra 4 -->
                     <div class="artwork-card" data-artwork="4">
                         <div class="artwork-image">
                             <img src="images/leo-dicaprio.png" alt="Minimalist painting with clean lines and subtle color palette by Francesco Ponte">
@@ -141,7 +114,6 @@
                         </div>
                     </div>
 
-                    <!-- Obra 5 -->
                     <div class="artwork-card" data-artwork="5">
                         <div class="artwork-image">
                             <img src="/images/will-smith.png" alt="Contemporary portrait with expressive brushstrokes by Francesco Ponte">
@@ -154,7 +126,6 @@
                         </div>
                     </div>
 
-                    <!-- Obra 6 -->
                     <div class="artwork-card" data-artwork="6">
                         <div class="artwork-image">
                             <img src="/images/eminem.png" alt="Abstract landscape painting with dynamic composition by Francesco Ponte">
@@ -167,7 +138,6 @@
                         </div>
                     </div>
 
-                    <!-- Obra 7 -->
                     <div class="artwork-card" data-artwork="7">
                         <div class="artwork-image">
                             <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Modern still life painting with bold colors by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Modern still life painting with bold colors by Francesco Ponte">
@@ -180,7 +150,6 @@
                         </div>
                     </div>
 
-                    <!-- Obra 8 -->
                     <div class="artwork-card" data-artwork="8">
                         <div class="artwork-image">
                             <img src="https://placeholder-image-service.onrender.com/image/300x300?prompt=Contemporary installation art piece with interactive elements by Francesco Ponte&id=77a80fee-8a55-40e3-8abd-e380037f9a5e&customer_id=cus_T6TCYe7lXY5gQI" alt="Contemporary installation art piece with interactive elements by Francesco Ponte">
@@ -197,7 +166,6 @@
         </section>
     </main>
 
-    <!-- Modal for Artwork Details -->
     <div id="artworkModal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
@@ -221,8 +189,7 @@
     </div>
 
 
-    <!-- Cart Modal -->
-<div id="cartModal" class="modal">
+    <div id="cartModal" class="modal">
     <div class="modal-content">
         <span class="modal-close" id="closeCart">&times;</span>
         <div class="modal-body">
@@ -232,7 +199,6 @@
                 <div class="cart-summary" style="margin-top:20px;">
                     <p><strong data-translate="cart-total">Total:</strong> <span id="cartTotal">0 €</span></p>
                     <button class="modal-add-to-cart" id="checkoutBtn" data-translate="cart-checkout">FINALIZAR COMPRA</button>
-                    <!-- Nuevo botón Vaciar carrito -->
                     <button id="clearCartBtn" class="modal-add-to-cart" style="background-color:#000; margin-top:10px;">
                         🗑️ Vaciar carrito
                     </button>
@@ -244,29 +210,41 @@
 
 
 
-    <!-- Footer -->
     <footer id="contact" class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3 data-translate="footer-contact">CONTACTO</h3>
                     <p>Francesco Ponte</p>
-                    <p>Direccion falsa</p>
-                    <p>Direccion falsa</p>
                     <p>+54 9 11 3891-5370</p>
-                    <p><a href="mailto:info@francescoponte.com">info@francescoponte.com</a></p>
+                    <p><a href="mailto:francescoponte185@gmail.com">francescoponte185@gmail.com</a></p>
                 </div>
+
                 <div class="footer-section">
-                    <h3 data-translate="footer-newsletter">NEWSLETTER</h3>
-                    <p data-translate="footer-newsletter-text">Con nuestro Newsletter no te perderás ninguna exposición. Además, obtienes ofertas especiales y siempre recibes las noticias más actuales.</p>
-                    <button class="newsletter-btn" data-translate="footer-newsletter-btn">¡REGÍSTRATE AHORA!</button>
+                    <h3 data-translate="footer-form-title">ENVIAR UN MENSAJE</h3>
+                    <form action="#" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <label for="name" data-translate="form-label-name">Nombre:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-translate="form-label-email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-translate="form-label-message">Mensaje:</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" data-translate="form-btn-submit">Enviar</button>
+                    </form>
                 </div>
+
                 <div class="footer-section">
                     <h3 data-translate="footer-social">REDES SOCIALES</h3>
                     <div class="social-icons">
-                        <a href="#" class="social-icon">✉️</a>
-                        <a href="#" class="social-icon">📷</a>
-                        <a href="#" class="social-icon">📘</a>
+                        <a href="mailto:francescoponte185@gmail.com" class="social-icon"><i class="fa-solid fa-envelope"></i></a>
+                        <a href="https://www.instagram.com/francesco_retratos?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@franartist?si=dZCKZtAvpW-x7Clc" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a> 
                     </div>
                 </div>
             </div>
@@ -276,7 +254,6 @@
                     <a href="#" data-translate="footer-agb">AGB</a>
                     <a href="#" data-translate="footer-faq">FAQ</a>
                     <a href="#" data-translate="footer-shop-info">Shop Info</a>
-                    <a href="#" data-translate="footer-update">UpDate</a>
                 </div>
             </div>
         </div>

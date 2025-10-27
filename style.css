@@ -23,54 +23,92 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #ffffff;
-    border-bottom: 1px solid #f0f0f0;
     z-index: 1000;
-    padding: 15px 0;
+    padding: 20px 0; /* Un poco más de padding */
+    
+    /* Transparente por defecto */
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil blanco */
+    
+    /* Transición suave */
+    transition: background-color 0.4s ease, border-color 0.4s ease, padding 0.4s ease;
 }
+
 
 .navbar .container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    position: relative; /* Clave para el centrado absoluto */
+    justify-content: flex-end; /* Alinea los controles a la derecha */
 }
 
-.nav-brand a {
-    font-size: 24px;
-    font-weight: 700;
-    color: #000000;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
+/* ESTILOS DE .nav-brand eliminados */
 
-.nav-brand a:hover {
-    color: #C6A200;
-}
-
-.nav-menu {
+/* MODIFICADO: Links de texto centrados con position: absolute */
+.nav-links-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 30px;
+    
+    /* Eliminamos las propiedades de flex-item (flex: 1, padding-right) */
 }
 
-.nav-menu a {
-    color: #000000;
+.nav-links-center a {
+    color: #ffffff;
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
     transition: color 0.3s ease;
 }
 
-.nav-menu a:hover {
+.nav-links-center a:hover {
     color: #C6A200;
 }
 
+
+/* MODIFICADO: Controles alineados a la derecha */
+.nav-controls-right {
+    display: flex;
+    align-items: center; /* Alinea verticalmente todos los hijos directos */
+    gap: 30px;
+    
+    /* Eliminamos el width fijo y justify-content */
+    /* El contenedor .container se encarga de alinearlo a la derecha */
+}
+
+/* NUEVO: Asegura alineación vertical consistente para todos los hijos */
+.nav-controls-right > * {
+    vertical-align: middle;
+}
+
+
+.nav-controls-right a {
+    color: #ffffff; /* CAMBIO A BLANCO */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.nav-controls-right a:hover {
+    color: #C6A200;
+}
+
+
 .nav-icon {
     font-size: 18px;
+    display: inline-flex; /* <-- RE-AÑADIDO */
+    align-items: center;  /* <-- RE-AÑADIDO */
 }
 
 .cart-container {
     position: relative;
+    display: inline-flex; /* <-- RE-AÑADIDO */
+    align-items: center;  /* <-- RE-AÑADIDO */
 }
 
 .cart-counter {
@@ -106,15 +144,15 @@ body {
 }
 
 .language-switcher {
-    display: flex;
-    align-items: center;
+    display: inline-flex; /* <-- MODIFICADO */
+    align-items: center;  /* <-- MANTENIDO */
     gap: 5px;
 }
 
 .lang-btn {
     cursor: pointer;
     font-weight: 500;
-    color: #000000;
+    color: #ffffff; /* CAMBIO A BLANCO */
     transition: color 0.3s ease;
 }
 
@@ -127,161 +165,91 @@ body {
 }
 
 .lang-separator {
-    color: #000000;
+    color: #ffffff; /* CAMBIO A BLANCO */
 }
 
-/* Hero Section */
+/* ===== NUEVO: Hero Section (Reemplaza estilos de .hero-section y carrusel) ===== */
 .hero-section {
-    margin-top: 80px;
-    padding: 80px 0;
-    text-align: center;
-}
-
-.carousel-container {
-    position: relative;
-    max-width: 600px;
-    margin: 0 auto 40px;
-}
-
-.carousel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.carousel-slide {
-    display: none;
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-.carousel-slide.active {
-    display: block;
-}
-
-/* ===== HERO SECTION IMAGES ===== */
-.carousel-slide img {
-    width: 100%;
-    height: 500px; /* Un poco más alto para retratos */
-    object-fit: contain; /* Muestra todo el dibujo sin recortar */
-    object-position: center;
-    background-color: #f9f9f9; /* Fondo suave para armonizar el marco */
-    border-radius: 8px;
-    padding: 20px; /* Espacio interno que evita que quede pegado arriba */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 20px;
-    font-weight: bold;
-    color: #C6A200;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.carousel-btn:hover {
-    background: #C6A200;
-    color: #ffffff;
-}
-
-.prev-btn {
-    left: 15px;
-}
-
-.next-btn {
-    right: 15px;
-}
-
-.carousel-indicators {
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    background-image: url('images/hero-dv.png'); /* <-- MODIFICADO (antes hero-bg.png) */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll */
+    
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #cccccc;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.indicator.active {
-    background-color: #C6A200;
-}
-
-.hero-title {
-    font-size: 48px;
-    font-weight: 700;
-    color: #C6A200;
-    letter-spacing: 2px;
-}
-
-/* Hero Section - menos espacio debajo del título */
-.hero-section {
-    margin-top: 80px; /* mantiene el espacio para el navbar fijo */
-    padding: 40px 0 20px 0; /* antes 80px — reduce espacio inferior */
+    align-items: center;
     text-align: center;
+    color: #ffffff;
+    
+    /* Reinicia padding/margin que antes compensaba el navbar sólido */
+    padding: 0; 
+    margin-top: 0; 
 }
 
-/* Descripción - sube más cerca del título */
+/* ===== ESTILOS DE CARRUSEL Y HERO-TITLE ANTERIORES ELIMINADOS ===== */
+
+
+/* Descripción */
 .description-section {
-    padding-top: 10px; /* antes 40px o 80px — ahora mucho más compacto */
-    padding-bottom: 50px;
+    padding-top: 80px; 
+    padding-bottom: 40px; /* <-- MODIFICADO (antes 80px) */
+    background-color: #fafafa; 
 }
 
-/* Texto de descripción */
-.artist-description {
-    font-size: 18px;
-    line-height: 1.8;
-    max-width: 900px;
-    margin: 0 auto 30px;
-    color: #333333;
-}
-
-.action-buttons {
+/* NUEVO: Contenedor flex para foto y texto */
+.description-content {
     display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
+    align-items: center; /* Centra verticalmente */
+    gap: 40px; /* Espacio entre foto y texto */
 }
 
-.btn-outline {
-    padding: 15px 30px;
-    border: 2px solid #C6A200;
-    background-color: transparent;
-    color: #C6A200;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 5px;
+/* NUEVO: Columna de la foto */
+.artist-photo {
+    flex: 0 0 35%; /* Ocupa 35% del ancho, no crece ni se encoge */
+    max-width: 35%;
+    order: 2; /* <-- AÑADIDO: Mueve la foto a la segunda posición (derecha) */
 }
 
-.btn-outline:hover {
-    background-color: #C6A200;
-    color: #ffffff;
+.artist-photo img {
+    width: 100%;
+    height: auto; /* Mantiene la proporción */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
+
+/* NUEVO: Columna del texto */
+.artist-text {
+    flex: 1; /* Ocupa el espacio restante */
+    order: 1; /* <-- AÑADIDO: Mueve el texto a la primera posición (izquierda) */
+}
+
+/* NUEVO: Título de la sección "Sobre Mí" */
+.about-section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #C6A200; /* Color dorado */
+    margin-bottom: 25px; /* Espacio antes del párrafo */
+    text-align: left; /* Alineado a la izquierda */
+    letter-spacing: 1px;
+}
+
+/* Texto de descripción (MODIFICADO) */
+.artist-description {
+    font-size: 17px; /* Un poco más pequeño para compensar */
+    line-height: 1.8;
+    color: #333333;
+    /* max-width y margin auto eliminados */
+    margin-bottom: 0; /* Quitamos el margen inferior */
+    text-align: left; /* Alineación justificada podría ser opción también */
+}
+
+
+/* ESTILOS .action-buttons y .btn-outline ELIMINADOS */
 
 /* Gallery Section */
 .gallery-section {
-    padding: 80px 0;
+    padding: 40px 0 80px 0; /* <-- MODIFICADO (antes padding: 80px 0;) */
     background-color: #fafafa;
 }
 
@@ -323,9 +291,9 @@ body {
   justify-content: center;
   overflow: hidden;
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: #ffffff; /* <-- MODIFICADO (antes #f9f9f9) */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 15px; /* 💡 Nuevo: agrega aire interno */
+  padding: 15px; 
 }
 
 .artwork-image img {
@@ -501,7 +469,8 @@ body {
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* MODIFICADO: Ajusta las columnas para dar más espacio al formulario */
+    grid-template-columns: 1fr 1.5fr 1fr; 
     gap: 40px;
     margin-bottom: 40px;
 }
@@ -528,21 +497,7 @@ body {
     color: #C6A200;
 }
 
-.newsletter-btn {
-    padding: 12px 24px;
-    background-color: #C6A200;
-    color: #000000;
-    border: none;
-    border-radius: 5px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 15px;
-}
-
-.newsletter-btn:hover {
-    background-color: #b08f00;
-}
+/* ESTILOS .newsletter-btn ELIMINADOS */
 
 .social-icons {
     display: flex;
@@ -686,29 +641,66 @@ body {
 
 
 /* Responsive Design */
+@media (max-width: 992px) { /* Ajustado para tablets */
+    .footer-content {
+        grid-template-columns: 1fr 1fr; /* Dos columnas en tablet */
+    }
+    .footer-section:nth-child(2) { /* El formulario */
+        grid-column: 1 / -1; /* Ocupa todo el ancho */
+        order: 3; /* Lo pone al final */
+    }
+     .footer-section:nth-child(1) { /* Contacto */
+        order: 1;
+    }
+     .footer-section:nth-child(3) { /* Redes Sociales */
+        order: 2;
+    }
+}
+
+
 @media (max-width: 768px) {
-    .nav-menu {
+    /* MODIFICADO: Responsive para 2 contenedores */
+    .nav-controls-right {
         gap: 15px;
+        /* width: auto; */ /* Ya no es necesario */
+        justify-content: flex-end;
+    }
+    .nav-controls-right a {
+        font-size: 12px;
+    }
+    .nav-links-center {
+        gap: 15px;
+        /* padding-right: 0; */ /* Ya no es necesario */
+    }
+    .nav-links-center a {
         font-size: 12px;
     }
     
-    .nav-menu a {
-        font-size: 12px;
+    /* NUEVO: Responsive para la descripción */
+    .description-content {
+        flex-direction: column; /* Apila foto y texto */
+        gap: 30px;
+    }
+    .artist-photo {
+        flex-basis: auto; /* Ancho automático */
+        max-width: 60%; /* Limita el ancho de la foto en móvil */
+        margin: 0 auto; /* Centra la foto */
+        order: 1; /* <-- Asegura que la foto va primero en móvil */
+    }
+    .artist-text {
+        text-align: center; /* Centra el texto */
+         order: 2; /* <-- Asegura que el texto va segundo en móvil */
+    }
+    /* NUEVO: Centra el título en móvil */
+    .about-section-title {
+        text-align: center;
+    }
+    .artist-description {
+        font-size: 16px; /* Tamaño original en móvil */
+        text-align: center; /* Centra el párrafo en móvil */
     }
     
-    .hero-title {
-        font-size: 32px;
-    }
-    
-    .action-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .btn-outline {
-        width: 100%;
-        max-width: 300px;
-    }
+    /* ESTILOS .action-buttons y .btn-outline ELIMINADOS del responsive */
     
     .gallery-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -732,7 +724,52 @@ body {
         flex-direction: column;
         gap: 15px;
     }
+
+    /* MODIFICADO: Footer en móvil (una columna) */
+    .footer-content {
+        grid-template-columns: 1fr; 
+    }
+     .footer-section:nth-child(1),
+     .footer-section:nth-child(2),
+     .footer-section:nth-child(3) {
+        order: initial; /* Resetea el orden */
+        grid-column: initial; /* Resetea la ocupación de columna */
+        text-align: center; /* Centra contenido en móvil */
+    }
+    .social-icons {
+        justify-content: center; /* Centra los iconos sociales */
+    }
+    .contact-form {
+        text-align: left; /* Mantiene etiquetas alineadas a la izquierda */
+    }
+
 }
+
+/* MODIFICADO: Responsive para pantallas muy pequeñas */
+@media (max-width: 600px) {
+    .navbar .container {
+        flex-direction: column; /* Apila los links y los controles */
+        gap: 10px;
+        justify-content: center; /* Centra todo en móvil */
+    }
+    .nav-links-center {
+        position: static; /* Quita el centrado absoluto en móvil */
+        transform: none;
+        gap: 15px;
+        order: 1; /* Pone los links primero */
+    }
+    .nav-controls-right {
+        width: 100%;
+        justify-content: center; /* Centra los iconos en móvil */
+        gap: 20px;
+        order: 2; /* Pone los iconos después */
+    }
+    /* NUEVO: Foto más pequeña en pantallas muy pequeñas */
+    .artist-photo {
+        max-width: 80%;
+    }
+}
+
 
 @media (max-width: 480px) {
     .container {
@@ -747,16 +784,14 @@ body {
         height: 250px;
     }
     
-    .hero-title {
-        font-size: 24px;
-    }
+    /* Reglas de .hero-title eliminadas */
     
     .section-title {
         font-size: 28px;
     }
     
     .artist-description {
-        font-size: 16px;
+        font-size: 16px; /* Se mantiene igual que en 768px */
     }
     .carousel-slide img {
     height: 350px;
@@ -854,3 +889,136 @@ body {
 }
 
 
+/* ===== NUEVOS ESTILOS AÑADIDOS AL FINAL ===== */
+
+/* MODIFICADO: Texto sobre el Hero (sin fondo) */
+.hero-text-overlay {
+    padding: 0 20px; /* Solo padding lateral para pantallas pequeñas */
+}
+
+/* ESTILOS de .hero-text-overlay h2 y .hero-email ELIMINADOS */
+
+
+/* MODIFICADO: Hero Title Styles */
+.hero-main-title {
+    font-family: 'Lora', serif; /* <-- AÑADIDO */
+    font-size: 64px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5); /* Sombra para legibilidad */
+}
+.hero-subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 5px; /* Espaciado amplio */
+    text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5); /* Sombra para legibilidad */
+}
+
+/* NUEVO: Responsive adjustments for new hero title */
+@media (max-width: 768px) {
+    .hero-main-title {
+        font-size: 48px;
+    }
+    .hero-subtitle {
+        font-size: 16px;
+        letter-spacing: 3px;
+    }
+}
+@media (max-width: 480px) {
+    .hero-main-title {
+        font-size: 36px;
+    }
+    .hero-subtitle {
+        font-size: 14px;
+    }
+}
+
+
+/* Navbar con Scroll */
+.navbar.scrolled {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f0f0f0; 
+    padding: 15px 0; /* Padding original al scrollear */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Colores de links del Navbar (cuando se hace scroll) */
+.navbar.scrolled .nav-controls-right a, /* MODIFICADO */
+.navbar.scrolled .lang-btn,
+.navbar.scrolled .lang-separator {
+    color: #000000; /* Texto negro sobre fondo blanco */
+}
+
+/* NUEVO: links centrados con scroll */
+.navbar.scrolled .nav-links-center a {
+    color: #000000;
+}
+
+.navbar.scrolled .nav-controls-right a:hover, /* MODIFICADO */
+.navbar.scrolled .nav-links-center a:hover, /* NUEVO */
+.navbar.scrolled .lang-btn:hover {
+    color: #C6A200;
+}
+
+.navbar.scrolled .lang-btn.active {
+    color: #C6A200;
+}
+
+/* NUEVO: Estilos para el formulario de contacto */
+.contact-form .form-group {
+    margin-bottom: 15px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #cccccc;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: #333333;
+    border: 1px solid #555555;
+    border-radius: 4px;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.contact-form textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #C6A200;
+    box-shadow: 0 0 5px rgba(198, 162, 0, 0.5);
+}
+
+.btn-submit {
+    padding: 12px 24px;
+    background-color: #C6A200;
+    color: #000000; /* Texto negro para contraste */
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.btn-submit:hover {
+    background-color: #b08f00;
+}

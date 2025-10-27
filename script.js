@@ -1,7 +1,7 @@
 // Variables globales
 let cartCount = 0;
-let currentSlide = 0;
-const totalSlides = 4;
+// let currentSlide = 0; // Eliminado (no se usa)
+// const totalSlides = 4; // Eliminado (no se usa)
 let currentLanguage = 'es';
 
 // Traducciones
@@ -12,7 +12,9 @@ const translations = {
         'nav-about': 'SOBRE MÍ',
         'nav-projects': 'PROYECTOS',
         'nav-login': 'LOGIN',
-        'hero-title': 'FRANCESCO PONTE',
+        'hero-main-title': 'FRANCESCO PONTE', // MODIFICADO
+        'hero-subtitle': 'ARTISTA REALISTA', // NUEVO
+        'about-title': 'SOBRE MÍ', // NUEVO
         'artist-description': 'Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista, una disciplina que descubrí como una forma de conectar con el detalle, la paciencia y la emoción detrás de cada trazo. Me especializo en retratos realistas en blanco y negro realizados con grafito, principalmente de rostros de celebridades. En cada obra busco alcanzar un equilibrio entre la fidelidad a la referencia y mi propia interpretación: no intento copiar la imagen, sino darle vida a través de mi mirada y mi técnica, incorporando matices que reflejan mi esencia como artista. Además de los retratos, también dibujo peces con el mismo enfoque realista, explorando las texturas, reflejos y contrastes que surgen de la naturaleza. Mi objetivo es transmitir conocimiento y, al mismo tiempo, provocar una emoción en quien observa mis obras: que cada dibujo logre detener el tiempo por un instante y genere una conexión genuina. Actualmente me encuentro en la búsqueda de un nuevo horizonte creativo, combinando el hiperrealismo con el surrealismo: piezas que mantienen la precisión técnica del realismo extremo, pero con contenidos imaginativos, simbólicos y conceptuales, que inviten a mirar más allá de lo evidente.',
         'btn-show-works': 'Mostrar obras en la tienda online',
         'btn-website': 'Sitio web de Francesco Ponte',
@@ -32,7 +34,9 @@ const translations = {
         'nav-about': 'ABOUT ME',
         'nav-projects': 'PROJECTS',
         'nav-login': 'LOGIN',
-        'hero-title': 'FRANCESCO PONTE',
+        'hero-main-title': 'FRANCESCO PONTE', // MODIFICADO
+        'hero-subtitle': 'REALIST ARTIST', // NUEVO
+        'about-title': 'ABOUT ME', // NUEVO
         'artist-description': 'My name is Francesco Ponte, I´m a self-taught artist from Buenos Aires, Argentina. My work focuses on realistic drawing, a discipline I discovered as a way to connect with the detail, patience, and emotion behind each stroke. I specialize in realistic black and white graphite portraits, mainly of celebrity faces. In each piece, I seek to achieve a balance between fidelity to the reference and my own interpretation: I don´t try to copy the image, but rather bring it to life through my gaze and my technique, incorporating nuances that reflect my essence as an artist. In addition to portraits, I also draw fish with the same realistic approach, exploring the textures, reflections, and contrasts that emerge from nature. My goal is to convey knowledge and, at the same time, provoke an emotion in those who view my works: that each drawing manages to stop time for an instant and generate a genuine connection. I am currently searching for a new creative horizon, combining hyperrealism with surrealism: pieces that maintain the technical precision of extreme realism, but with imaginative, symbolic and conceptual content that invites us to look beyond the obvious.',
         'btn-show-works': 'Show works in online store',
         'btn-website': 'Francesco Ponte Website',
@@ -85,47 +89,24 @@ const artworksData = {
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
-    initCarousel();
+    // initCarousel(); // ELIMINADO
     initCartFunctionality();
     initLanguageSwitcher();
     initModal();
     initSmoothScrolling();
+    initNavbarScroll(); // AÑADIDO
 });
 
-// Carrusel
+// Carrusel (ELIMINADO)
+/*
 function initCarousel() {
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const indicators = document.querySelectorAll('.indicator');
-
-    prevBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        showSlide(currentSlide);
-    });
-    nextBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    });
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            currentSlide = index;
-            showSlide(currentSlide);
-        });
-    });
-    setInterval(() => {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    }, 5000);
+    ...
 }
 
 function showSlide(slideIndex) {
-    const slides = document.querySelectorAll('.carousel-slide');
-    const indicators = document.querySelectorAll('.indicator');
-    slides.forEach(slide => slide.classList.remove('active'));
-    indicators.forEach(indicator => indicator.classList.remove('active'));
-    slides[slideIndex].classList.add('active');
-    indicators[slideIndex].classList.add('active');
+    ...
 }
+*/
 
 // Carrito
 let cartItems = [];
@@ -266,7 +247,7 @@ function switchLanguage(lang) {
     elements.forEach(el => {
         const key = el.getAttribute('data-translate');
         if (translations[lang] && translations[lang][key]) {
-            el.textContent = translations[lang][key];
+            el.innerHTML = translations[lang][key]; // Usar innerHTML por si acaso (aunque ya no hay <br>)
         }
     });
 }
@@ -351,3 +332,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     clearCartBtn.addEventListener('click', clearCart);
 });
+
+// ===== NUEVA FUNCIÓN PARA NAVBAR CON SCROLL =====
+function initNavbarScroll() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return; // Asegurarse que el navbar existe
+
+    window.addEventListener('scroll', () => {
+        // Si el usuario baja más de 50px
+        if (window.scrollY > 50) { 
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+}
