@@ -76,6 +76,15 @@
     overflow: visible;
 }
 
+/* AÑADIDO: Aspect-ratio para mantener la proporción cuando quitamos width/height del HTML */
+.login-svg-container {
+    aspect-ratio: 450 / 510;
+}
+.register-svg-container {
+    aspect-ratio: 450 / 590;
+}
+
+
 /* PARTE 1: EL CONTENEDOR (EL RECTÁNGULO)
    Se aplica a AMBOS formularios
 */
@@ -228,6 +237,8 @@
     .login-section {
         /* Reducimos el padding vertical para pantallas pequeñas */
         padding: 100px 15px 40px;
+        /* AÑADIDO: Corregimos el zoom del fondo en móvil */
+        background-attachment: scroll;
     }
 
     .login-content h2 {
