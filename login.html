@@ -19,7 +19,16 @@
                 <a href="index.html#home" data-translate="nav-home">HOME</a>
                 <a href="index.html#about" data-translate="nav-about">SOBRE MÍ</a>
                 <a href="index.html#projects" data-translate="nav-projects">PROYECTOS</a>
-                <a href="login.html" data-translate="nav-login">LOGIN</a>
+                
+                <a href="login.html" data-translate="nav-login" id="navLoginLink">LOGIN</a>
+
+                <div class="user-menu-container" id="userMenuContainer">
+                    <a href="#" id="userNameLink" class="user-menu-toggle">USUARIO</a>
+                    <div class="user-menu-dropdown" id="userMenuDropdown">
+                        <a href="historial.html">Historial</a> 
+                        <a href="#" id="logoutButton">Cerrar sesión</a>
+                    </div>
+                </div>
             </div>
             <div class="nav-controls-right">
                 <a href="#contact" class="nav-icon"><i class="fa-regular fa-envelope"></i></a>
@@ -51,8 +60,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="login-password" data-translate="form-label-password">Contraseña:</label>
-                                <input type="password" id="login-password" name="password" required>
-                            </div>
+                                <div class="password-wrapper">
+                                    <input type="password" id="login-password" name="password" required>
+                                    <i class="fa-solid fa-eye toggle-password"></i>
+                                </div>
+                                </div>
                             <button type="submit" class="btn-submit" data-translate="login-btn-submit">Ingresar</button>
                         </form>
                         <div class="login-links">
@@ -66,18 +78,24 @@
                     <div class="login-content">
                         <h2 data-translate="register-title">CREAR CUENTA</h2>
                         <form class="login-form">
+                            
+                            <div class="form-group">
+                                <label for="register-name">Nombre:</label>
+                                <input type="text" id="register-name" name="name" required>
+                            </div>
+                            
                             <div class="form-group">
                                 <label for="register-email" data-translate="form-label-email">Email:</label>
                                 <input type="email" id="register-email" name="email" required>
                             </div>
                             <div class="form-group">
                                 <label for="register-password" data-translate="form-label-password">Contraseña:</label>
-                                <input type="password" id="register-password" name="password" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm-password" data-translate="register-confirm-password">Confirmar Contraseña:</label>
-                                <input type="password" id="confirm-password" name="password-confirm" required>
-                            </div>
+                                <div class="password-wrapper">
+                                    <input type="password" id="register-password" name="password" required>
+                                    <i class="fa-solid fa-eye toggle-password"></i>
+                                </div>
+                                </div>
+                            
                             <button type="submit" class="btn-submit" data-translate="register-btn-submit">Registrarse</button>
                         </form>
                         <div class="login-links">
@@ -93,6 +111,7 @@
     <footer id="contact" class="footer">
         </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
 
     <script>

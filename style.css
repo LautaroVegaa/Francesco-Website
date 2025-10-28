@@ -1028,3 +1028,75 @@ body {
 .btn-submit:hover {
     background-color: #b08f00;
 }
+
+/* ==================================
+   ESTILOS DEL MENÚ DE USUARIO
+   ================================== */
+.user-menu-container {
+    position: relative;
+    display: none; /* Oculto por defecto, JS lo mostrará */
+}
+
+/* Este es el link con el nombre del usuario */
+.user-menu-toggle {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Ajuste de color para cuando se hace scroll */
+.navbar.scrolled .user-menu-toggle {
+    color: #000000;
+}
+
+.user-menu-toggle:hover {
+    color: #C6A200;
+}
+
+/* Busca este bloque al final de style.css y modifícalo */
+
+/* El contenedor del menú desplegable */
+.user-menu-dropdown {
+    display: none; 
+    position: absolute;
+    top: 150%; 
+    left: 50%;
+    transform: translateX(-50%);
+    /* ===== CAMBIOS AQUÍ ===== */
+    background-color: #ffffff; /* Mantenemos fondo blanco */
+    border: 1px solid #eee; /* Borde sutil gris claro */
+    border-radius: 4px; /* Bordes un poco menos redondeados */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra un poco más suave */
+    /* ===== FIN CAMBIOS ===== */
+    z-index: 1001;
+    width: 160px; 
+    overflow: hidden; 
+}
+
+/* Clase que se añade con JS para mostrarlo */
+.user-menu-dropdown.show {
+    display: block;
+}
+
+/* Los links dentro del menú */
+.user-menu-dropdown a {
+    display: block;
+    /* ===== CAMBIOS AQUÍ ===== */
+    padding: 10px 15px; /* Menos padding vertical, más horizontal */
+    text-decoration: none;
+    color: #555; /* Color gris oscuro, no tan negro */
+    font-size: 13px; /* Un poco más pequeño */
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease; /* Transición más rápida */
+    /* ===== FIN CAMBIOS ===== */
+}
+
+.user-menu-dropdown a:hover {
+    /* ===== CAMBIOS AQUÍ ===== */
+    background-color: #f8f8f8; /* Fondo hover más sutil */
+    color: #C6A200; /* Color dorado al hacer hover */
+    /* ===== FIN CAMBIOS ===== */
+}
