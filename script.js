@@ -26,7 +26,19 @@ const translations = {
         'footer-newsletter': 'NEWSLETTER',
         'footer-newsletter-text': 'Con nuestro Newsletter no te perderás ninguna exposición. Además, obtienes ofertas especiales y siempre recibes las noticias más actuales.',
         'footer-newsletter-btn': '¡REGÍSTRATE AHORA!',
-        'footer-social': 'REDES SOCIALES'
+        'footer-social': 'REDES SOCIALES',
+
+        // --- Nuevas traducciones de Login/Register ---
+        'login-title': 'INICIAR SESIÓN',
+        'login-btn-submit': 'Ingresar',
+        'login-forgot-password': '¿Olvidaste tu contraseña?',
+        'login-register': 'Crear una cuenta',
+        'register-title': 'CREAR CUENTA',
+        'register-confirm-password': 'Confirmar Contraseña:',
+        'register-btn-submit': 'Registrarse',
+        'register-go-back': 'Ya tengo una cuenta',
+        'form-label-email': 'Email:',
+        'form-label-password': 'Contraseña:'
     },
     en: {
         'brand': 'Francesco Ponte',
@@ -48,7 +60,19 @@ const translations = {
         'footer-newsletter': 'NEWSLETTER',
         'footer-newsletter-text': 'With our Newsletter you won\'t miss any exhibition. In addition, you get special offers and always receive the latest news.',
         'footer-newsletter-btn': 'SIGN UP NOW!',
-        'footer-social': 'SOCIAL MEDIA'
+        'footer-social': 'SOCIAL MEDIA',
+
+        // --- New Login/Register translations ---
+        'login-title': 'LOGIN',
+        'login-btn-submit': 'Sign In',
+        'login-forgot-password': 'Forgot your password?',
+        'login-register': 'Create an account',
+        'register-title': 'CREATE ACCOUNT',
+        'register-confirm-password': 'Confirm Password:',
+        'register-btn-submit': 'Register',
+        'register-go-back': 'I already have an account',
+        'form-label-email': 'Email:',
+        'form-label-password': 'Password:'
     }
 };
 
