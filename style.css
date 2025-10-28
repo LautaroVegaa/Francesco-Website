@@ -200,7 +200,7 @@ body {
 /* NUEVO: Contenedor flex para foto y texto */
 .description-content {
     display: flex;
-    align-items: center; /* Centra verticalmente */
+    align-items: flex-end; /* <-- CAMBIO AQUÍ: Alinea los items al final (abajo) */
     gap: 40px; /* Espacio entre foto y texto */
 }
 
@@ -659,6 +659,12 @@ body {
 
 
 @media (max-width: 768px) {
+    /* ----- INICIO DE LA MODIFICACIÓN ----- */
+    .hero-section {
+        background-attachment: scroll; /* Desactiva el 'fixed' en móviles */
+    }
+    /* ----- FIN DE LA MODIFICACIÓN ----- */
+    
     /* MODIFICADO: Responsive para 2 contenedores */
     .nav-controls-right {
         gap: 15px;

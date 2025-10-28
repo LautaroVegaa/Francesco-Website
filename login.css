@@ -219,3 +219,19 @@
 #register-form-svg .login-form .form-group:nth-of-type(3) { animation-delay: 1.1s; }
 #register-form-svg .login-form .btn-submit { animation-delay: 1.2s; }
 #register-form-svg .login-links { animation-delay: 1.3s; }
+
+
+/* ==================================
+   NUEVO: MEDIA QUERIES (Responsive)
+   ================================== */
+@media (max-width: 768px) {
+    .login-section {
+        /* Reducimos el padding vertical para pantallas pequeñas */
+        padding: 100px 15px 40px;
+    }
+
+    .login-content h2 {
+        font-size: 24px; /* Hacemos el título un poco más pequeño */
+        margin-bottom: 25px;
+    }
+}
