@@ -41,56 +41,50 @@
 
             <div class="auth-container">
 
-                <svg class="login-svg-container" id="login-form-svg" viewBox="0 0 450 510" xmlns="http://www.w3.org/2000/svg">
-                    <rect class="login-box-path" x="1" y="1" width="448" height="508" rx="8" ry="8" />
-                    <foreignObject x="40" y="40" width="370" height="430">
-                        <div class="login-content" xmlns="http://www.w3.org/1999/xhtml">
-                            <h2 data-translate="login-title">INICIAR SESIÓN</h2>
-                            <form class="login-form">
-                                <div class="form-group">
-                                    <label for="login-email" data-translate="form-label-email">Email:</label>
-                                    <input type="email" id="login-email" name="email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="login-password" data-translate="form-label-password">Contraseña:</label>
-                                    <input type="password" id="login-password" name="password" required>
-                                </div>
-                                <button type="submit" class="btn-submit" data-translate="login-btn-submit">Ingresar</button>
-                            </form>
-                            <div class="login-links">
-                                <a href="#" data-translate="login-forgot-password">¿Olvidaste tu contraseña?</a>
-                                <a href="#" id="show-register-btn" data-translate="login-register">Crear una cuenta</a>
+                <div class="auth-box login-box" id="login-form">
+                    <div class="login-content">
+                        <h2 data-translate="login-title">INICIAR SESIÓN</h2>
+                        <form class="login-form">
+                            <div class="form-group">
+                                <label for="login-email" data-translate="form-label-email">Email:</label>
+                                <input type="email" id="login-email" name="email" required>
                             </div>
+                            <div class="form-group">
+                                <label for="login-password" data-translate="form-label-password">Contraseña:</label>
+                                <input type="password" id="login-password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn-submit" data-translate="login-btn-submit">Ingresar</button>
+                        </form>
+                        <div class="login-links">
+                            <a href="#" data-translate="login-forgot-password">¿Olvidaste tu contraseña?</a>
+                            <a href="#" id="show-register-btn" data-translate="login-register">Crear una cuenta</a>
                         </div>
-                    </foreignObject>
-                </svg>
+                    </div>
+                </div>
 
-                <svg class="register-svg-container" id="register-form-svg" viewBox="0 0 450 590" xmlns="http://www.w3.org/2000/svg">
-                    <rect class="login-box-path" x="1" y="1" width="448" height="588" rx="8" ry="8" />
-                    <foreignObject x="40" y="40" width="370" height="510">
-                        <div class="login-content" xmlns="http://www.w3.org/1999/xhtml">
-                            <h2 data-translate="register-title">CREAR CUENTA</h2>
-                            <form class="login-form">
-                                <div class="form-group">
-                                    <label for="register-email" data-translate="form-label-email">Email:</label>
-                                    <input type="email" id="register-email" name="email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="register-password" data-translate="form-label-password">Contraseña:</label>
-                                    <input type="password" id="register-password" name="password" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="confirm-password" data-translate="register-confirm-password">Confirmar Contraseña:</label>
-                                    <input type="password" id="confirm-password" name="password-confirm" required>
-                                </div>
-                                <button type="submit" class="btn-submit" data-translate="register-btn-submit">Registrarse</button>
-                            </form>
-                            <div class="login-links">
-                                <a href="#" id="show-login-btn" data-translate="register-go-back">Ya tengo una cuenta</a>
+                <div class="auth-box register-box" id="register-form">
+                    <div class="login-content">
+                        <h2 data-translate="register-title">CREAR CUENTA</h2>
+                        <form class="login-form">
+                            <div class="form-group">
+                                <label for="register-email" data-translate="form-label-email">Email:</label>
+                                <input type="email" id="register-email" name="email" required>
                             </div>
+                            <div class="form-group">
+                                <label for="register-password" data-translate="form-label-password">Contraseña:</label>
+                                <input type="password" id="register-password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password" data-translate="register-confirm-password">Confirmar Contraseña:</label>
+                                <input type="password" id="confirm-password" name="password-confirm" required>
+                            </div>
+                            <button type="submit" class="btn-submit" data-translate="register-btn-submit">Registrarse</button>
+                        </form>
+                        <div class="login-links">
+                            <a href="#" id="show-login-btn" data-translate="register-go-back">Ya tengo una cuenta</a>
                         </div>
-                    </foreignObject>
-                </svg>
+                    </div>
+                </div>
 
             </div>
         </section>

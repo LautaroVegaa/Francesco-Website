@@ -4,16 +4,19 @@
 .auth-container {
     position: relative;
     perspective: 1000px;
+    /* AÑADIDO: Asegura que ocupe el ancho en móvil */
+    width: 100%;
+    max-width: 450px;
 }
 
 /* Estilo base para AMBOS formularios */
-.login-svg-container,
-.register-svg-container {
+.login-box,
+.register-box {
     transition: transform 0.6s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 /* El formulario de LOGIN empieza visible */
-.login-svg-container {
+.login-box {
     opacity: 1;
     transform: translateX(0);
     z-index: 2;
@@ -21,7 +24,7 @@
 }
 
 /* El formulario de REGISTER empieza oculto y a la derecha */
-.register-svg-container {
+.register-box {
     position: absolute;
     top: 0;
     left: 0;
@@ -29,12 +32,14 @@
     transform: translateX(50px);
     z-index: 1;
     pointer-events: none;
+    /* AÑADIDO: Asegura que ocupe el 100% de su contenedor padre */
+    width: 100%;
 }
 
 /* ESTADO ACTIVO: Cuando se hace clic en "Crear cuenta" */
 
 /* 1. Ocultamos el Login (se va a la izquierda) */
-.auth-container.show-register .login-svg-container {
+.auth-container.show-register .login-box {
     opacity: 0;
     transform: translateX(-50px);
     z-index: 1;
@@ -42,7 +47,7 @@
 }
 
 /* 2. Mostramos el Register (viene al centro) */
-.auth-container.show-register .register-svg-container {
+.auth-container.show-register .register-box {
     opacity: 1;
     transform: translateX(0);
     z-index: 2;
@@ -62,49 +67,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* ----- AQUÍ ESTÁ EL CAMBIO ----- */
-    padding: 120px 20px 80px; /* ANTES: 40px de padding inferior */
+    padding: 120px 20px 80px; 
     box-sizing: border-box;
 }
 
 /* --- 2. ESTILOS DEL SVG --- */
-.login-svg-container,
-.register-svg-container {
+/* REEMPLAZADO: Estilos de .login-svg-container movidos a .auth-box */
+.auth-box {
     max-width: 450px;
     width: 100%;
     filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.1));
-    overflow: visible;
-}
-
-/* AÑADIDO: Aspect-ratio para mantener la proporción cuando quitamos width/height del HTML */
-.login-svg-container {
-    aspect-ratio: 450 / 510;
-}
-.register-svg-container {
-    aspect-ratio: 450 / 590;
+    
+    /* NUEVOS ESTILOS (reemplazan al SVG) */
+    background-color: #ffffff;
+    border: 3px solid #C6A200;
+    border-radius: 8px;
+    padding: 40px;
+    box-sizing: border-box; /* Muy importante */
 }
 
 
-/* PARTE 1: EL CONTENEDOR (EL RECTÁNGULO)
-   Se aplica a AMBOS formularios
-*/
-.login-box-path {
-    fill: #ffffff;
-    stroke: #C6A200;
-    stroke-width: 3;
-    stroke-dasharray: 1912; /* Valor base para el de 510px */
-    stroke-dashoffset: 1912;
-    animation: drawBorder 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
+/* ELIMINADO: .login-box-path y sus animaciones */
 
-/* Ajustamos el perímetro para el formulario de REGISTRO (que es más alto) */
-.register-svg-container .login-box-path {
-    /* Perímetro: (448*2) + (588*2) = 2072 */
-    stroke-dasharray: 2072;
-    stroke-dashoffset: 2072;
-}
 
 /* PARTE 2: EL CONTENIDO HTML 
+   (Sin cambios, ya estaba bien)
 */
 .login-content {
     text-align: center;
@@ -182,17 +169,13 @@
 }
 
 /* ==================================
-   ANIMACIONES SVG (Se aplican al cargar)
+   ANIMACIONES (Contenido)
    ================================== */
 
-/* Animación para dibujar el borde */
-@keyframes drawBorder {
-    to {
-        stroke-dashoffset: 0;
-    }
-}
+/* ELIMINADO: @keyframes drawBorder */
 
-/* Animación para el contenido */
+
+/* Animación para el contenido (sin cambios) */
 @keyframes fadeInContent {
     from {
         opacity: 0;
@@ -213,36 +196,38 @@
     animation: fadeInContent 0.5s ease-out forwards;
 }
 
-/* Delay para el LOGIN */
-#login-form-svg .login-content h2 { animation-delay: 0.8s; }
-#login-form-svg .login-form .form-group:nth-of-type(1) { animation-delay: 0.9s; }
-#login-form-svg .login-form .form-group:nth-of-type(2) { animation-delay: 1.0s; }
-#login-form-svg .login-form .btn-submit { animation-delay: 1.1s; }
-#login-form-svg .login-links { animation-delay: 1.2s; }
+/* MODIFICADO: Selectores de ID para delays */
+#login-form .login-content h2 { animation-delay: 0.8s; }
+#login-form .login-form .form-group:nth-of-type(1) { animation-delay: 0.9s; }
+#login-form .login-form .form-group:nth-of-type(2) { animation-delay: 1.0s; }
+#login-form .login-form .btn-submit { animation-delay: 1.1s; }
+#login-form .login-links { animation-delay: 1.2s; }
 
-/* Delay para el REGISTER (más campos) */
-/* (Se aplica si la página carga ya en modo register) */
-#register-form-svg .login-content h2 { animation-delay: 0.8s; }
-#register-form-svg .login-form .form-group:nth-of-type(1) { animation-delay: 0.9s; }
-#register-form-svg .login-form .form-group:nth-of-type(2) { animation-delay: 1.0s; }
-#register-form-svg .login-form .form-group:nth-of-type(3) { animation-delay: 1.1s; }
-#register-form-svg .login-form .btn-submit { animation-delay: 1.2s; }
-#register-form-svg .login-links { animation-delay: 1.3s; }
+/* MODIFICADO: Selectores de ID para delays */
+#register-form .login-content h2 { animation-delay: 0.8s; }
+#register-form .login-form .form-group:nth-of-type(1) { animation-delay: 0.9s; }
+#register-form .login-form .form-group:nth-of-type(2) { animation-delay: 1.0s; }
+#register-form .login-form .form-group:nth-of-type(3) { animation-delay: 1.1s; }
+#register-form .login-form .btn-submit { animation-delay: 1.2s; }
+#register-form .login-links { animation-delay: 1.3s; }
 
 
 /* ==================================
-   NUEVO: MEDIA QUERIES (Responsive)
+   MEDIA QUERIES (Responsive)
    ================================== */
 @media (max-width: 768px) {
     .login-section {
-        /* Reducimos el padding vertical para pantallas pequeñas */
         padding: 100px 15px 40px;
-        /* AÑADIDO: Corregimos el zoom del fondo en móvil */
         background-attachment: scroll;
     }
 
     .login-content h2 {
-        font-size: 24px; /* Hacemos el título un poco más pequeño */
+        font-size: 24px; 
         margin-bottom: 25px;
+    }
+
+    /* AÑADIDO: Reduce el padding de la caja en móvil */
+    .auth-box {
+        padding: 30px 25px;
     }
 }
