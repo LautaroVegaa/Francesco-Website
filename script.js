@@ -16,6 +16,67 @@ let cartCount = 0;
 // const totalSlides = 4; // Eliminado (no se usa)
 let currentLanguage = 'es';
 
+
+// ====================================================
+// 🧩 INTEGRACIÓN CON MERCADO PAGO (AGREGADO)
+// ====================================================
+
+// Convierte "$30.000 ARS" → 30000
+function parseArsPrice(str) {
+    if (!str) return 0;
+    return Number(str.replace(/[^\d]/g, ""));
+}
+
+// Mapea los productos del carrito al formato de Mercado Pago
+function mapCartToPreferenceItems() {
+    return cartItems.map((item) => ({
+        title: typeof item.title === 'object' ? item.title[currentLanguage] : item.title,
+        unit_price: parseArsPrice(item.price),
+        quantity: 1,
+        picture_url: item.image
+            ? (item.image.startsWith('http')
+                ? item.image
+                : `${window.location.origin}/images/${item.image}`)
+            : undefined,
+    }));
+}
+
+// Envía los productos al backend Supabase y redirige al checkout
+async function iniciarCheckout() {
+    try {
+        const items = mapCartToPreferenceItems();
+        if (!items.length) {
+            alert("Tu carrito está vacío.");
+            return;
+        }
+
+        const res = await fetch(
+            "https://umnahyousgddxyfwopsq.supabase.co/functions/v1/create_preference",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ items }),
+            }
+        );
+
+        const data = await res.json();
+        if (!data.init_point) {
+            console.error("Error al crear preferencia:", data);
+            alert("No se pudo iniciar el pago. Intenta nuevamente.");
+            return;
+        }
+
+        // Redirige al checkout oficial de Mercado Pago
+        window.location.href = data.init_point;
+    } catch (err) {
+        console.error("Error al iniciar pago:", err);
+        alert("Ocurrió un error al iniciar el pago.");
+    }
+}
+// ====================================================
+
+
+
 // Traducciones
 const translations = {
     es: {
@@ -24,10 +85,10 @@ const translations = {
         'nav-about': 'SOBRE MÍ',
         'nav-projects': 'PROYECTOS',
         'nav-login': 'LOGIN',
-        'hero-main-title': 'FRANCESCO PONTE', // MODIFICADO
-        'hero-subtitle': 'ARTISTA REALISTA', // NUEVO
-        'about-title': 'SOBRE MÍ', // NUEVO
-        'artist-description': 'Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista, una disciplina que descubrí como una forma de conectar con el detalle, la paciencia y la emoción detrás de cada trazo. Me especializo en retratos realistas en blanco y negro realizados con grafito, principalmente de rostros de celebridades. En cada obra busco alcanzar un equilibrio entre la fidelidad a la referencia y mi propia interpretación: no intento copiar la imagen, sino darle vida a través de mi mirada y mi técnica, incorporando matices que reflejan mi esencia como artista. Además de los retratos, también dibujo peces con el mismo enfoque realista, explorando las texturas, reflejos y contrastes que surgen de la naturaleza. Mi objetivo es transmitir conocimiento y, al mismo tiempo, provocar una emoción en quien observa mis obras: que cada dibujo logre detener el tiempo por un instante y genere una conexión genuina. Actualmente me encuentro en la búsqueda de un nuevo horizonte creativo, combinando el hiperrealismo con el surrealismo: piezas que mantienen la precisión técnica del realismo extremo, pero con contenidos imaginativos, simbólicos y conceptuales, que inviten a mirar más allá de lo evidente.',
+        'hero-main-title': 'FRANCESCO PONTE',
+        'hero-subtitle': 'ARTISTA REALISTA',
+        'about-title': 'SOBRE MÍ',
+        'artist-description': 'Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista...',
         'btn-show-works': 'Mostrar obras en la tienda online',
         'btn-website': 'Sitio web de Francesco Ponte',
         'btn-projects': 'Proyectos con Francesco Ponte',
@@ -36,11 +97,9 @@ const translations = {
         'modal-add-to-cart': 'AÑADIR A LA CESTA',
         'footer-contact': 'CONTACTO',
         'footer-newsletter': 'NEWSLETTER',
-        'footer-newsletter-text': 'Con nuestro Newsletter no te perderás ninguna exposición. Además, obtienes ofertas especiales y siempre recibes las noticias más actuales.',
+        'footer-newsletter-text': 'Con nuestro Newsletter no te perderás ninguna exposición...',
         'footer-newsletter-btn': '¡REGÍSTRATE AHORA!',
         'footer-social': 'REDES SOCIALES',
-
-        // --- Nuevas traducciones de Login/Register ---
         'login-title': 'INICIAR SESIÓN',
         'login-btn-submit': 'Ingresar',
         'login-forgot-password': '¿Olvidaste tu contraseña?',
@@ -58,10 +117,10 @@ const translations = {
         'nav-about': 'ABOUT ME',
         'nav-projects': 'PROJECTS',
         'nav-login': 'LOGIN',
-        'hero-main-title': 'FRANCESCO PONTE', // MODIFICADO
-        'hero-subtitle': 'REALIST ARTIST', // NUEVO
-        'about-title': 'ABOUT ME', // NUEVO
-        'artist-description': 'My name is Francesco Ponte, I´m a self-taught artist from Buenos Aires, Argentina. My work focuses on realistic drawing, a discipline I discovered as a way to connect with the detail, patience, and emotion behind each stroke. I specialize in realistic black and white graphite portraits, mainly of celebrity faces. In each piece, I seek to achieve a balance between fidelity to the reference and my own interpretation: I don´t try to copy the image, but rather bring it to life through my gaze and my technique, incorporating nuances that reflect my essence as an artist. In addition to portraits, I also draw fish with the same realistic approach, exploring the textures, reflections, and contrasts that emerge from nature. My goal is to convey knowledge and, at the same time, provoke an emotion in those who view my works: that each drawing manages to stop time for an instant and generate a genuine connection. I am currently searching for a new creative horizon, combining hyperrealismo with surrealism: pieces that maintain the technical precision of extreme realism, but with imaginative, symbolic and conceptual content that invites us to look beyond the obvious.',
+        'hero-main-title': 'FRANCESCO PONTE',
+        'hero-subtitle': 'REALIST ARTIST',
+        'about-title': 'ABOUT ME',
+        'artist-description': 'My name is Francesco Ponte, I´m a self-taught artist from Buenos Aires...',
         'btn-show-works': 'Show works in online store',
         'btn-website': 'Francesco Ponte Website',
         'btn-projects': 'Projects with Francesco Ponte',
@@ -70,11 +129,9 @@ const translations = {
         'modal-add-to-cart': 'ADD TO BASKET',
         'footer-contact': 'CONTACT',
         'footer-newsletter': 'NEWSLETTER',
-        'footer-newsletter-text': 'With our Newsletter you won\'t miss any exhibition. In addition, you get special offers and always receive the latest news.',
+        'footer-newsletter-text': 'With our Newsletter you won\'t miss any exhibition...',
         'footer-newsletter-btn': 'SIGN UP NOW!',
         'footer-social': 'SOCIAL MEDIA',
-
-        // --- New Login/Register translations ---
         'login-title': 'LOGIN',
         'login-btn-submit': 'Sign In',
         'login-forgot-password': 'Forgot your password?',
@@ -88,62 +145,40 @@ const translations = {
     }
 };
 
-// Datos de las obras (usando las imágenes locales del proyecto)
+
+// Datos de las obras
 const artworksData = {
-    1: {
-        title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' },
-        price: '$30.000 ARS',
-        image: 'ben-shelton.png'
-    },
-    2: {
-        title: { es: 'Lamine Yamal', en: 'Lamine Yamal' },
-        price: '$30.000 ARS',
-        image: 'lamine-yamal.png'
-    },
-    3: {
-        title: { es: 'David Goggins', en: 'David Goggins' },
-        price: '$30.000 ARS',
-        image: 'david-goggings.png'
-    },
-    4: {
-        title: { es: 'Leonardo DiCaprio', en: 'Leonardo DiCaprio' },
-        price: '$30.000 ARS',
-        image: 'leo-dicaprio.png'
-    },
-    5: {
-        title: { es: 'Will Smith', en: 'Will Smith' },
-        price: '$30.000 ARS',
-        image: 'will-smith.png'
-    },
-    6: {
-        title: { es: 'Eminem', en: 'Eminem' },
-        price: '$30.000 ARS',
-        image: 'eminem.png'
-    }
+    1: { title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' }, price: '$30.000 ARS', image: 'ben-shelton.png' },
+    2: { title: { es: 'Lamine Yamal', en: 'Lamine Yamal' }, price: '$30.000 ARS', image: 'lamine-yamal.png' },
+    3: { title: { es: 'David Goggins', en: 'David Goggins' }, price: '$30.000 ARS', image: 'david-goggings.png' },
+    4: { title: { es: 'Leonardo DiCaprio', en: 'Leonardo DiCaprio' }, price: '$30.000 ARS', image: 'leo-dicaprio.png' },
+    5: { title: { es: 'Will Smith', en: 'Will Smith' }, price: '$30.000 ARS', image: 'will-smith.png' },
+    6: { title: { es: 'Eminem', en: 'Eminem' }, price: '$30.000 ARS', image: 'eminem.png' }
 };
 
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
-    // initCarousel(); // ELIMINADO
     initCartFunctionality();
     initLanguageSwitcher();
     initModal();
     initSmoothScrolling();
     initNavbarScroll(); 
     initAuthFormListeners(); 
-    handleUserSession(); // <-- MODIFICADA
-    initPasswordToggles(); 
+    handleUserSession(); 
+    initPasswordToggles();
+
+    // 🔹 BOTÓN "FINALIZAR COMPRA" (AGREGADO)
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            iniciarCheckout();
+        });
+    }
 });
 
-// Carrusel (ELIMINADO)
-/*
-function initCarousel() {
-    ...
-}
-*/
 
-// Carrito
 let cartItems = [];
 
 function initCartFunctionality() {
