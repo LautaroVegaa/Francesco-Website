@@ -12,9 +12,8 @@ const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Variables globales
 let cartCount = 0;
-// let currentSlide = 0; // Eliminado (no se usa)
-// const totalSlides = 4; // Eliminado (no se usa)
 let currentLanguage = 'es';
+let currentOpenModalId = null;
 
 
 // ====================================================
@@ -237,13 +236,93 @@ const translations = {
 
 // Datos de las obras
 const artworksData = {
-    1: { title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' }, price: '$100 ARS', image: 'ben-shelton.png' },
-    2: { title: { es: 'Lamine Yamal', en: 'Lamine Yamal' }, price: '$30.000 ARS', image: 'lamine-yamal.png' },
-    3: { title: { es: 'David Goggins', en: 'David Goggins' }, price: '$30.000 ARS', image: 'david-goggings.png' },
-    4: { title: { es: 'Leonardo DiCaprio', en: 'Leonardo DiCaprio' }, price: '$30.000 ARS', image: 'leo-dicaprio.png' },
-    5: { title: { es: 'Will Smith', en: 'Will Smith' }, price: '$30.000 ARS', image: 'will-smith.png' },
-    6: { title: { es: 'Eminem', en: 'Eminem' }, price: '$30.000 ARS', image: 'eminem.png' }
+    1: { 
+        title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' }, 
+        price: '$100 ARS', 
+        image: 'ben-shelton.png',
+        year: '2024',
+        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
+        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
+        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+    },
+    2: { 
+        title: { es: 'Lamine Yamal', en: 'Lamine Yamal' }, 
+        price: '$30.000 ARS', 
+        image: 'lamine-yamal.png',
+        year: '2024',
+        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
+        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
+        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+    },
+    3: { 
+        title: { es: 'David Goggins', en: 'David Goggins' }, 
+        price: '$30.000 ARS', 
+        image: 'david-goggings.png',
+        year: '2024',
+        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
+        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
+        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+    },
+    4: { 
+        title: { es: 'Leonardo DiCaprio', en: 'Leonardo DiCaprio' }, 
+        price: '$30.000 ARS', 
+        image: 'leo-dicaprio.png',
+        year: '2023',
+        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
+        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
+        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+    },
+    5: { 
+        title: { es: 'Will Smith', en: 'Will Smith' }, 
+        price: '$30.000 ARS', 
+        image: 'will-smith.png',
+        year: '2023',
+        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
+        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
+        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+    },
+    6: { 
+        title: { es: 'Eminem', en: 'Eminem' }, 
+        price: '$30.000 ARS', 
+        image: 'eminem.png',
+        year: '2023',
+        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
+        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
+        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+    }
+    // Puedes añadir las obras 7 y 8 aquí cuando las tengas
 };
+
+
+// Añade esta función nueva (después de artworksData está bien)
+
+function updateModalContent() {
+    if (!currentOpenModalId) return; // Si no hay modal abierto, no hace nada
+
+    const artwork = artworksData[currentOpenModalId];
+    if (!artwork) return;
+
+    // Obtiene el texto traducido o el valor directo
+    const title = artwork.title[currentLanguage] || artwork.title['es'];
+    const price = artwork.price;
+    const year = artwork.year;
+    const technique = artwork.technique[currentLanguage] || artwork.technique['es'];
+    const size = artwork.size[currentLanguage] || artwork.size['es'];
+    const style = artwork.style[currentLanguage] || artwork.style['es'];
+
+    // Actualiza el HTML del modal
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalPrice').textContent = price;
+    document.getElementById('modalYear').textContent = year;
+    document.getElementById('modalTechnique').textContent = technique;
+    document.getElementById('modalSize').textContent = size;
+    document.getElementById('modalStyle').textContent = style;
+    
+    // También actualizamos la imagen por si acaso (aunque 'openModal' ya lo hace)
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = artwork.image.includes('http') ? artwork.image : `images/${artwork.image}`;
+    modalImage.alt = title;
+}
 
 
 // Inicialización
@@ -418,6 +497,7 @@ function switchLanguage(lang) {
             el.innerHTML = translations[lang][key]; 
         }
     });
+    updateModalContent();
 }
 
 function initModal() {
@@ -441,25 +521,15 @@ function initModal() {
 
 function openModal(artworkId) {
     const modal = document.getElementById('artworkModal');
-    const artwork = artworksData[artworkId];
-    if (!artwork || !modal) return; 
+    if (!modal) return; 
 
-    const imgSrc = artwork.image.includes('http')
-        ? artwork.image
-        : `images/${artwork.image}`;
+    // 1. Guardamos el ID de la obra que estamos abriendo
+    currentOpenModalId = artworkId;
 
-    const modalImage = document.getElementById('modalImage');
-    modalImage.src = imgSrc;
-    modalImage.alt = artwork.title[currentLanguage];
-    modalImage.style.objectFit = 'contain';
-    modalImage.style.maxHeight = '80vh';
-    modalImage.style.width = 'auto';
-    modalImage.style.margin = '0 auto';
-    modalImage.style.display = 'block';
+    // 2. Llamamos a la función que rellena los datos
+    updateModalContent();
 
-    document.getElementById('modalTitle').textContent = artwork.title[currentLanguage];
-    document.getElementById('modalPrice').textContent = artwork.price;
-
+    // 3. Mostramos el modal
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
 }
@@ -471,6 +541,7 @@ function closeModal() {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
     }
+    currentOpenModalId = null; // <-- AÑADE ESTA LÍNEA
 }
 
 function initSmoothScrolling() {
