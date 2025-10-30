@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Pedidos - Francesco Ponte</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="historial.css"> <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+
+    <header class="navbar scrolled">
+        <div class="container">
+            <div class="nav-links-center">
+                <a href="index.html#home" data-translate="nav-home">HOME</a>
+                <a href="index.html#about" data-translate="nav-about">SOBRE MÍ</a>
+                <a href="index.html#projects" data-translate="nav-projects">PROYECTOS</a>
+                <a href="login.html" data-translate="nav-login" id="navLoginLink">LOGIN</a>
+                <div class="user-menu-container" id="userMenuContainer">
+                    <a href="#" id="userNameLink" class="user-menu-toggle">USUARIO</a>
+                    <div class="user-menu-dropdown" id="userMenuDropdown">
+                        <a href="historial.html">Historial</a> 
+                        <a href="#" id="logoutButton">Cerrar sesión</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-controls-right">
+                <a href="index.html#contact" class="nav-icon"><i class="fa-regular fa-envelope"></i></a>
+                <div class="cart-container">
+                    <a href="#cart" class="nav-icon"><i class="fa-solid fa-shopping-bag"></i></a>
+                    <span class="cart-counter" id="cartCounter">0</span>
+                </div>
+                <div class="language-switcher">
+                    <span class="lang-btn active" data-lang="es">ES</span>
+                    <span class="lang-separator">|</span>
+                    <span class="lang-btn" data-lang="en">EN</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="historial-section">
+            <div class="container">
+                <h2 class="section-title">MI HISTORIAL DE PEDIDOS</h2>
+                <div id="historial-container">
+                    <div id="loading-spinner">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <p>Cargando tu historial...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="footer">
+        </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script> <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // El script.js principal (script.js) necesita un instante para 
+            // ejecutarse y definir la variable _supabase.
+            // Esperamos 100ms antes de ejecutar nuestra lógica.
+            setTimeout(checkLoginAndFetchHistorial, 100);
+        });
+
+        async function checkLoginAndFetchHistorial() {
+            // 1. VERIFICAR SI HAY SESIÓN
+            const { data: { session } } = await _supabase.auth.getSession();
+
+            if (!session) {
+                // Si no está logueado, lo redirigimos al login
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 2. SI HAY SESIÓN, BUSCAR PEDIDOS
+            fetchHistorial(session.user.id);
+        }
+
+        async function fetchHistorial(userId) {
+            const container = document.getElementById('historial-container');
+            
+            try {
+                // Gracias al RLS (Row Level Security) del Paso 1,
+                // esta query solo traerá los pedidos del usuario actual.
+                const { data: pedidos, error } = await _supabase
+                    .from('pedidos')
+                    .select('*')
+                    .eq('user_id', userId) // Doble chequeo (aunque RLS ya lo hace)
+                    .order('created_at', { ascending: false }); // Mostrar más nuevos primero
+
+                if (error) throw error;
+
+                // 3. MOSTRAR RESULTADOS
+                if (pedidos.length === 0) {
+                    container.innerHTML = '<p class="empty-historial">Aún no tienes pedidos registrados.</p>';
+                    return;
+                }
+
+                renderHistorial(pedidos);
+
+            } catch (error) {
+                console.error('Error al cargar el historial:', error.message);
+                container.innerHTML = '<p class="empty-historial">Error al cargar tu historial. Intenta de nuevo.</p>';
+            }
+        }
+
+        function renderHistorial(pedidos) {
+            const container = document.getElementById('historial-container');
+            container.innerHTML = ''; // Limpiamos el "Cargando..."
+
+            pedidos.forEach(pedido => {
+                const pedidoCard = document.createElement('div');
+                pedidoCard.classList.add('pedido-card');
+
+                // Formatear fecha
+                const fecha = new Date(pedido.created_at).toLocaleDateString('es-ES', {
+                    day: 'numeric', month: 'long', year: 'numeric'
+                });
+
+                // Formatear total (convertir de centavos a pesos)
+                const total = (pedido.total_amount / 100).toLocaleString('es-AR', {
+                    style: 'currency', currency: 'ARS'
+                });
+
+                // Crear lista de items
+                let itemsHtml = '<ul>';
+                if (pedido.items && pedido.items.length > 0) {
+                    pedido.items.forEach(item => {
+                        itemsHtml += `<li>${item.title} (x${item.quantity})</li>`;
+                    });
+                } else {
+                    itemsHtml += '<li>Detalle no disponible</li>';
+                }
+                itemsHtml += '</ul>';
+
+                pedidoCard.innerHTML = `
+                    <div class="pedido-header">
+                        <span class="pedido-fecha">${fecha}</span>
+                        <span class="pedido-status ${pedido.payment_status}">${pedido.payment_status}</span>
+                    </div>
+                    <div class="pedido-body">
+                        <div class="pedido-items">
+                            <h4>Items:</h4>
+                            ${itemsHtml}
+                        </div>
+                        <div class="pedido-total">
+                            <h4>Total:</h4>
+                            <p>${total}</p>
+                        </div>
+                    </div>
+                    <div class="pedido-footer">
+                        ID de Pago: ${pedido.mp_payment_id}
+                    </div>
+                `;
+                container.appendChild(pedidoCard);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+/* historial.css */
+
+.historial-section {
+    padding: 140px 20px 80px; /* Espacio para el header y footer */
+    background-color: #fafafa;
+    min-height: 80vh; /* Asegura que ocupe al menos la pantalla */
+}
+
+/* Alinea el título con los de index.html */
+.historial-section .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #C6A200;
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 1px;
+}
+
+#historial-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre cada tarjeta de pedido */
+}
+
+.empty-historial {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    margin-top: 40px;
+}
+
+/* Spinner de Carga */
+#loading-spinner {
+    text-align: center;
+    font-size: 24px;
+    color: #C6A200;
+    margin-top: 40px;
+}
+#loading-spinner p {
+    font-size: 16px;
+    color: #555;
+    margin-top: 10px;
+}
+/* La clase fa-spin la trae FontAwesome */
+
+/* Tarjeta de Pedido */
+.pedido-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.pedido-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+}
+
+.pedido-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.pedido-fecha {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+}
+
+.pedido-status {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+/* Estilos de estado */
+.pedido-status.approved {
+    background-color: #d4edda; /* Verde (como en success.html) */
+    color: #155724;
+}
+.pedido-status.pending {
+    background-color: #fff3cd; /* Amarillo (como en pending.html) */
+    color: #856404;
+}
+.pedido-status.failure {
+    background-color: #f8d7da; /* Rojo (como en failure.html) */
+    color: #721c24;
+}
+
+.pedido-body {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Para responsive */
+    padding: 20px;
+    gap: 20px;
+}
+
+.pedido-items {
+    flex: 3;
+    min-width: 250px; /* Para responsive */
+}
+
+.pedido-items h4,
+.pedido-total h4 {
+    font-size: 14px;
+    color: #C6A200;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pedido-items ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.pedido-items li {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.pedido-total {
+    flex: 1;
+    min-width: 150px; /* Para responsive */
+    text-align: right;
+}
+
+.pedido-total p {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+}
+
+.pedido-footer {
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+    padding: 10px 20px;
+    font-size: 12px;
+    color: #888;
+    text-align: right;
+}
+
+@media (max-width: 600px) {
+    .pedido-body {
+        flex-direction: column;
+    }
+    .pedido-total {
+        text-align: left;
+        border-top: 1px dashed #ddd;
+        padding-top: 15px;
+    }
+}

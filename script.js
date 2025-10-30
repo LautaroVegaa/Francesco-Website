@@ -50,11 +50,38 @@ async function iniciarCheckout() {
             return;
         }
 
+        // --- ¡CAMBIO AQUÍ! ---
+        // 1. Obtenemos la sesión actual del usuario desde Supabase
+        const { data: { session }, error: sessionError } = await _supabase.auth.getSession();
+
+        if (sessionError) {
+            console.error('Error al obtener la sesión:', sessionError);
+            alert('Error de autenticación. Por favor, inicia sesión de nuevo.');
+            return;
+        }
+
+        if (!session) {
+            console.error('No hay sesión activa.');
+            alert('No estás conectado. Por favor, inicia sesión para comprar.');
+            // Opcional: redirigir a login.html
+            // window.location.href = 'login.html';
+            return;
+        }
+        // --- FIN DEL CAMBIO ---
+
+
         const res = await fetch(
             "https://umnahyousgddxyfwopsq.supabase.co/functions/v1/create_preference",
             {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    // --- ¡LÍNEAS NUEVAS! ---
+                    // Añadimos el token de autorización para que Supabase sepa quién eres
+                    "Authorization": `Bearer ${session.access_token}`,
+                    // La Anon Key también es necesaria para llamar a la función
+                    "apikey": SUPABASE_ANON_KEY 
+                },
                 body: JSON.stringify({ items }),
             }
         );
