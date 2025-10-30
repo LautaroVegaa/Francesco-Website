@@ -1100,3 +1100,77 @@ body {
     color: #C6A200; /* Color dorado al hacer hover */
     /* ===== FIN CAMBIOS ===== */
 }
+
+/* ==== AJUSTE PRECISO DE ICONOS Y ALINEACIÓN ==== */
+
+/* Tamaño unificado para todos los íconos del header */
+.nav-icon i {
+    font-size: 17px; /* mismo tamaño para sobre y bolsa */
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 1;
+}
+
+/* Asegura que el sobre y la bolsa estén centrados */
+.nav-controls-right {
+    display: flex;
+    align-items: center; /* 🔥 centra verticalmente todo */
+    gap: 20px; /* espacio entre íconos y texto */
+}
+
+/* Contenedor del carrito */
+.cart-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contador del carrito */
+.cart-counter {
+    position: absolute;
+    top: -5px;
+    right: -6px;
+    background-color: #C6A200;
+    color: #fff;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ajuste del selector de idioma */
+.language-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 0;
+}
+
+/* ==== AJUSTE DE ALINEACIÓN EXACTA DE ICONOS ==== */
+
+/* Corrige la altura del carrito para alinearlo con el sobre */
+.cart-container {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start; /* sube ligeramente el ícono */
+    justify-content: center;
+    transform: translateY(-1px); /* ajuste fino de altura */
+}
+
+/* Mantiene la alineación global y espaciado */
+.nav-controls-right {
+    display: flex;
+    align-items: center; /* asegura línea base compartida */
+    gap: 20px;
+}
+
+/* Ajusta el contador para que siga bien posicionado */
+.cart-counter {
+    top: -5px;
+    right: -6px;
+}
