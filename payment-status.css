@@ -1,0 +1,79 @@
+/* --- payment-status.css --- */
+/* (Similar al login.css, pero para las páginas de estado de pago) */
+
+/* --- 1. CONTENEDOR DE LA SECCIÓN --- */
+.payment-status-section {
+    min-height: calc(100vh - 80px); /* Ocupa la pantalla menos el footer */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 140px 20px 60px; /* Padding para no chocar con header/footer */
+    box-sizing: border-box;
+}
+
+/* --- 2. CAJA DE MENSAJE --- */
+.status-box {
+    max-width: 500px;
+    width: 100%;
+    background-color: #ffffff;
+    border: 3px solid #C6A200;
+    border-radius: 8px;
+    padding: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.1));
+}
+
+.status-icon {
+    font-size: 60px;
+    margin-bottom: 25px;
+}
+
+.status-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.status-message {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* --- 3. COLORES DE ESTADO --- */
+.status-box.success .status-icon {
+    color: #28a745; /* Verde */
+}
+.status-box.success .status-title {
+    color: #28a745;
+}
+
+.status-box.failure .status-icon {
+    color: #dc3545; /* Rojo */
+}
+.status-box.failure .status-title {
+    color: #dc3545;
+}
+
+.status-box.pending .status-icon {
+    color: #ffc107; /* Amarillo/Naranja */
+}
+.status-box.pending .status-title {
+    color: #ffc107;
+}
+
+/* Reutilizamos la clase del botón de login.html */
+.status-box .btn-submit {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px 24px;
+    margin-top: 10px;
+    text-decoration: none;
+    display: inline-block;
+}

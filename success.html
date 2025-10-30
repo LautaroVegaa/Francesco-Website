@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pago Exitoso! - Francesco Ponte</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="payment-status.css"> <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+
+    <header class="navbar scrolled">
+        <div class="container">
+            <div class="nav-links-center">
+                <a href="index.html#home" data-translate="nav-home">HOME</a>
+                <a href="index.html#about" data-translate="nav-about">SOBRE MÍ</a>
+                <a href="index.html#projects" data-translate="nav-projects">PROYECTOS</a>
+                <a href="login.html" data-translate="nav-login" id="navLoginLink">LOGIN</a>
+                <div class="user-menu-container" id="userMenuContainer">
+                    <a href="#" id="userNameLink" class="user-menu-toggle">USUARIO</a>
+                    <div class="user-menu-dropdown" id="userMenuDropdown">
+                        <a href="historial.html">Historial</a> 
+                        <a href="#" id="logoutButton">Cerrar sesión</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-controls-right">
+                <a href="index.html#contact" class="nav-icon"><i class="fa-regular fa-envelope"></i></a>
+                <div class="cart-container">
+                    <a href="#cart" class="nav-icon"><i class="fa-solid fa-shopping-bag"></i></a>
+                    <span class="cart-counter" id="cartCounter">0</span>
+                </div>
+                <div class="language-switcher">
+                    <span class="lang-btn active" data-lang="es">ES</span> | <span class="lang-btn" data-lang="en">EN</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="payment-status-section" style="background-image: url('images/hero-dv.png');">
+            
+            <div class="status-box success">
+                <div class="status-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h2 class="status-title">¡Gracias por tu compra!</h2>
+                <p class="status-message">
+                    Tu pago fue procesado con éxito. En breve recibirás un email con la confirmación y los detalles de tu pedido.
+                </p>
+                <a href="index.html" class="btn-submit">Volver al inicio</a>
+            </div>
+
+        </section>
+    </main>
+
+    <footer id="contact" class="footer">
+        </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  
+    <script src="script.js"></script>
+</body>
+</html>
