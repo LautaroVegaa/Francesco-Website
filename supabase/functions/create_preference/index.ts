@@ -88,7 +88,8 @@ serve(async (req: Request): Promise<Response> => {
       // --- ¡ESTA ES LA LÍNEA CLAVE QUE AÑADIMOS! ---
       // Aquí le pasamos el user_id a Mercado Pago
       metadata: {
-        user_id: userId
+        user_id: userId,
+        items: mpItems
       }
     };
 

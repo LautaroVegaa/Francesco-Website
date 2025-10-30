@@ -44,8 +44,9 @@ Deno.serve(async (req: Request) => {
       // 3. Verificamos si fue aprobado
       if (mpPayment && mpPayment.status === 'approved') {
         
-        // 4. Recuperamos el user_id de la metadata
+        // 4. Recuperamos el user_id y los items de la metadata
         const userId = mpPayment.metadata?.user_id;
+        const items = mpPayment.metadata?.items;
         
         if (!userId) {
           throw new Error('No se encontró user_id en la metadata del pago');
@@ -54,7 +55,7 @@ Deno.serve(async (req: Request) => {
         // 5. Preparamos los datos para nuestra tabla "pedidos"
         const newOrder = {
           user_id: userId,
-          items: mpPayment.additional_information?.items || [],
+          items: items || [],
           total_amount: Math.round(mpPayment.transaction_amount * 100), 
           payment_status: 'approved',
           mp_payment_id: paymentId,
