@@ -115,18 +115,49 @@ const translations = {
         'hero-main-title': 'FRANCESCO PONTE',
         'hero-subtitle': 'ARTISTA REALISTA',
         'about-title': 'SOBRE MÍ',
-        'artist-description': 'Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista...',
-        'btn-show-works': 'Mostrar obras en la tienda online',
-        'btn-website': 'Sitio web de Francesco Ponte',
-        'btn-projects': 'Proyectos con Francesco Ponte',
+        'artist-description': 'Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista, una disciplina que descubrí como una forma de conectar con el detalle, la paciencia y la emoción detrás de cada trazo.<br>Me especializo en retratos realistas en blanco y negro realizados con grafito, principalmente de rostros de celebridades. En cada obra busco alcanzar un equilibrio entre la fidelidad a la referencia y mi propia interpretación: no intento copiar la imagen, sino darle vida a través de mi mirada y mi técnica, incorporando matices que reflejan mi esencia como artista.<br>Además de los retratos, también dibujo peces con el mismo enfoque realista, explorando las texturas, reflejos y contrastes que surgen de la naturaleza.<br>Mi objetivo es transmitir conocimiento y, al mismo tiempo, provocar una emoción en quien observa mis obras: que cada dibujo logre detener el tiempo por un instante y genere una conexión genuina.<br>Actualmente me encuentro en la búsqueda de un nuevo horizonte creativo, combinando el hiperrealismo con el surrealismo: piezas que mantienen la precisión técnica del realismo extremo, pero con contenidos imaginativos, simbólicos y conceptuales, que inviten a mirar más allá de lo evidente.',
         'gallery-title': 'TRABAJA EN LÍNEA',
         'add-to-cart': 'Agregar al carrito',
         'modal-add-to-cart': 'AÑADIR A LA CESTA',
         'footer-contact': 'CONTACTO',
-        'footer-newsletter': 'NEWSLETTER',
-        'footer-newsletter-text': 'Con nuestro Newsletter no te perderás ninguna exposición...',
-        'footer-newsletter-btn': '¡REGÍSTRATE AHORA!',
         'footer-social': 'REDES SOCIALES',
+        
+        // --- NUEVO: Títulos de la Galería ---
+        'artwork-1-title': 'Retrato de Ben Shelton',
+        'artwork-2-title': 'Lamine Yamal',
+        'artwork-3-title': 'David Goggins',
+        'artwork-4-title': 'Leonardo DiCaprio',
+        'artwork-5-title': 'Will Smith',
+        'artwork-6-title': 'Eminem',
+        'artwork-7-title': 'Obra (Placeholder)',
+        'artwork-8-title': 'Obra (Placeholder)',
+
+        // --- NUEVO: Detalles del Modal ---
+        'modal-year': 'Año:',
+        'modal-technique': 'Técnica:',
+        'modal-technique-value': 'Grafito sobre papel 150 gr',
+        'modal-size': 'Tamaño:',
+        'modal-style': 'Estilo:',
+        'modal-style-value': 'Retrato Realista',
+
+        // --- NUEVO: Modal del Carrito ---
+        'cart-title': 'CARRITO DE COMPRA',
+        'cart-total': 'Total:',
+        'cart-checkout': 'FINALIZAR COMPRA',
+
+        // --- NUEVO: Formulario de Contacto ---
+        'footer-form-title': 'ENVIAR UN MENSAJE',
+        'form-label-name': 'Nombre:',
+        'form-label-message': 'Mensaje:',
+        'form-btn-submit': 'Enviar',
+
+        // --- NUEVO: Links del Footer ---
+        'footer-privacy': 'Protección de Datos',
+        'footer-agb': 'Términos y Cond.',
+        'footer-faq': 'FAQ',
+        'footer-shop-info': 'Info Tienda',
+
+        // --- Traducciones de Login/Registro (Ya existían) ---
         'login-title': 'INICIAR SESIÓN',
         'login-btn-submit': 'Ingresar',
         'login-forgot-password': '¿Olvidaste tu contraseña?',
@@ -147,18 +178,49 @@ const translations = {
         'hero-main-title': 'FRANCESCO PONTE',
         'hero-subtitle': 'REALIST ARTIST',
         'about-title': 'ABOUT ME',
-        'artist-description': 'My name is Francesco Ponte, I´m a self-taught artist from Buenos Aires...',
-        'btn-show-works': 'Show works in online store',
-        'btn-website': 'Francesco Ponte Website',
-        'btn-projects': 'Projects with Francesco Ponte',
+        'artist-description': 'My name is Francesco Ponte, I am a self-taught artist from Buenos Aires, Argentina. My work focuses on realistic drawing, a discipline I discovered as a way to connect with the detail, patience, and emotion behind each stroke.<br>I specialize in realistic black and white portraits made with graphite, mainly of celebrity faces. In each piece, I seek to achieve a balance between fidelity to the reference and my own interpretation: I do not try to copy the image, but to bring it to life through my gaze and my technique, incorporating nuances that reflect my essence as an artist.<br>In addition to portraits, I also draw fish with the same realistic approach, exploring the textures, reflections, and contrasts that arise from nature.<br>My goal is to transmit knowledge and, at the same time, provoke an emotion in the viewer: that each drawing manages to stop time for an instant and generate a genuine connection.<br>I am currently in search of a new creative horizon, combining hyperrealism with surrealism: pieces that maintain the technical precision of extreme realism but with imaginative, symbolic, and conceptual content, inviting viewers to look beyond the obvious.',
         'gallery-title': 'WORKS ONLINE',
         'add-to-cart': 'Add to cart',
         'modal-add-to-cart': 'ADD TO BASKET',
         'footer-contact': 'CONTACT',
-        'footer-newsletter': 'NEWSLETTER',
-        'footer-newsletter-text': 'With our Newsletter you won\'t miss any exhibition...',
-        'footer-newsletter-btn': 'SIGN UP NOW!',
         'footer-social': 'SOCIAL MEDIA',
+
+        // --- NUEVO: Títulos de la Galería ---
+        'artwork-1-title': 'Ben Shelton Portrait',
+        'artwork-2-title': 'Lamine Yamal',
+        'artwork-3-title': 'David Goggins',
+        'artwork-4-title': 'Leonardo DiCaprio',
+        'artwork-5-title': 'Will Smith',
+        'artwork-6-title': 'Eminem',
+        'artwork-7-title': 'Work (Placeholder)',
+        'artwork-8-title': 'Work (Placeholder)',
+
+        // --- NUEVO: Detalles del Modal ---
+        'modal-year': 'Year:',
+        'modal-technique': 'Technique:',
+        'modal-technique-value': 'Graphite on 150 gr paper',
+        'modal-size': 'Size:',
+        'modal-style': 'Style:',
+        'modal-style-value': 'Realistic Portrait',
+
+        // --- NUEVO: Modal del Carrito ---
+        'cart-title': 'SHOPPING CART',
+        'cart-total': 'Total:',
+        'cart-checkout': 'PROCEED TO CHECKOUT',
+        
+        // --- NUEVO: Formulario de Contacto ---
+        'footer-form-title': 'SEND A MESSAGE',
+        'form-label-name': 'Name:',
+        'form-label-message': 'Message:',
+        'form-btn-submit': 'Send',
+
+        // --- NUEVO: Links del Footer ---
+        'footer-privacy': 'Data Protection',
+        'footer-agb': 'Terms & Cond.',
+        'footer-faq': 'FAQ',
+        'footer-shop-info': 'Shop Info',
+
+        // --- Traducciones de Login/Registro (Ya existían) ---
         'login-title': 'LOGIN',
         'login-btn-submit': 'Sign In',
         'login-forgot-password': 'Forgot your password?',
