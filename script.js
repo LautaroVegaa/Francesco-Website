@@ -148,7 +148,7 @@ const translations = {
 
 // Datos de las obras
 const artworksData = {
-    1: { title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' }, price: '$30.000 ARS', image: 'ben-shelton.png' },
+    1: { title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' }, price: '$100 ARS', image: 'ben-shelton.png' },
     2: { title: { es: 'Lamine Yamal', en: 'Lamine Yamal' }, price: '$30.000 ARS', image: 'lamine-yamal.png' },
     3: { title: { es: 'David Goggins', en: 'David Goggins' }, price: '$30.000 ARS', image: 'david-goggings.png' },
     4: { title: { es: 'Leonardo DiCaprio', en: 'Leonardo DiCaprio' }, price: '$30.000 ARS', image: 'leo-dicaprio.png' },
