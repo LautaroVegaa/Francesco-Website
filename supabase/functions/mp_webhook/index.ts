@@ -7,7 +7,7 @@ import { MercadoPagoConfig, Payment } from 'https://esm.sh/mercadopago@2.9.0';
 
 // Inicia el cliente de Mercado Pago (usará el Access Token del .env)
 const mpClient = new MercadoPagoConfig({ 
-  accessToken: Deno.env.get('MP_ACCESS_TOKEN')! 
+  accessToken: Deno.env.get('ACCESS_TOKEN')! 
 });
 const payment = new Payment(mpClient);
 
