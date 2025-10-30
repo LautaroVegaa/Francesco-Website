@@ -3,20 +3,17 @@
 // @ts-nocheck
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { MercadoPagoConfig, Payment } from 'https://esm.sh/mercadopago@2.9.0';
-
-// Inicia el cliente de Mercado Pago (usará el Access Token del .env)
-const mpClient = new MercadoPagoConfig({ 
-  accessToken: Deno.env.get('ACCESS_TOKEN')! 
-});
-const payment = new Payment(mpClient);
+// Ya no necesitamos la librería de MP para el 'get', solo fetch.
+// import { MercadoPagoConfig, Payment } from 'https://esm.sh/mercadopago@2.9.0';
 
 // Inicia el cliente de Supabase (Admin)
-// ¡OJO! Esta vez usamos la SERVICE_ROLE_KEY para poder escribir en la DB
 const supabaseAdmin = createClient(
   Deno.env.get('SUPABASE_URL')!,
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')! 
 );
+
+// Obtenemos el token de MP del entorno
+const MP_ACCESS_TOKEN = Deno.env.get('ACCESS_TOKEN');
 
 Deno.serve(async (req: Request) => {
   try {
@@ -26,13 +23,28 @@ Deno.serve(async (req: Request) => {
     if (body.type === 'payment' && body.data?.id) {
       const paymentId = body.data.id;
       
-      // 2. Buscamos el pago completo en Mercado Pago
-      const mpPayment = await payment.get({ id: paymentId });
+      // 2. ===== ¡AQUÍ ESTÁ EL CAMBIO! =====
+      // Buscamos el pago completo en Mercado Pago usando fetch nativo
+      // en lugar del SDK de MP que estaba fallando.
+      const mpPaymentResponse = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${MP_ACCESS_TOKEN}`
+        }
+      });
+
+      if (!mpPaymentResponse.ok) {
+        throw new Error(`Error al obtener el pago desde MP: ${mpPaymentResponse.statusText}`);
+      }
+
+      const mpPayment = await mpPaymentResponse.json();
+      // ===== FIN DEL CAMBIO =====
+
 
       // 3. Verificamos si fue aprobado
       if (mpPayment && mpPayment.status === 'approved') {
         
-        // 4. ¡Recuperamos el user_id que guardamos en la metadata!
+        // 4. Recuperamos el user_id de la metadata
         const userId = mpPayment.metadata?.user_id;
         
         if (!userId) {
@@ -43,13 +55,12 @@ Deno.serve(async (req: Request) => {
         const newOrder = {
           user_id: userId,
           items: mpPayment.additional_information?.items || [],
-          // Guardamos el total en centavos (ej: 100.50 ARS -> 10050)
           total_amount: Math.round(mpPayment.transaction_amount * 100), 
           payment_status: 'approved',
           mp_payment_id: paymentId,
         };
 
-        // 6. Guardamos en la tabla "pedidos" usando el cliente Admin
+        // 6. Guardamos en la tabla "pedidos"
         const { error } = await supabaseAdmin
           .from('pedidos')
           .insert(newOrder);
@@ -63,7 +74,7 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    // 7. Devolvemos 200 OK a Mercado Pago para que sepa que recibimos
+    // 7. Devolvemos 200 OK a Mercado Pago
     return new Response(JSON.stringify({ received: true }), {
       headers: { 'Content-Type': 'application/json' },
       status: 200,
@@ -73,7 +84,7 @@ Deno.serve(async (req: Request) => {
     console.error('Error en el webhook:', error.message);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { 'Content-Type': 'application/json' },
-      status: 400, // Devolvemos un error
+      status: 400, 
     });
   }
 });
