@@ -346,6 +346,95 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// === ✅ Detectar confirmación de email y mostrar mensaje de bienvenida ===
+document.addEventListener('DOMContentLoaded', async () => {
+    const hash = window.location.hash;
+    const urlParams = new URLSearchParams(hash.replace('#', '?'));
+
+    if (urlParams.has('access_token')) {
+        console.log('Cuenta verificada desde el email.');
+        const { data: { user }, error } = await _supabase.auth.getUser();
+
+        if (!error && user) {
+            const fullName = user.user_metadata?.full_name || user.email.split('@')[0];
+
+            const welcomeMsg = document.createElement('div');
+            welcomeMsg.textContent = `✅ Cuenta verificada, ¡bienvenido ${fullName}!`;
+            welcomeMsg.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-10px);
+                background: #C6A200;
+                color: #000;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 2000;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                opacity: 0;
+                transition: opacity 0.4s ease, transform 0.4s ease;
+            `;
+            document.body.appendChild(welcomeMsg);
+            setTimeout(() => {
+                welcomeMsg.style.opacity = '1';
+                welcomeMsg.style.transform = 'translateX(-50%) translateY(0)';
+            }, 100);
+
+            setTimeout(() => {
+                welcomeMsg.style.opacity = '0';
+                welcomeMsg.style.transform = 'translateX(-50%) translateY(-10px)';
+                setTimeout(() => {
+                    welcomeMsg.remove();
+                    history.replaceState(null, '', window.location.pathname);
+                }, 500);
+            }, 4000);
+        }
+    }
+});
+
+
+// === ✅ Mostrar mensaje de bienvenida tras login ===
+document.addEventListener('DOMContentLoaded', () => {
+    const userName = localStorage.getItem('welcomeUser');
+    if (userName) {
+        const welcomeMsg = document.createElement('div');
+        welcomeMsg.textContent = `✅ ¡Bienvenido ${userName}!`;
+        welcomeMsg.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: #C6A200;
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 2000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        `;
+        document.body.appendChild(welcomeMsg);
+        setTimeout(() => {
+            welcomeMsg.style.opacity = '1';
+            welcomeMsg.style.transform = 'translateX(-50%) translateY(0)';
+        }, 100);
+
+        // 🔹 Borrar mensaje después de unos segundos
+        setTimeout(() => {
+            welcomeMsg.style.opacity = '0';
+            welcomeMsg.style.transform = 'translateX(-50%) translateY(-10px)';
+            setTimeout(() => {
+                welcomeMsg.remove();
+                localStorage.removeItem('welcomeUser');
+            }, 500);
+        }, 3500);
+    }
+});
+
+
+
 
 let cartItems = [];
 
@@ -602,60 +691,96 @@ function initAuthFormListeners() {
     const loginFormEl = document.querySelector('#login-form .login-form');
     const registerFormEl = document.querySelector('#register-form .login-form');
 
-    if (loginFormEl) {
-        loginFormEl.addEventListener('submit', async (e) => { 
-            e.preventDefault(); 
+if (loginFormEl) {
+    loginFormEl.addEventListener('submit', async (e) => { 
+        e.preventDefault(); 
             
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
 
-            console.log('Intentando iniciar sesión con Supabase...');
+        console.log('Intentando iniciar sesión con Supabase...');
 
-            const { data, error } = await _supabase.auth.signInWithPassword({
-                email: email,
-                password: password,
-            });
+        const { data, error } = await _supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
 
-            if (error) {
-                console.error('Error en el login:', error.message);
-                alert('Error al iniciar sesión: ' + error.message);
-            } else {
-                console.log('Login exitoso:', data.user);
-                alert('¡Login exitoso! Redirigiendo...');
-                window.location.href = 'index.html'; 
+        if (error) {
+            console.error('Error en el login:', error.message);
+            const msg = document.createElement('div');
+            msg.textContent = '❌ ' + error.message;
+            msg.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #ff4d4d;
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 2000;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                opacity: 0;
+                transition: opacity 0.4s ease;
+            `;
+            document.body.appendChild(msg);
+            setTimeout(() => (msg.style.opacity = '1'), 100);
+            setTimeout(() => {
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 500);
+            }, 4000);
+        } else {
+            console.log('Login exitoso:', data.user);
+
+            // 🔹 Guarda el nombre y redirige al home
+            const userName = data.user.user_metadata?.full_name || data.user.email.split('@')[0];
+            localStorage.setItem('welcomeUser', userName);
+            window.location.href = 'index.html';
+        }
+    });
+}
+
+
+if (registerFormEl) {
+    registerFormEl.addEventListener('submit', async (e) => { 
+        e.preventDefault(); 
+
+        const name = document.getElementById('register-name').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const messageEl = document.getElementById('register-message');
+        
+        messageEl.textContent = ''; // limpia cualquier mensaje previo
+
+        console.log('Intentando registrar con Supabase...');
+
+        const { data, error } = await _supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: { full_name: name },
+                // 🔹 Agregamos la URL de redirección post-confirmación
+                emailRedirectTo: `${window.location.origin}/index.html`
             }
         });
-    }
 
-    if (registerFormEl) {
-        registerFormEl.addEventListener('submit', async (e) => { 
-            e.preventDefault(); 
+        if (error) {
+            console.error('Error en el registro:', error.message);
+            messageEl.style.color = 'red';
+            messageEl.textContent = 'Error al registrarse: ' + error.message;
+            return;
+        }
 
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            
-            console.log('Intentando registrar con Supabase...');
+        console.log('Registro exitoso:', data.user);
+        messageEl.style.color = '#C6A200';
+        messageEl.textContent = 'Cuenta creada con éxito. Verifica tu correo para confirmar tu cuenta.';
+        
+        // Limpia los campos del formulario
+        registerFormEl.reset();
+    });
+}
 
-            const { data, error } = await _supabase.auth.signUp({
-                email: email,
-                password: password,
-                options: {
-                    data: {
-                        full_name: name 
-                    }
-                }
-            });
-
-            if (error) {
-                console.error('Error en el registro:', error.message);
-                alert('Error al registrarse: ' + error.message);
-            } else {
-                console.log('Registro exitoso:', data.user);
-                alert('¡Registro exitoso! Por favor, revisa tu email para confirmar tu cuenta.');
-            }
-        });
-    }
 }
 
 // ===== FUNCIÓN MODIFICADA PARA MANEJAR EL NUEVO MENÚ =====
@@ -703,17 +828,31 @@ function handleUserSession() {
 
     // 4. Lógica de LOGOUT
     logoutButton.addEventListener('click', async (e) => {
-        e.preventDefault();
-        console.log('Cerrando sesión...');
-        userMenuDropdown.classList.remove('show'); // Oculta el menú
+    e.preventDefault();
+    console.log('Cerrando sesión...');
+    userMenuDropdown.classList.remove('show');
+
+    try {
+        // Intenta cerrar sesión con Supabase
         const { error } = await _supabase.auth.signOut();
-        if (error) {
-            console.error('Error al cerrar sesión:', error.message);
-        } else {
-            console.log('Sesión cerrada.');
-            window.location.reload(); // Recargamos la página
-        }
-    });
+
+        // Borra la sesión local (fix para localhost)
+        localStorage.removeItem('sb-umnahyousgddxyfwopsq-auth-token');
+        sessionStorage.clear();
+
+        if (error) console.warn('Supabase signOut error (ignorado en localhost):', error.message);
+
+        console.log('Sesión cerrada correctamente.');
+        window.location.href = 'login.html';
+    } catch (err) {
+        console.error('Error al cerrar sesión:', err);
+        localStorage.removeItem('sb-umnahyousgddxyfwopsq-auth-token');
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+    }
+});
+
+
 
     // 5. Opcional: Cierra el menú si se hace clic fuera
     document.addEventListener('click', (e) => {
