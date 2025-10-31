@@ -38,23 +38,20 @@ body {
 .navbar .container {
     display: flex;
     align-items: center;
-    position: relative; /* Clave para el centrado absoluto */
-    justify-content: flex-end; /* Alinea los controles a la derecha */
+    justify-content: center; /* ✅ centra el bloque principal */
+    position: relative; /* necesario para posicionar los íconos */
 }
 
-/* ESTILOS DE .nav-brand eliminados */
 
-/* MODIFICADO: Links de texto centrados con position: absolute */
+
 .nav-links-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* ✅ evita que se rompa con nombres largos */
     gap: 30px;
-    
-    /* Eliminamos las propiedades de flex-item (flex: 1, padding-right) */
+    flex: 1;
+    text-align: center;
 }
 
 .nav-links-center a {
@@ -62,6 +59,10 @@ body {
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
+    line-height: 1.4; /* ✅ más natural con Montserrat */
+    display: inline-flex;        /* ✅ alinea como el usuario */
+    align-items: center;         /* ✅ centra verticalmente */
+    vertical-align: middle;      /* ✅ misma línea base */
     transition: color 0.3s ease;
 }
 
@@ -70,14 +71,14 @@ body {
 }
 
 
-/* MODIFICADO: Controles alineados a la derecha */
 .nav-controls-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;                 /* ocupa toda la altura del navbar */
     display: flex;
-    align-items: center; /* Alinea verticalmente todos los hijos directos */
-    gap: 30px;
-    
-    /* Eliminamos el width fijo y justify-content */
-    /* El contenedor .container se encarga de alinearlo a la derecha */
+    align-items: center;          /* ✅ centra verticalmente íconos */
+    gap: 25px;
 }
 
 /* NUEVO: Asegura alineación vertical consistente para todos los hijos */
@@ -103,12 +104,14 @@ body {
     font-size: 18px;
     display: inline-flex; /* <-- RE-AÑADIDO */
     align-items: center;  /* <-- RE-AÑADIDO */
+    vertical-align: middle;  /* ✅ alinea ícono con texto */
 }
 
 .cart-container {
     position: relative;
     display: inline-flex; /* <-- RE-AÑADIDO */
     align-items: center;  /* <-- RE-AÑADIDO */
+    vertical-align: middle; /* ✅ iguala altura con los otros */
 }
 
 .cart-counter {
@@ -147,6 +150,7 @@ body {
     display: inline-flex; /* <-- MODIFICADO */
     align-items: center;  /* <-- MANTENIDO */
     gap: 5px;
+    vertical-align: middle; /* ✅ la barra ES | EN queda alineada */
 }
 
 .lang-btn {
@@ -1043,6 +1047,9 @@ body {
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
+    display: inline-flex;    /* ✅ permite centrado vertical */
+    align-items: center;     /* ✅ centra el texto verticalmente */
+    vertical-align: middle;  /* ✅ misma línea base que los links */
     transition: color 0.3s ease;
     cursor: pointer;
 }
@@ -1174,3 +1181,23 @@ body {
     top: -5px;
     right: -6px;
 }
+
+/* ✅ Corrige el solapamiento del navbar en pantallas medianas */
+@media (max-width: 992px) {
+  .navbar .container {
+    justify-content: space-between; /* vuelve al flujo natural */
+  }
+
+  .nav-controls-right {
+    position: static;       /* saca la posición absoluta */
+    transform: none;
+  }
+
+  .nav-links-center {
+    flex: 1;                /* permite que se adapte el ancho */
+    flex-wrap: wrap;        /* baja los links de línea si no entra */
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
