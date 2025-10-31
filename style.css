@@ -47,7 +47,7 @@ body {
 .nav-links-center {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline; /* 🔧 cambia center → baseline */
     flex-wrap: wrap; /* ✅ evita que se rompa con nombres largos */
     gap: 30px;
     flex: 1;
@@ -61,10 +61,18 @@ body {
     font-size: 14px;
     line-height: 1.4; /* ✅ más natural con Montserrat */
     display: inline-flex;        /* ✅ alinea como el usuario */
-    align-items: center;         /* ✅ centra verticalmente */
     vertical-align: middle;      /* ✅ misma línea base */
     transition: color 0.3s ease;
 }
+
+.nav-links-center a,
+.user-menu-toggle {
+    display: inline-flex;
+    align-items: baseline; /* ✅ misma línea base */
+    line-height: 1;
+    transform: translateY(-1px); /* corrige leve diferencia visual */
+}
+
 
 .nav-links-center a:hover {
     color: #C6A200;
@@ -754,31 +762,47 @@ body {
     }
 
 }
-
 /* MODIFICADO: Responsive para pantallas muy pequeñas */
 @media (max-width: 600px) {
     .navbar .container {
         flex-direction: column; /* Apila los links y los controles */
         gap: 10px;
         justify-content: center; /* Centra todo en móvil */
+        align-items: center; /* mantiene alineación vertical */
     }
+
     .nav-links-center {
         position: static; /* Quita el centrado absoluto en móvil */
         transform: none;
         gap: 15px;
         order: 1; /* Pone los links primero */
     }
+
     .nav-controls-right {
         width: 100%;
         justify-content: center; /* Centra los iconos en móvil */
         gap: 20px;
         order: 2; /* Pone los iconos después */
     }
+
     /* NUEVO: Foto más pequeña en pantallas muy pequeñas */
     .artist-photo {
         max-width: 80%;
     }
+
+    /* 🔧 Alineación precisa de "Lautaro" con los demás links en móvil */
+    .nav-links-center a,
+    .user-menu-toggle {
+        display: inline-flex;
+        align-items: baseline;   /* fuerza misma línea base */
+        line-height: 1;          /* elimina altura adicional */
+        padding-top: 0;
+        padding-bottom: 0;
+        transform: translateY(-1px); /* baja 1px visualmente */
+    }
 }
+
+
 
 
 @media (max-width: 480px) {
