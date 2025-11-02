@@ -267,3 +267,42 @@
         padding: 30px 25px;
     }
 }
+
+/* --- Añade esto al final de login.css --- */
+
+/* 1. Hace que .reset-box se oculte por defecto, igual que .register-box */
+/* (Puedes buscar la regla .register-box original y añadir .reset-box, 
+   o simplemente añadir esta nueva regla combinada al final) */
+.register-box,
+.reset-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateX(50px);
+    z-index: 1;
+    pointer-events: none;
+    width: 100%;
+}
+
+/* 2. Oculta el login cuando se muestra el reset */
+.auth-container.show-reset .login-box {
+    opacity: 0;
+    transform: translateX(-50px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 3. Muestra el reset */
+.auth-container.show-reset .reset-box {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 2;
+    pointer-events: auto;
+}
+
+/* 4. (Recomendado) Asegura que el reset se oculte si se muestra el registro */
+.auth-container.show-register .reset-box {
+    opacity: 0;
+    pointer-events: none;
+}

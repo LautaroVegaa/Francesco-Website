@@ -12,16 +12,13 @@
 <body>
     <header class="navbar">
         <div class="container">
-            <!-- ===== SECCIÓN MODIFICADA ===== -->
             <div class="nav-links-center">
                 <a href="#home" data-translate="nav-home">HOME</a>
                 <a href="#about" data-translate="nav-about">SOBRE MÍ</a>
                 <a href="#projects" data-translate="nav-projects">PROYECTOS</a>
                 
-                <!-- Link de Login (se ocultará si hay sesión) -->
                 <a href="login.html" data-translate="nav-login" id="navLoginLink">LOGIN</a>
 
-                <!-- Menú de Usuario (oculto por defecto) -->
                 <div class="user-menu-container" id="userMenuContainer">
                     <a href="#" id="userNameLink" class="user-menu-toggle">USUARIO</a>
                     <div class="user-menu-dropdown" id="userMenuDropdown">
@@ -30,8 +27,6 @@
                     </div>
                 </div>
             </div>
-            <!-- ===== FIN DE LA SECCIÓN MODIFICADA ===== -->
-
             <div class="nav-controls-right">
                 <a href="#contact" class="nav-icon"><i class="fa-regular fa-envelope"></i></a> 
                 <div class="cart-container">
@@ -213,14 +208,46 @@
     </div>
 
 
+    <div id="resetPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-info">
+                    <h2 data-translate="reset-title-new">Establece tu nueva contraseña</h2>
+                    
+                    <form id="new-password-form" class="login-form">
+                        <div class="form-group">
+                            <label for="new-password" data-translate="form-label-password-new">Nueva Contraseña:</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="new-password" required>
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password" data-translate="form-label-password-confirm">Confirmar Contraseña:</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="confirm-password" required>
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit" data-translate="reset-btn-submit-new">Guardar Contraseña</button>
+                        <p id="new-password-message"></p>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div id="cartModal" class="modal">
     <div class="modal-content">
         <span class="modal-close" id="closeCart">&times;</span>
         <div class="modal-body">
-            <div class="modal-info" style="flex:1;">
+            <div class="modal-info">
                 <h2 data-translate="cart-title">CARRITO DE COMPRA</h2>
                 <div id="cartItems" class="cart-items"></div>
-                <div class="cart-summary" style="margin-top:20px;">
+                <div class="cart-summary">
                     <p><strong data-translate="cart-total">Total:</strong> <span id="cartTotal">0 €</span></p>
                     <button class="modal-add-to-cart" id="checkoutBtn" data-translate="cart-checkout">FINALIZAR COMPRA</button>
                     <button id="clearCartBtn" class="modal-add-to-cart" style="background-color:#000; margin-top:10px;">
@@ -283,10 +310,8 @@
         </div>
     </footer>
 
-    <!-- Script de Supabase (ya estaba aquí) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  
     <script src="script.js"></script>
 
-    <!-- Script duplicado eliminado -->
-</body>
+    </body>
 </html>

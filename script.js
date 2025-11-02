@@ -186,7 +186,20 @@ const translations = {
         'register-btn-submit': 'Registrarse',
         'register-go-back': 'Ya tengo una cuenta',
         'form-label-email': 'Email:',
-        'form-label-password': 'Contraseña:'
+        'form-label-password': 'Contraseña:',
+
+        // --- (NUEVO) Traducciones de Reset ---
+        'reset-title': 'RESETEAR CONTRASEÑA',
+        'reset-btn-submit': 'Enviar enlace',
+        'reset-success': 'Enlace enviado. Revisa tu correo.',
+        'reset-error': 'Error: No se pudo enviar el enlace.',
+        // --- (NUEVO) Traducciones de Nuevo Formulario de Reset ---
+        'reset-title-new': 'Establece tu nueva contraseña',
+        'form-label-password-new': 'Nueva Contraseña:',
+        'form-label-password-confirm': 'Confirmar Contraseña:',
+        'reset-btn-submit-new': 'Guardar Contraseña',
+        'reset-password-success': '¡Contraseña actualizada con éxito!',
+        'reset-password-mismatch': 'Las contraseñas no coinciden.',
     },
     en: {
         'brand': 'Francesco Ponte',
@@ -249,7 +262,20 @@ const translations = {
         'register-btn-submit': 'Register',
         'register-go-back': 'I already have an account',
         'form-label-email': 'Email:',
-        'form-label-password': 'Password:'
+        'form-label-password': 'Password:',
+        
+        // --- (NUEVO) Traducciones de Reset ---
+        'reset-title': 'RESET PASSWORD',
+        'reset-btn-submit': 'Send reset link',
+        'reset-success': 'Link sent. Check your email.',
+        'reset-error': 'Error: Could not send link.',
+        // --- (NUEVO) Traducciones de Nuevo Formulario de Reset ---
+        'reset-title-new': 'Set your new password',
+        'form-label-password-new': 'New Password:',
+        'form-label-password-confirm': 'Confirm Password:',
+        'reset-btn-submit-new': 'Save Password',
+        'reset-password-success': 'Password updated successfully!',
+        'reset-password-mismatch': 'Passwords do not match.',
     }
 };
 
@@ -357,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavbarScroll(); 
     initAuthFormListeners(); 
     handleUserSession(); 
-    initPasswordToggles();
+    initPasswordToggles(); // --- (MODIFICACIÓN) LLAMAR A ESTA FUNCIÓN AQUÍ ---
 
     // --- 5. MODIFICACIÓN: Actualizar UI del carrito al cargar la página ---
     const cartCounter = document.getElementById('cartCounter');
@@ -374,51 +400,100 @@ document.addEventListener('DOMContentLoaded', function() {
             iniciarCheckout();
         });
     }
+
+    // --- (NUEVO) LISTENER PARA EL FORMULARIO DE NUEVA CONTRASEÑA ---
+    const newPasswordForm = document.getElementById('new-password-form');
+    if (newPasswordForm) {
+        newPasswordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const messageEl = document.getElementById('new-password-message');
+
+            if (newPassword !== confirmPassword) {
+                messageEl.style.color = 'red';
+                messageEl.textContent = translations[currentLanguage]['reset-password-mismatch'] || 'Las contraseñas no coinciden.';
+                return;
+            }
+
+            // El usuario ya está autenticado por hacer clic en el enlace
+            const { data, error } = await _supabase.auth.updateUser({
+                password: newPassword
+            });
+
+            if (error) {
+                messageEl.style.color = 'red';
+                messageEl.textContent = error.message;
+            } else {
+                messageEl.style.color = '#C6A200'; // Verde o dorado
+                messageEl.textContent = translations[currentLanguage]['reset-password-success'] || '¡Contraseña actualizada con éxito!';
+                
+                // Cerramos el modal y limpiamos la URL después de 2 segundos
+                setTimeout(() => {
+                    closeResetPasswordModal();
+                }, 2000);
+            }
+        });
+    }
 });
 
-// === ✅ Detectar confirmación de email y mostrar mensaje de bienvenida ===
+// === (MODIFICADO) Detectar confirmación de email Y RESSETEO DE CONTRASEÑA ===
 document.addEventListener('DOMContentLoaded', async () => {
     const hash = window.location.hash;
     const urlParams = new URLSearchParams(hash.replace('#', '?'));
 
     if (urlParams.has('access_token')) {
-        console.log('Cuenta verificada desde el email.');
-        const { data: { user }, error } = await _supabase.auth.getUser();
+        
+        // --- (NUEVO) Diferenciamos el tipo de token ---
+        const type = urlParams.get('type');
 
-        if (!error && user) {
-            const fullName = user.user_metadata?.full_name || user.email.split('@')[0];
+        if (type === 'recovery') {
+            // --- Es un reseteo de contraseña ---
+            console.log('Detectado flujo de reseteo de contraseña.');
+            openResetPasswordModal();
+            // No mostramos el mensaje de bienvenida
 
-            const welcomeMsg = document.createElement('div');
-            welcomeMsg.textContent = `✅ Cuenta verificada, ¡bienvenido ${fullName}!`;
-            welcomeMsg.style.cssText = `
-                position: fixed;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%) translateY(-10px);
-                background: #C6A200;
-                color: #000;
-                padding: 12px 24px;
-                border-radius: 8px;
-                font-weight: 600;
-                z-index: 2000;
-                box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-                opacity: 0;
-                transition: opacity 0.4s ease, transform 0.4s ease;
-            `;
-            document.body.appendChild(welcomeMsg);
-            setTimeout(() => {
-                welcomeMsg.style.opacity = '1';
-                welcomeMsg.style.transform = 'translateX(-50%) translateY(0)';
-            }, 100);
+        } else if (type === 'signup' || type === null) {
+            // --- Es una confirmación de cuenta nueva ---
+            console.log('Cuenta verificada desde el email.');
+            const { data: { user }, error } = await _supabase.auth.getUser();
 
-            setTimeout(() => {
-                welcomeMsg.style.opacity = '0';
-                welcomeMsg.style.transform = 'translateX(-50%) translateY(-10px)';
+            if (!error && user) {
+                const fullName = user.user_metadata?.full_name || user.email.split('@')[0];
+
+                const welcomeMsg = document.createElement('div');
+                welcomeMsg.textContent = `✅ Cuenta verificada, ¡bienvenido ${fullName}!`;
+                welcomeMsg.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(-10px);
+                    background: #C6A200;
+                    color: #000;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    z-index: 2000;
+                    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                    opacity: 0;
+                    transition: opacity 0.4s ease, transform 0.4s ease;
+                `;
+                document.body.appendChild(welcomeMsg);
                 setTimeout(() => {
-                    welcomeMsg.remove();
-                    history.replaceState(null, '', window.location.pathname);
-                }, 500);
-            }, 4000);
+                    welcomeMsg.style.opacity = '1';
+                    welcomeMsg.style.transform = 'translateX(-50%) translateY(0)';
+                }, 100);
+
+                setTimeout(() => {
+                    welcomeMsg.style.opacity = '0';
+                    welcomeMsg.style.transform = 'translateX(-50%) translateY(-10px)';
+                    setTimeout(() => {
+                        welcomeMsg.remove();
+                        // Limpiamos la URL
+                        history.replaceState(null, '', window.location.pathname); 
+                    }, 500);
+                }, 4000);
+            }
         }
     }
 });
@@ -523,6 +598,27 @@ function closeCartModal() {
         document.body.style.overflow = 'auto';
     }
 }
+
+// --- (NUEVO) Funciones para abrir/cerrar el nuevo modal de reseteo ---
+function openResetPasswordModal() {
+    const modal = document.getElementById('resetPasswordModal');
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeResetPasswordModal() {
+    const modal = document.getElementById('resetPasswordModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        // Limpiamos la URL para que no se vuelva a abrir si refresca
+        history.replaceState(null, '', window.location.pathname);
+    }
+}
+// --- Fin de nuevas funciones ---
+
 
 function renderCartItems() {
     const cartItemsContainer = document.getElementById('cartItems');
@@ -730,101 +826,132 @@ function initNavbarScroll() {
     });
 }
 
+// ===== (FUNCIÓN MODIFICADA) =====
 function initAuthFormListeners() {
     const loginFormEl = document.querySelector('#login-form .login-form');
     const registerFormEl = document.querySelector('#register-form .login-form');
+    // --- (NUEVO) ---
+    const resetFormEl = document.querySelector('#reset-form .login-form');
 
-if (loginFormEl) {
-    loginFormEl.addEventListener('submit', async (e) => { 
-        e.preventDefault(); 
-            
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
+    if (loginFormEl) {
+        loginFormEl.addEventListener('submit', async (e) => { 
+            e.preventDefault(); 
+                
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
 
-        console.log('Intentando iniciar sesión con Supabase...');
+            console.log('Intentando iniciar sesión con Supabase...');
 
-        const { data, error } = await _supabase.auth.signInWithPassword({
-            email: email,
-            password: password,
-        });
+            const { data, error } = await _supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
 
-        if (error) {
-            console.error('Error en el login:', error.message);
-            const msg = document.createElement('div');
-            msg.textContent = '❌ ' + error.message;
-            msg.style.cssText = `
-                position: fixed;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #ff4d4d;
-                color: #fff;
-                padding: 12px 24px;
-                border-radius: 8px;
-                font-weight: 600;
-                z-index: 2000;
-                box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-                opacity: 0;
-                transition: opacity 0.4s ease;
-            `;
-            document.body.appendChild(msg);
-            setTimeout(() => (msg.style.opacity = '1'), 100);
-            setTimeout(() => {
-                msg.style.opacity = '0';
-                setTimeout(() => msg.remove(), 500);
-            }, 4000);
-        } else {
-            console.log('Login exitoso:', data.user);
+            if (error) {
+                console.error('Error en el login:', error.message);
+                const msg = document.createElement('div');
+                msg.textContent = '❌ ' + error.message;
+                msg.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #ff4d4d;
+                    color: #fff;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    z-index: 2000;
+                    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                `;
+                document.body.appendChild(msg);
+                setTimeout(() => (msg.style.opacity = '1'), 100);
+                setTimeout(() => {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.remove(), 500);
+                }, 4000);
+            } else {
+                console.log('Login exitoso:', data.user);
 
-            // 🔹 Guarda el nombre y redirige al home
-            const userName = data.user.user_metadata?.full_name || data.user.email.split('@')[0];
-            localStorage.setItem('welcomeUser', userName);
-            window.location.href = 'index.html';
-        }
-    });
-}
-
-
-if (registerFormEl) {
-    registerFormEl.addEventListener('submit', async (e) => { 
-        e.preventDefault(); 
-
-        const name = document.getElementById('register-name').value;
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        const messageEl = document.getElementById('register-message');
-        
-        messageEl.textContent = ''; // limpia cualquier mensaje previo
-
-        console.log('Intentando registrar con Supabase...');
-
-        const { data, error } = await _supabase.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-                data: { full_name: name },
-                // 🔹 Agregamos la URL de redirección post-confirmación
-                emailRedirectTo: `${window.location.origin}/index.html`
+                // 🔹 Guarda el nombre y redirige al home
+                const userName = data.user.user_metadata?.full_name || data.user.email.split('@')[0];
+                localStorage.setItem('welcomeUser', userName);
+                window.location.href = 'index.html';
             }
         });
+    }
 
-        if (error) {
-            console.error('Error en el registro:', error.message);
-            messageEl.style.color = 'red';
-            messageEl.textContent = 'Error al registrarse: ' + error.message;
-            return;
-        }
 
-        console.log('Registro exitoso:', data.user);
-        messageEl.style.color = '#C6A200';
-        messageEl.textContent = 'Cuenta creada con éxito. Verifica tu correo para confirmar tu cuenta.';
-        
-        // Limpia los campos del formulario
-        registerFormEl.reset();
-    });
+    if (registerFormEl) {
+        registerFormEl.addEventListener('submit', async (e) => { 
+            e.preventDefault(); 
+
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const messageEl = document.getElementById('register-message');
+            
+            messageEl.textContent = ''; // limpia cualquier mensaje previo
+
+            console.log('Intentando registrar con Supabase...');
+
+            const { data, error } = await _supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: { full_name: name },
+                    // 🔹 Agregamos la URL de redirección post-confirmación
+                    emailRedirectTo: `${window.location.origin}/index.html`
+                }
+            });
+
+            if (error) {
+                console.error('Error en el registro:', error.message);
+                messageEl.style.color = 'red';
+                messageEl.textContent = 'Error al registrarse: ' + error.message;
+                return;
+            }
+
+            console.log('Registro exitoso:', data.user);
+            messageEl.style.color = '#C6A200';
+            messageEl.textContent = 'Cuenta creada con éxito. Verifica tu correo para confirmar tu cuenta.';
+            
+            // Limpia los campos del formulario
+            registerFormEl.reset();
+        });
+    }
+
+    // --- (NUEVO) LISTENER PARA EL FORMULARIO DE RESET ---
+    if (resetFormEl) {
+        resetFormEl.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('reset-email').value;
+            const messageEl = document.getElementById('reset-message');
+            messageEl.textContent = ''; // Limpia mensajes previos
+
+            console.log('Intentando enviar enlace de reseteo...');
+
+            // Llama a la función de Supabase
+            const { error } = await _supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${window.location.origin}/index.html`, // A dónde ir DESPUÉS de hacer clic en el enlace
+            });
+
+            if (error) {
+                console.error('Error al resetear contraseña:', error.message);
+                messageEl.style.color = 'red';
+                // Usamos la traducción, con un fallback
+                messageEl.textContent = translations[currentLanguage]['reset-error'] || 'Error: No se pudo enviar el enlace.';
+            } else {
+                console.log('Enlace de reseteo enviado');
+                messageEl.style.color = '#C6A200'; // Color dorado
+                messageEl.textContent = translations[currentLanguage]['reset-success'] || 'Enlace enviado. Revisa tu correo.';
+            }
+        });
+    }
 }
 
-}
 
 // ===== FUNCIÓN MODIFICADA PARA MANEJAR EL NUEVO MENÚ =====
 function handleUserSession() {
@@ -905,20 +1032,30 @@ function handleUserSession() {
     });
 }
 
-// ===== NUEVA FUNCIÓN PARA EL OJO DE CONTRASEÑA =====
+// ===== (MODIFICADO) FUNCIÓN PARA EL OJO DE CONTRASEÑA =====
 function initPasswordToggles() {
+    // Ahora busca *todos* los toggles en la página (login, registro y nuevo modal)
     const toggles = document.querySelectorAll('.toggle-password');
     toggles.forEach(toggle => {
+        // Prevenimos que se añadan múltiples listeners si se llama varias veces
+        if (toggle.dataset.listenerAttached) return; 
+
         toggle.addEventListener('click', () => {
-            const passwordField = toggle.previousElementSibling; // El input está justo antes
+            // Buscamos el input que está ANTES del icono 'i'
+            const passwordField = toggle.previousElementSibling; 
             
-            // Cambiar tipo de input
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-            
-            // Cambiar icono
-            toggle.classList.toggle('fa-eye');
-            toggle.classList.toggle('fa-eye-slash');
+            if (passwordField && passwordField.tagName === 'INPUT') {
+                // Cambiar tipo de input
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                
+                // Cambiar icono
+                toggle.classList.toggle('fa-eye');
+                toggle.classList.toggle('fa-eye-slash');
+            } else {
+                console.warn('No se encontró el input de contraseña antes del toggle.');
+            }
         });
+        toggle.dataset.listenerAttached = 'true'; // Marcamos como inicializado
     });
 }

@@ -1225,3 +1225,91 @@ body {
   }
 }
 
+/* ==================================
+   ESTILOS MODAL RESET PASSWORD (INDEX)
+   ================================== */
+#resetPasswordModal .modal-content {
+    max-width: 500px;
+}
+
+#resetPasswordModal .modal-info {
+    flex: 1;
+}
+
+/* Replicamos los estilos de login.css para el formulario del modal,
+  ya que index.html no carga login.css 
+*/
+#new-password-form {
+    text-align: left;
+    margin-top: 20px;
+}
+
+#new-password-form .form-group {
+    margin-bottom: 20px;
+}
+
+#new-password-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333333;
+    font-weight: 500;
+}
+
+#new-password-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    caret-color: #C6A200;
+}
+
+#new-password-form input[type="password"]:focus {
+    outline: none;
+    border-color: #C6A200;
+    box-shadow: 0 0 5px rgba(198, 162, 0, 0.5);
+    background-color: #ffffff;
+}
+
+#new-password-form .password-wrapper {
+    position: relative;
+}
+
+#new-password-form .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px; 
+    transform: translateY(-50%);
+    color: #888;
+    cursor: pointer;
+    z-index: 2; 
+    transition: color 0.3s ease;
+}
+
+#new-password-form .toggle-password:hover {
+    color: #C6A200;
+}
+
+/* Hacemos espacio para el icono DENTRO del input */
+#new-password-form .password-wrapper input {
+    padding-right: 45px !important; 
+}
+
+#new-password-form .btn-submit {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px 24px;
+    margin-top: 10px;
+}
+
+#new-password-message {
+    font-weight: 500;
+    margin-top: 15px;
+    text-align: center;
+}
+
