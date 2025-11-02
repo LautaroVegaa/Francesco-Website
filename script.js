@@ -793,12 +793,23 @@ function closeModal() {
 }
 
 function initSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
+    document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const target = document.querySelector(link.getAttribute('href'));
-            if (target) {
-                window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            // ⚠️ No interceptar mailto, tel ni links externos
+            if (href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http')) {
+                return;
+            }
+
+            // 🔹 Solo aplicar scroll suave a los anclajes internos
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                }
             }
         });
     });
