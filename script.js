@@ -15,6 +15,26 @@ let cartCount = 0;
 let currentLanguage = 'es';
 let currentOpenModalId = null;
 
+// --- 1. MODIFICACIÓN: La variable cartItems ahora se define dentro de loadCart ---
+let cartItems = [];
+
+// --- 2. NUEVA FUNCIÓN: Guardar carrito en localStorage ---
+function saveCart() {
+    localStorage.setItem('francescoCart', JSON.stringify(cartItems));
+}
+
+// --- 3. NUEVA FUNCIÓN: Cargar carrito desde localStorage ---
+function loadCart() {
+    const storedCart = localStorage.getItem('francescoCart');
+    if (storedCart) {
+        cartItems = JSON.parse(storedCart);
+        cartCount = cartItems.length; // Actualizar el contador global
+    } else {
+        cartItems = [];
+        cartCount = 0;
+    }
+}
+
 
 // ====================================================
 // 🧩 INTEGRACIÓN CON MERCADO PAGO (AGREGADO)
@@ -327,6 +347,9 @@ function updateModalContent() {
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
+    // --- 4. MODIFICACIÓN: Llamar a loadCart() al inicio ---
+    loadCart(); 
+
     initCartFunctionality();
     initLanguageSwitcher();
     initModal();
@@ -335,6 +358,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initAuthFormListeners(); 
     handleUserSession(); 
     initPasswordToggles();
+
+    // --- 5. MODIFICACIÓN: Actualizar UI del carrito al cargar la página ---
+    const cartCounter = document.getElementById('cartCounter');
+    cartCounter.textContent = cartCount;
+    if (cartCount > 0) {
+        cartCounter.classList.add('show');
+    }
 
     // 🔹 BOTÓN "FINALIZAR COMPRA" (AGREGADO)
     const checkoutBtn = document.getElementById('checkoutBtn');
@@ -435,8 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-let cartItems = [];
+// --- MODIFICACIÓN: Se elimina la definición 'let cartItems = [];' de aquí ---
 
 function initCartFunctionality() {
     const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
@@ -472,6 +501,9 @@ function addToCart(artworkId) {
     cartCounter.classList.add('show', 'animate');
     setTimeout(() => cartCounter.classList.remove('animate'), 600);
     renderCartItems();
+    
+    // --- 6. MODIFICACIÓN: Llamar a saveCart() ---
+    saveCart();
 }
 
 function openCartModal() {
@@ -513,13 +545,16 @@ function renderCartItems() {
                 ? item.image
                 : `images/${item.image}`;
 
+            // --- FIX: Asegurarse de que el título se muestre en el idioma actual ---
+            const title = item.title[currentLanguage] || item.title['es'];
+
             const cartItem = document.createElement('div');
             cartItem.classList.add('cart-item');
             cartItem.innerHTML = `
                 <div class="cart-item-left">
-                    <img src="${imgSrc}" alt="${item.title[currentLanguage]}" class="cart-item-image">
+                    <img src="${imgSrc}" alt="${title}" class="cart-item-image">
                     <div class="cart-item-info">
-                        <p class="cart-item-title">${item.title[currentLanguage]}</p>
+                        <p class="cart-item-title">${title}</p>
                         <p class="cart-item-price">${item.price}</p>
                     </div>
                 </div>
@@ -555,6 +590,9 @@ function removeFromCart(index) {
     cartCount = Math.max(0, cartCount - 1);
     document.getElementById('cartCounter').textContent = cartCount;
     renderCartItems();
+
+    // --- 7. MODIFICACIÓN: Llamar a saveCart() ---
+    saveCart();
 }
 
 function clearCart() {
@@ -562,6 +600,9 @@ function clearCart() {
     cartCount = 0;
     document.getElementById('cartCounter').textContent = '0';
     renderCartItems();
+
+    // --- 8. MODIFICACIÓN: Llamar a saveCart() ---
+    saveCart();
 }
 
 function initLanguageSwitcher() {
@@ -587,6 +628,8 @@ function switchLanguage(lang) {
         }
     });
     updateModalContent();
+    // --- 9. MODIFICACIÓN: Re-renderizar el carrito para traducir títulos ---
+    renderCartItems();
 }
 
 function initModal() {
