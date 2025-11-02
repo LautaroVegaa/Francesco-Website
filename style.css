@@ -1256,7 +1256,8 @@ body {
     font-weight: 500;
 }
 
-#new-password-form input[type="password"] {
+#new-password-form input[type="password"],
+#new-password-form input[type="text"] { /* --- CORRECCIÓN AQUÍ: Aplicar también a input[type="text"] --- */
     width: 100%;
     padding: 12px;
     background-color: #f0f0f0;
@@ -1269,7 +1270,8 @@ body {
     caret-color: #C6A200;
 }
 
-#new-password-form input[type="password"]:focus {
+#new-password-form input[type="password"]:focus,
+#new-password-form input[type="text"]:focus { /* --- CORRECCIÓN AQUÍ: Aplicar también a input[type="text"] --- */
     outline: none;
     border-color: #C6A200;
     box-shadow: 0 0 5px rgba(198, 162, 0, 0.5);
@@ -1280,7 +1282,10 @@ body {
     position: relative;
 }
 
-#new-password-form .toggle-password {
+/* --- CORRECCIÓN PRINCIPAL AQUÍ --- */
+/* Aplicamos los estilos de posición a ambas clases de icono (ojo abierto y cerrado) */
+#new-password-form .toggle-password.fa-eye,
+#new-password-form .toggle-password.fa-eye-slash {
     position: absolute;
     top: 50%;
     right: 15px; 
@@ -1290,6 +1295,8 @@ body {
     z-index: 2; 
     transition: color 0.3s ease;
 }
+/* --- FIN DE LA CORRECCIÓN --- */
+
 
 #new-password-form .toggle-password:hover {
     color: #C6A200;
