@@ -295,7 +295,7 @@ const artworksData = {
         title: { es: 'Lamine Yamal', en: 'Lamine Yamal' }, 
         price: '$30.000 ARS', 
         image: 'lamine-yamal.png',
-        year: '2024',
+        year: '2025',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
         size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
         style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
@@ -331,12 +331,32 @@ const artworksData = {
         title: { es: 'Eminem', en: 'Eminem' }, 
         price: '$30.000 ARS', 
         image: 'eminem.png',
-        year: '2023',
+        year: '2025',
+        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
+        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
+        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+    },
+
+    7: { 
+        title: { es: 'Brotola', en: 'Brotola' }, 
+        price: '$30.000 ARS', 
+        image: 'brotola.png',
+        year: '2025',
+        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
+        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
+        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+    },
+
+    8: { 
+        title: { es: 'Liza Ramada', en: 'Liza Ramada' }, 
+        price: '$30.000 ARS', 
+        image: 'liza-ramada.png',
+        year: '2025',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
         size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
         style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
     }
-    // Puedes añadir las obras 7 y 8 aquí cuando las tengas
+
 };
 
 
