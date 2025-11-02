@@ -674,7 +674,7 @@ function renderCartItems() {
                         <p class="cart-item-price">${item.price}</p>
                     </div>
                 </div>
-                <button class="remove-item" data-index="${index}">🗑️</button>
+                <button class="remove-item" data-index="${index}"><i class="fa-solid fa-trash"></i></button>
             `;
             cartItemsContainer.appendChild(cartItem);
 
