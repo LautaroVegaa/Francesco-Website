@@ -61,6 +61,21 @@ serve(async (req: Request): Promise<Response> => {
         headers: cors({ "Content-Type": "application/json" }),
       });
     }
+
+    // --- ¡NUEVA COMPROBACIÓN AÑADIDA! ---
+    // Verificamos si la propiedad 'email_confirmed_at' tiene un valor.
+    if (!user.email_confirmed_at) {
+      console.warn(`Intento de pago fallido: Email no verificado (ID: ${user.id})`);
+      // Devolvemos un error 403 (Prohibido) al frontend
+      return new Response(
+        JSON.stringify({ error: "Por favor, verifica tu email antes de poder comprar." }),
+        {
+          status: 403, // 403 Forbidden
+          headers: cors({ "Content-Type": "application/json" }),
+        }
+      );
+    }
+    // --- FIN DE LA NUEVA COMPROBACIÓN ---
     
     // 3. ¡Aquí tenemos el ID del usuario!
     const userId = user.id;
