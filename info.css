@@ -22,6 +22,9 @@
     margin-bottom: 60px;
     padding-bottom: 40px;
     border-bottom: 1px dashed #ccc;
+
+    /* AÑADE ESTA LÍNEA: */
+    scroll-margin-top: 100px; 
 }
 .info-article:last-child {
     margin-bottom: 0;
