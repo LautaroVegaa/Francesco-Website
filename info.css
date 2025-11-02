@@ -1,0 +1,62 @@
+/* info.css */
+/* Estilos para la página de información (Términos, FAQ, etc.) */
+
+.info-section {
+    padding: 140px 20px 80px; /* Espacio para el header y footer */
+    background-color: #fafafa;
+    min-height: 80vh;
+}
+
+.info-section .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 40px 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.info-article {
+    /* Cada sección (Términos, FAQ, etc.) */
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px dashed #ccc;
+}
+.info-article:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* Título de la sección (ej. "Términos y Condiciones") */
+.info-article .section-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #C6A200;
+    text-align: left;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.info-article p,
+.info-article li {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.info-article ul {
+    list-style-position: inside;
+    margin-left: 10px;
+}
+
+.info-article h3 {
+    /* Para los subtítulos del FAQ */
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
