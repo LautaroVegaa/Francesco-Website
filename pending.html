@@ -11,8 +11,37 @@
 </head>
 <body>
 
-    <header class="navbar scrolled">
-        </header>
+        <header class="navbar">
+        <div class="container">
+            <div class="nav-links-center">
+                <a href="#home" data-translate="nav-home">HOME</a>
+                <a href="#about" data-translate="nav-about">SOBRE MÍ</a>
+                <a href="#projects" data-translate="nav-projects">PROYECTOS</a>
+                
+                <a href="login.html" data-translate="nav-login" id="navLoginLink">LOGIN</a>
+
+                <div class="user-menu-container" id="userMenuContainer">
+                    <a href="#" id="userNameLink" class="user-menu-toggle">USUARIO</a>
+                    <div class="user-menu-dropdown" id="userMenuDropdown">
+                        <a href="historial.html">Historial</a> 
+                        <a href="#" id="logoutButton">Cerrar sesión</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-controls-right">
+                <a href="#contact" class="nav-icon"><i class="fa-regular fa-envelope"></i></a> 
+                <div class="cart-container">
+                    <a href="#cart" class="nav-icon"><i class="fa-solid fa-shopping-bag"></i></a> 
+                    <span class="cart-counter" id="cartCounter">0</span>
+                </div>
+                <div class="language-switcher">
+                    <span class="lang-btn active" data-lang="es">ES</span>
+                    <span class="lang-separator">|</span>
+                    <span class="lang-btn" data-lang="en">EN</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <main>
         <section class="payment-status-section" style="background-image: url('images/hero-dv.png');">

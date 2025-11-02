@@ -115,7 +115,62 @@
         </section>
     </main>
 
-    <footer id="contact" class="footer"></footer>
+    <footer id="contact" class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 data-translate="footer-contact">CONTACTO</h3>
+                <p>Francesco Ponte</p>
+                <p>+54 9 11 3891-5370</p>
+                <p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=francescoponte185@gmail.com&su=Consulta%20sobre%20obra%20Fine%20Art&body=Hola%20Francesco%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20tus%20obras%20Fine%20Art." 
+                    target="_blank" rel="noopener noreferrer">
+                    francescoponte185@gmail.com
+                    </a>
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3 data-translate="footer-form-title">ENVIAR UN MENSAJE</h3>
+                <form action="https://formspree.io/f/mblpkrej" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <label for="name" data-translate="form-label-name">Nombre:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-translate="form-label-email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-translate="form-label-message">Mensaje:</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" data-translate="form-btn-submit">Enviar</button>
+                </form>
+            </div>
+
+            <div class="footer-section">
+                <h3 data-translate="footer-social">REDES SOCIALES</h3>
+                <div class="social-icons">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=francescoponte185@gmail.com&su=Consulta%20sobre%20obra%20Fine%20Art&body=Hola%20Francesco%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20tus%20obras%20Fine%20Art." 
+                    target="_blank" rel="noopener noreferrer" class="social-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                    </a>
+                    <a href="https://www.instagram.com/francesco_retratos?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://youtube.com/@franartist?si=dZCKZtAvpW-x7Clc" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a> 
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-links">
+                <a href="info.html#proteccion" data-translate="footer-privacy">Data Protection</a>
+                <a href="info.html#terminos" data-translate="footer-agb">TyC</a>
+                <a href="info.html#faq" data-translate="footer-faq">FAQ</a>
+                <a href="info.html#tienda" data-translate="footer-shop-info">Shop Info</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
