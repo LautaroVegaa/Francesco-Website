@@ -1229,6 +1229,7 @@ body {
 #resetPasswordModal .modal-info,
 #shippingModal .modal-info {
     flex: 1;
+    padding: 40px; /* <-- AÑADE ESTA LÍNEA */
 }
 
 /* Estilos para el H2 del nuevo modal de envío */
@@ -1333,5 +1334,24 @@ body {
     margin-top: 15px;
     text-align: center;
 }
+
+/* ==================================
+   CORRECCIÓN PARA CENTRAR MODAL DE ENVÍO
+   ================================== */
+#shippingModal {
+    /* Estas propiedades anulan el .modal genérico */
+    display: none; /* JS lo cambiará a 'flex' */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Le quitamos el margen superior (margin: 5% auto) 
+  que tiene .modal-content, pero SOLO a este modal.
+*/
+#shippingModal .modal-content {
+    margin: 0 auto;
+}
+
+
 
 /* --- FIN DE CAMBIOS --- */

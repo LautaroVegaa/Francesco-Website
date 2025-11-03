@@ -136,7 +136,7 @@ async function openShippingModal() {
     
     // Abrimos el nuevo modal de envío
     const modal = document.getElementById('shippingModal');
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 
