@@ -1219,27 +1219,50 @@ body {
 /* ==================================
    ESTILOS MODAL RESET PASSWORD (INDEX)
    ================================== */
-#resetPasswordModal .modal-content {
+/* --- INICIO DE CAMBIOS --- */
+/* Aplicamos estilos generales a los modales de formulario */
+#resetPasswordModal .modal-content,
+#shippingModal .modal-content {
     max-width: 500px;
 }
 
-#resetPasswordModal .modal-info {
+#resetPasswordModal .modal-info,
+#shippingModal .modal-info {
     flex: 1;
 }
 
-/* Replicamos los estilos de login.css para el formulario del modal,
-  ya que index.html no carga login.css 
-*/
-#new-password-form {
+/* Estilos para el H2 del nuevo modal de envío */
+#shippingModal .modal-info h2 {
+    text-align: center;
+    /* color: #C6A200; */ /* Ya lo hereda de .modal-info h2 */
+    /* font-size: 28px; */ /* Ya lo hereda de .modal-info h2 */
+    /* margin-bottom: 10px; */ /* Ya lo hereda de .modal-info h2 */
+}
+
+/* Estilos para el P del nuevo modal de envío */
+#shippingModal .modal-info p {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 25px;
+}
+/* No queremos margen superior en el form de envío */
+#shippingModal .login-form {
+    margin-top: 0;
+}
+
+
+/* Generalizamos los estilos del formulario para que apliquen a AMBOS modales */
+.modal .login-form {
     text-align: left;
     margin-top: 20px;
 }
 
-#new-password-form .form-group {
+.modal .login-form .form-group {
     margin-bottom: 20px;
 }
 
-#new-password-form label {
+.modal .login-form label {
     display: block;
     margin-bottom: 8px;
     font-size: 14px;
@@ -1247,8 +1270,8 @@ body {
     font-weight: 500;
 }
 
-#new-password-form input[type="password"],
-#new-password-form input[type="text"] { /* --- CORRECCIÓN AQUÍ: Aplicar también a input[type="text"] --- */
+.modal .login-form input[type="password"],
+.modal .login-form input[type="text"] { /* --- CORRECCIÓN AQUÍ: Aplicar también a input[type="text"] --- */
     width: 100%;
     padding: 12px;
     background-color: #f0f0f0;
@@ -1261,22 +1284,22 @@ body {
     caret-color: #C6A200;
 }
 
-#new-password-form input[type="password"]:focus,
-#new-password-form input[type="text"]:focus { /* --- CORRECCIÓN AQUÍ: Aplicar también a input[type="text"] --- */
+.modal .login-form input[type="password"]:focus,
+.modal .login-form input[type="text"]:focus { /* --- CORRECCIÓN AQUÍ: Aplicar también a input[type="text"] --- */
     outline: none;
     border-color: #C6A200;
     box-shadow: 0 0 5px rgba(198, 162, 0, 0.5);
     background-color: #ffffff;
 }
 
-#new-password-form .password-wrapper {
+.modal .login-form .password-wrapper {
     position: relative;
 }
 
 /* --- CORRECCIÓN PRINCIPAL AQUÍ --- */
 /* Aplicamos los estilos de posición a ambas clases de icono (ojo abierto y cerrado) */
-#new-password-form .toggle-password.fa-eye,
-#new-password-form .toggle-password.fa-eye-slash {
+.modal .login-form .toggle-password.fa-eye,
+.modal .login-form .toggle-password.fa-eye-slash {
     position: absolute;
     top: 50%;
     right: 15px; 
@@ -1289,16 +1312,16 @@ body {
 /* --- FIN DE LA CORRECCIÓN --- */
 
 
-#new-password-form .toggle-password:hover {
+.modal .login-form .toggle-password:hover {
     color: #C6A200;
 }
 
 /* Hacemos espacio para el icono DENTRO del input */
-#new-password-form .password-wrapper input {
+.modal .login-form .password-wrapper input {
     padding-right: 45px !important; 
 }
 
-#new-password-form .btn-submit {
+.modal .login-form .btn-submit {
     width: 100%;
     font-size: 16px;
     padding: 14px 24px;
@@ -1311,3 +1334,4 @@ body {
     text-align: center;
 }
 
+/* --- FIN DE CAMBIOS --- */
