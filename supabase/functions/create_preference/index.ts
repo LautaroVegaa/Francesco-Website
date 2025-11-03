@@ -94,9 +94,9 @@ serve(async (req: Request): Promise<Response> => {
     const preference = {
       items: mpItems,
       back_urls: {
-        success: "https://francescoretratos.com/success.html",
-        failure: "https://francescoretratos.com/failure.html",
-        pending: "https://francescoretratos.com/pending.html",
+        success: "https://www.francescoretratos.com/success.html",
+        failure: "https://www.francescoretratos.com/failure.html",
+        pending: "https://www.francescoretratos.com/pending.html",
       },
       auto_return: "approved",
       
