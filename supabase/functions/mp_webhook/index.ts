@@ -3,8 +3,6 @@
 // @ts-nocheck
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-// Ya no necesitamos la librería de MP para el 'get', solo fetch.
-// import { MercadoPagoConfig, Payment } from 'https://esm.sh/mercadopago@2.9.0';
 
 // Inicia el cliente de Supabase (Admin)
 const supabaseAdmin = createClient(
@@ -12,39 +10,33 @@ const supabaseAdmin = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')! 
 );
 
-// Obtenemos el token de MP del entorno
+// Obtenemos los tokens del entorno
 const MP_ACCESS_TOKEN = Deno.env.get('ACCESS_TOKEN');
+
+// --- ¡CAMBIO 1: Añadimos Resend! ---
+const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
+// IMPORTANTE: Cambia esto al email que verificaste en Resend
+const SENDER_EMAIL = 'ventas@francescoretratos.com'; 
 
 Deno.serve(async (req: Request) => {
   try {
     const body = await req.json();
 
-    // 1. Solo nos interesa el evento de "pago"
     if (body.type === 'payment' && body.data?.id) {
       const paymentId = body.data.id;
       
-      // 2. ===== ¡AQUÍ ESTÁ EL CAMBIO! =====
-      // Buscamos el pago completo en Mercado Pago usando fetch nativo
-      // en lugar del SDK de MP que estaba fallando.
       const mpPaymentResponse = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${MP_ACCESS_TOKEN}`
-        }
+        headers: { 'Authorization': `Bearer ${MP_ACCESS_TOKEN}` }
       });
 
       if (!mpPaymentResponse.ok) {
         throw new Error(`Error al obtener el pago desde MP: ${mpPaymentResponse.statusText}`);
       }
-
       const mpPayment = await mpPaymentResponse.json();
-      // ===== FIN DEL CAMBIO =====
 
-
-      // 3. Verificamos si fue aprobado
       if (mpPayment && mpPayment.status === 'approved') {
         
-        // 4. Recuperamos el user_id y los items de la metadata
         const userId = mpPayment.metadata?.user_id;
         const items = mpPayment.metadata?.items;
         
@@ -52,7 +44,20 @@ Deno.serve(async (req: Request) => {
           throw new Error('No se encontró user_id en la metadata del pago');
         }
 
-        // 5. Preparamos los datos para nuestra tabla "pedidos"
+        // --- ¡CAMBIO 2: Buscamos los datos del usuario (email y nombre)! ---
+        const { data: { user }, error: userError } = await supabaseAdmin.auth.admin.getUserById(userId);
+        
+        if (userError) {
+            console.error('Error al buscar usuario para email:', userError);
+            throw userError;
+        }
+
+        const userEmail = user.email;
+        const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+        // --- Fin Cambio 2 ---
+
+
+        // Preparamos los datos para nuestra tabla "pedidos"
         const newOrder = {
           user_id: userId,
           items: items || [],
@@ -61,7 +66,7 @@ Deno.serve(async (req: Request) => {
           mp_payment_id: paymentId,
         };
 
-        // 6. Guardamos en la tabla "pedidos"
+        // Guardamos en la tabla "pedidos"
         const { error } = await supabaseAdmin
           .from('pedidos')
           .insert(newOrder);
@@ -72,10 +77,66 @@ Deno.serve(async (req: Request) => {
         }
         
         console.log('Pedido registrado con éxito:', newOrder);
+
+        // --- ¡CAMBIO 3: Enviamos el email de confirmación! ---
+        // Lo ponemos en un try/catch separado para que si falla el email,
+        // NO falle la respuesta 200 a Mercado Pago.
+        try {
+            // 1. Formateamos los items para el HTML del email
+            const itemsHtml = newOrder.items.map((item: any) => 
+                `<li>${item.title} (x${item.quantity}) - $${item.unit_price} ARS</li>`
+            ).join('');
+
+            // 2. Formateamos el total
+            const totalArs = (newOrder.total_amount / 100).toLocaleString('es-AR');
+            
+            // 3. Creamos el cuerpo del email
+            const emailHtml = `
+              <html>
+                <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                  <h2>¡Gracias por tu compra, ${userName}!</h2>
+                  <p>Tu pago fue procesado con éxito y tu pedido ya está confirmado.</p>
+                  <h3>Detalles del Pedido:</h3>
+                  <ul>
+                    ${itemsHtml}
+                  </ul>
+                  <p><strong>Total pagado: $${totalArs} ARS</strong></p>
+                  <p>ID de la transacción: ${newOrder.mp_payment_id}</p>
+                  <hr>
+                  <p>Podes ver tu historial de compras en cualquier momento ingresando a tu cuenta en <a href="https://www.francescoretratos.com/historial.html">francescoretratos.com</a>.</p>
+                </body>
+              </html>
+            `;
+
+            // 4. Enviamos la petición a Resend
+            const resendResponse = await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${RESEND_API_KEY}`
+                },
+                body: JSON.stringify({
+                    from: `Francesco Ponte <${SENDER_EMAIL}>`,
+                    to: [userEmail],
+                    subject: `¡Confirmación de tu pedido en Francesco Retratos!`,
+                    html: emailHtml
+                })
+            });
+
+            if (resendResponse.ok) {
+                console.log('Email de confirmación enviado a:', userEmail);
+            } else {
+                console.warn('Pedido guardado, pero falló el envío de email:', await resendResponse.json());
+            }
+
+        } catch (emailError) {
+            console.error('Error catastrófico al enviar email:', emailError.message);
+        }
+        // --- Fin Cambio 3 ---
       }
     }
 
-    // 7. Devolvemos 200 OK a Mercado Pago
+    // Devolvemos 200 OK a Mercado Pago
     return new Response(JSON.stringify({ received: true }), {
       headers: { 'Content-Type': 'application/json' },
       status: 200,
