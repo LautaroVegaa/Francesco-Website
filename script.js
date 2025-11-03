@@ -284,7 +284,7 @@ const translations = {
 const artworksData = {
     1: { 
         title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' }, 
-        price: '$100 ARS', 
+        price: '$50.000 ARS', 
         image: 'ben-shelton.png',
         year: '2024',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
@@ -293,7 +293,7 @@ const artworksData = {
     },
     2: { 
         title: { es: 'Lamine Yamal', en: 'Lamine Yamal' }, 
-        price: '$30.000 ARS', 
+        price: '$50.000 ARS', 
         image: 'lamine-yamal.png',
         year: '2025',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
@@ -302,7 +302,7 @@ const artworksData = {
     },
     3: { 
         title: { es: 'David Goggins', en: 'David Goggins' }, 
-        price: '$30.000 ARS', 
+        price: '$50.000 ARS', 
         image: 'david-goggings.png',
         year: '2024',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
@@ -311,7 +311,7 @@ const artworksData = {
     },
     4: { 
         title: { es: 'Leonardo DiCaprio', en: 'Leonardo DiCaprio' }, 
-        price: '$30.000 ARS', 
+        price: '$50.000 ARS', 
         image: 'leo-dicaprio.png',
         year: '2023',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
@@ -320,7 +320,7 @@ const artworksData = {
     },
     5: { 
         title: { es: 'Will Smith', en: 'Will Smith' }, 
-        price: '$30.000 ARS', 
+        price: '$50.000 ARS', 
         image: 'will-smith.png',
         year: '2023',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
@@ -329,7 +329,7 @@ const artworksData = {
     },
     6: { 
         title: { es: 'Eminem', en: 'Eminem' }, 
-        price: '$30.000 ARS', 
+        price: '$50.000 ARS', 
         image: 'eminem.png',
         year: '2025',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
@@ -339,7 +339,7 @@ const artworksData = {
 
     7: { 
         title: { es: 'Brotola', en: 'Brotola' }, 
-        price: '$30.000 ARS', 
+        price: '$40.000 ARS', 
         image: 'brotola.png',
         year: '2025',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
@@ -349,7 +349,7 @@ const artworksData = {
 
     8: { 
         title: { es: 'Liza Ramada', en: 'Liza Ramada' }, 
-        price: '$30.000 ARS', 
+        price: '$100 ARS', 
         image: 'liza-ramada.png',
         year: '2025',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
