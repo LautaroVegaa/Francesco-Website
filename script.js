@@ -37,7 +37,7 @@ function loadCart() {
 
 
 // ====================================================
-// 🧩 INTEGRACIÓN CON MERCADO PAGO (AGREGADO)
+// 🧩 INTEGRACIÓN CON MERCADO PAGO (MODIFICADO)
 // ====================================================
 
 // Convierte "$30.000 ARS" → 30000
@@ -60,8 +60,10 @@ function mapCartToPreferenceItems() {
     }));
 }
 
-// Envía los productos al backend Supabase y redirige al checkout
-async function iniciarCheckout() {
+// --- INICIO DE CÓDIGO MODIFICADO/AÑADIDO ---
+
+// Envía los productos AL BACKEND (Esta es la ex-funcion "iniciarCheckout")
+async function procesarPago(shippingData) { // <-- ACEPTA shippingData
     try {
         const items = mapCartToPreferenceItems();
         if (!items.length) {
@@ -69,7 +71,6 @@ async function iniciarCheckout() {
             return;
         }
 
-        // --- ¡CAMBIO AQUÍ! ---
         // 1. Obtenemos la sesión actual del usuario desde Supabase
         const { data: { session }, error: sessionError } = await _supabase.auth.getSession();
 
@@ -82,12 +83,9 @@ async function iniciarCheckout() {
         if (!session) {
             console.error('No hay sesión activa.');
             alert('No estás conectado. Por favor, inicia sesión para comprar.');
-            // Opcional: redirigir a login.html
-            // window.location.href = 'login.html';
             return;
         }
-        // --- FIN DEL CAMBIO ---
-
+        // --- FIN DEL BLOQUE SIN CAMBIOS ---
 
         const res = await fetch(
             "https://umnahyousgddxyfwopsq.supabase.co/functions/v1/create_preference",
@@ -95,13 +93,13 @@ async function iniciarCheckout() {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
-                    // --- ¡LÍNEAS NUEVAS! ---
                     // Añadimos el token de autorización para que Supabase sepa quién eres
                     "Authorization": `Bearer ${session.access_token}`,
                     // La Anon Key también es necesaria para llamar a la función
                     "apikey": SUPABASE_ANON_KEY 
                 },
-                body: JSON.stringify({ items }),
+                 // ¡CAMBIO CLAVE! Enviamos los items Y la dirección
+                body: JSON.stringify({ items, shipping_details: shippingData }),
             }
         );
 
@@ -115,10 +113,43 @@ async function iniciarCheckout() {
         // Redirige al checkout oficial de Mercado Pago
         window.location.href = data.init_point;
     } catch (err) {
-        console.error("Error al iniciar pago:", err);
-        alert("Ocurrió un error al iniciar el pago.");
+        console.error("Error al procesar pago:", err); // Mensaje de error actualizado
+        alert("Ocurrió un error al procesar el pago."); // Mensaje de error actualizado
     }
 }
+
+// 2. NUEVA FUNCIÓN PARA ABRIR EL MODAL DE ENVÍO
+async function openShippingModal() {
+    // Buscamos si el usuario ya tiene una dirección guardada
+    const { data: { user } } = await _supabase.auth.getUser();
+    
+    if (user && user.user_metadata.shipping_details) {
+        // ¡AQUÍ ESTÁ LA MAGIA! Rellenamos el formulario si ya tenía datos
+        const details = user.user_metadata.shipping_details;
+        document.getElementById('shipping-address').value = details.address || '';
+        document.getElementById('shipping-city').value = details.city || '';
+        document.getElementById('shipping-province').value = details.province || '';
+        document.getElementById('shipping-postalcode').value = details.postalcode || '';
+    }
+    
+    closeCartModal(); // Cerramos el carrito
+    
+    // Abrimos el nuevo modal de envío
+    const modal = document.getElementById('shippingModal');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+// 3. NUEVA FUNCIÓN PARA CERRAR EL MODAL DE ENVÍO
+function closeShippingModal() {
+    const modal = document.getElementById('shippingModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+// --- FIN DE CÓDIGO MODIFICADO/AÑADIDO ---
+
 // ====================================================
 
 
@@ -412,14 +443,17 @@ document.addEventListener('DOMContentLoaded', function() {
         cartCounter.classList.add('show');
     }
 
-    // 🔹 BOTÓN "FINALIZAR COMPRA" (AGREGADO)
+    // --- INICIO CÓDIGO MODIFICADO ---
+    // 🔹 BOTÓN "FINALIZAR COMPRA" (¡MODIFICADO!)
     const checkoutBtn = document.getElementById('checkoutBtn');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            iniciarCheckout();
+            // ¡Ya no llama a procesarPago()! Llama al modal.
+            openShippingModal(); 
         });
     }
+    // --- FIN CÓDIGO MODIFICADO ---
 
     // --- (NUEVO) LISTENER PARA EL FORMULARIO DE NUEVA CONTRASEÑA ---
     const newPasswordForm = document.getElementById('new-password-form');
@@ -455,6 +489,44 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // --- INICIO CÓDIGO AÑADIDO: Listeners para el Modal de Envío ---
+    const shippingForm = document.getElementById('shipping-form');
+    const closeShippingBtn = document.getElementById('closeShippingModal');
+    const shippingModal = document.getElementById('shippingModal');
+
+    if (shippingForm) {
+        shippingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // 1. Recolectamos los datos del formulario (los nuevos o los viejos confirmados)
+            const shippingData = {
+                address: document.getElementById('shipping-address').value,
+                city: document.getElementById('shipping-city').value,
+                province: document.getElementById('shipping-province').value,
+                postalcode: document.getElementById('shipping-postalcode').value,
+            };
+
+            // 2. ¡AQUÍ ESTÁ LA MAGIA (Parte 2)!
+            // Actualizamos/guardamos los datos en el perfil del usuario para la próxima vez
+            const { error: updateError } = await _supabase.auth.updateUser({
+                data: { shipping_details: shippingData }
+            });
+
+            if (updateError) {
+                alert('Error al guardar tu dirección. Intenta de nuevo.');
+                return;
+            }
+
+            // 3. ¡Ahora sí, a pagar!
+            closeShippingModal();
+            procesarPago(shippingData); // Le pasamos los datos a la función de pago
+        });
+    }
+    
+    if(closeShippingBtn) closeShippingBtn.addEventListener('click', closeShippingModal);
+    if(shippingModal) shippingModal.addEventListener('click', (e) => { if(e.target === shippingModal) closeShippingModal(); });
+    // --- FIN CÓDIGO AÑADIDO ---
 });
 
 // === (MODIFICADO) Detectar confirmación de email Y RESSETEO DE CONTRASEÑA ===

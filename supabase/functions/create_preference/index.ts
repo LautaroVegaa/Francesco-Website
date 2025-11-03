@@ -86,7 +86,9 @@ serve(async (req: Request): Promise<Response> => {
     }
     
     const userId = user.id;
-    const { items } = await req.json();
+// --- INICIO DE LÍNEA MODIFICADA ---
+    const { items, shipping_details } = await req.json();
+// --- FIN DE LÍNEA MODIFICADA ---
 
     const mpItems = (items as any[]).map((i) => ({
       title: String(i.title),
@@ -105,10 +107,13 @@ serve(async (req: Request): Promise<Response> => {
         pending: "https://www.francescoretratos.com/pending.html",
       },
       auto_return: "approved",
+// --- INICIO DE BLOQUE MODIFICADO ---
       metadata: {
         user_id: userId,
-        items: mpItems
+        items: mpItems,
+        shipping_address: shipping_details // <-- Línea añadida
       }
+// --- FIN DE BLOQUE MODIFICADO ---
     };
 
     const res = await fetch("https://api.mercadopago.com/checkout/preferences", {

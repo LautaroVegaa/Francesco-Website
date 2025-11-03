@@ -276,7 +276,42 @@
     </div>
 </div>
 
-
+<div id="shippingModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" id="closeShippingModal">&times;</span>
+        <div class="modal-body">
+            <div class="modal-info">
+                <h2>¿Dónde enviamos tu pedido?</h2>
+                <p style="text-align:center; font-size:14px; color:#555; margin-bottom:20px;">
+                    Confirmá tu dirección de envío.
+                </p>
+                
+                <form id="shipping-form" class="login-form" style="text-align: left;">
+                    <div class="form-group">
+                        <label for="shipping-address">Dirección (Calle y Número):</label>
+                        <input type="text" id="shipping-address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipping-city">Ciudad:</label>
+                        <input type="text" id="shipping-city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipping-province">Provincia:</label>
+                        <input type="text" id="shipping-province" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipping-postalcode">Código Postal:</label>
+                        <input type="text" id="shipping-postalcode" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" id="confirmAndPayBtn">
+                        Confirmar y Pagar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <footer id="contact" class="footer">
     <div class="container">
