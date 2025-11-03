@@ -16,7 +16,7 @@ const MP_ACCESS_TOKEN = Deno.env.get('ACCESS_TOKEN');
 // --- ¡CAMBIO 1: Añadimos Resend! ---
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 // IMPORTANTE: Cambia esto al email que verificaste en Resend
-const SENDER_EMAIL = 'ventas@francescoretratos.com'; 
+const SENDER_EMAIL = 'noreply@francescoretratos.com'; 
 
 Deno.serve(async (req: Request) => {
   try {
