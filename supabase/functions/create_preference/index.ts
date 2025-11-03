@@ -6,7 +6,7 @@ import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 // --- ¡NUEVA IMPORTACIÓN! ---
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const ALLOWED_ORIGIN = "*";
+const ALLOWED_ORIGIN = "https://www.francescoretratos.com/";
 
 function cors(headers: HeadersInit = {}): HeadersInit {
   return {
@@ -94,9 +94,9 @@ serve(async (req: Request): Promise<Response> => {
     const preference = {
       items: mpItems,
       back_urls: {
-        success: "https://francesco-website.vercel.app/success.html",
-        failure: "https://francesco-website.vercel.app/failure.html",
-        pending: "https://francesco-website.vercel.app/pending.html",
+        success: "https://francescoretratos.com/success.html",
+        failure: "https://francescoretratos.com/failure.html",
+        pending: "https://francescoretratos.com/pending.html",
       },
       auto_return: "approved",
       
