@@ -54,29 +54,16 @@ body {
     text-align: center;
 }
 
-.nav-links-center a {
+/* Corrige la alineación de todos los links del navbar */
+.nav-links-center a,
+.user-menu-toggle {
     color: #ffffff;
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
-    line-height: 1.4; /* ✅ más natural con Montserrat */
-    display: inline-flex;        /* ✅ alinea como el usuario */
-    vertical-align: middle;      /* ✅ misma línea base */
-    transition: color 0.3s ease;
-}
-
-/* 1. Primero, definimos los estilos base de todos los links */
-.nav-links-center a,
-.user-menu-toggle {
+    line-height: 1.4;
     display: inline-flex;
-    align-items: baseline; /* ✅ misma línea base */
-    line-height: 1;
-}
-
-/* 2. (REGLA MODIFICADA) Aplicamos la corrección de 1px a los hijos DIRECTOS */
-.nav-links-center > a,
-.user-menu-container {
-     transform: translateY(-1px); /* corrige leve leve diferencia visual */
+    transition: color 0.3s ease;
 }
 
 
@@ -804,7 +791,6 @@ body {
         line-height: 1;          /* elimina altura adicional */
         padding-top: 0;
         padding-bottom: 0;
-        transform: translateY(-1px); /* baja 1px visualmente */
     }
 }
 
@@ -1079,7 +1065,6 @@ body {
     font-size: 14px;
     display: inline-flex;    /* ✅ permite centrado vertical */
     align-items: center;     /* ✅ centra el texto verticalmente */
-    vertical-align: middle;  /* ✅ misma línea base que los links */
     transition: color 0.3s ease;
     cursor: pointer;
 }
