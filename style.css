@@ -65,12 +65,18 @@ body {
     transition: color 0.3s ease;
 }
 
+/* 1. Primero, definimos los estilos base de todos los links */
 .nav-links-center a,
 .user-menu-toggle {
     display: inline-flex;
     align-items: baseline; /* ✅ misma línea base */
     line-height: 1;
-    transform: translateY(-1px); /* corrige leve diferencia visual */
+}
+
+/* 2. (REGLA MODIFICADA) Aplicamos la corrección de 1px a los hijos DIRECTOS */
+.nav-links-center > a,
+.user-menu-container {
+     transform: translateY(-1px); /* corrige leve leve diferencia visual */
 }
 
 
