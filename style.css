@@ -176,7 +176,7 @@ body {
 /* ===== NUEVO: Hero Section (Reemplaza estilos de .hero-section y carrusel) ===== */
 .hero-section {
     height: 100vh; /* Ocupa toda la altura de la pantalla */
-    background-image: url('images/hero-dv.png'); /* <-- MODIFICADO (antes hero-bg.png) */
+    background-image: url('images/hero-dv.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll */
@@ -1431,8 +1431,3 @@ body {
     max-height: 40vh;
   }
 }
-
-
-
-
-/* --- FIN DE CAMBIOS --- */
