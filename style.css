@@ -407,8 +407,8 @@ body {
 }
 
 .modal-image img {
-    width: 100%;
-    height: auto;
+    width: 100%; /* <-- ¡AÑADE ESTA LÍNEA! */
+    max-width: 100%;
     max-height: 80vh;
     object-fit: contain;
     border-radius: 8px;
@@ -846,6 +846,7 @@ body {
 }
 
 .modal-image img {
+    width: 100%; /* <-- ¡AÑADE ESTA LÍNEA AQUÍ! */
     max-width: 100%;
     max-height: 80vh;
     object-fit: contain;
