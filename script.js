@@ -103,15 +103,28 @@ function parseArsPrice(str) {
 
 // Mapea los productos del carrito al formato de Mercado Pago
 function mapCartToPreferenceItems() {
-    return cartItems.map((item) => ({
-        title: typeof item.title === 'object' ? item.title[currentLanguage] : item.title,
-        unit_price: parseArsPrice(item.price),
-        quantity: 1,
-        picture_url: item.image
-            ? (item.image.startsWith('http')
-                ? item.image
-                : `${window.location.origin}/images/${item.image}`)
-            : undefined,
+    
+    // 1. Agregamos el carrito. 
+    // Si cartItems = [itemA, itemA, itemB],
+    // aggregatedCart = { '1': {id: 1, quantity: 2}, '2': {id: 2, quantity: 1} }
+    const aggregatedCart = cartItems.reduce((acc, item) => {
+        // item.id ahora existe gracias a la función renderProducts
+        if (!acc[item.id]) { 
+            acc[item.id] = { id: item.id, quantity: 0 };
+        }
+        acc[item.id].quantity += 1;
+        return acc;
+    }, {});
+
+    // 2. Convertimos el objeto de vuelta a un array
+    // -> [{id: 1, quantity: 2}, {id: 2, quantity: 1}]
+    const itemsToSend = Object.values(aggregatedCart);
+
+    // 3. Enviamos SÓLO el ID y la cantidad. 
+    // El servidor se encargará del precio y el título.
+    return itemsToSend.map(item => ({
+        id: item.id,
+        quantity: item.quantity
     }));
 }
 
@@ -120,6 +133,7 @@ function mapCartToPreferenceItems() {
 // Envía los productos AL BACKEND (Esta es la ex-funcion "iniciarCheckout")
 async function procesarPago(shippingData) { // <-- ACEPTA shippingData
     try {
+        // AHORA 'items' SERÁ [{id: 1, quantity: 2}, {id: 7, quantity: 1}]
         const items = mapCartToPreferenceItems();
         if (!items.length) {
             // ⬇️ REEMPLAZO DE ALERT ⬇️
@@ -232,15 +246,7 @@ const translations = {
         'footer-contact': 'CONTACTO',
         'footer-social': 'REDES SOCIALES',
         
-        // --- NUEVO: Títulos de la Galería ---
-        'artwork-1-title': 'Retrato de Ben Shelton',
-        'artwork-2-title': 'Lamine Yamal',
-        'artwork-3-title': 'David Goggins',
-        'artwork-4-title': 'Leonardo DiCaprio',
-        'artwork-5-title': 'Will Smith',
-        'artwork-6-title': 'Eminem',
-        'artwork-7-title': 'Brotola',
-        'artwork-8-title': 'Liza Ramada',
+        // --- Títulos de Galería ELIMINADOS ---
 
         // --- NUEVO: Detalles del Modal ---
         'modal-year': 'Año:',
@@ -308,15 +314,7 @@ const translations = {
         'footer-contact': 'CONTACT',
         'footer-social': 'SOCIAL MEDIA',
 
-        // --- NUEVO: Títulos de la Galería ---
-        'artwork-1-title': 'Ben Shelton Portrait',
-        'artwork-2-title': 'Lamine Yamal',
-        'artwork-3-title': 'David Goggins',
-        'artwork-4-title': 'Leonardo DiCaprio',
-        'artwork-5-title': 'Will Smith',
-        'artwork-6-title': 'Eminem',
-        'artwork-7-title': 'Brotola',
-        'artwork-8-title': 'Liza Ramada',
+        // --- Títulos de Galería ELIMINADOS ---
 
         // --- NUEVO: Detalles del Modal ---
         'modal-year': 'Year:',
@@ -372,83 +370,82 @@ const translations = {
 
 
 // Datos de las obras
-const artworksData = {
-    1: { 
-        title: { es: 'Retrato de Ben Shelton', en: 'Ben Shelton Portrait' }, 
-        price: '$50.000 ARS', 
-        image: 'ben-shelton.webp',
-        year: '2024',
-        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
-        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
-        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
-    },
-    2: { 
-        title: { es: 'Lamine Yamal', en: 'Lamine Yamal' }, 
-        price: '$50.000 ARS', 
-        image: 'lamine-yamal.jpg',
-        year: '2025',
-        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
-        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
-        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
-    },
-    3: { 
-        title: { es: 'David Goggins', en: 'David Goggins' }, 
-        price: '$50.000 ARS', 
-        image: 'david-goggings.jpg',
-        year: '2024',
-        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
-        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
-        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
-    },
-    4: { 
-        title: { es: 'Leonardo DiCaprio', en: 'Leonardo DiCaprio' }, 
-        price: '$50.000 ARS', 
-        image: 'leo-dicaprio.jpg',
-        year: '2023',
-        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
-        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
-        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
-    },
-    5: { 
-        title: { es: 'Will Smith', en: 'Will Smith' }, 
-        price: '$50.000 ARS', 
-        image: 'will-smith.jpg',
-        year: '2023',
-        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
-        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
-        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
-    },
-    6: { 
-        title: { es: 'Eminem', en: 'Eminem' }, 
-        price: '$50.000 ARS', 
-        image: 'eminem.jpg',
-        year: '2025',
-        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
-        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
-        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
-    },
+let artworksData = {};
 
-    7: { 
-        title: { es: 'Brotola', en: 'Brotola' }, 
-        price: '$40.000 ARS', 
-        image: 'brotola.webp',
-        year: '2025',
-        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
-        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
-        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
-    },
+// Pega esta función nueva cerca de la línea 307 en script.js
 
-    8: { 
-        title: { es: 'Liza Ramada', en: 'Liza Ramada' }, 
-        price: '$40.000 ARS', 
-        image: 'liza-ramada.webp',
-        year: '2025',
-        technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
-        size: { es: 'A3 (29,7 x 42 cm)', en: 'A3 (29.7 x 42 cm)' },
-        style: { es: 'Retrato Realista', en: 'Realistic Portrait' }
+async function renderProducts() {
+    const galleryGrid = document.querySelector('.gallery-grid');
+    // Si no estamos en index.html (donde existe .gallery-grid), no hagas nada.
+    if (!galleryGrid) {
+        console.log('No se encontró .gallery-grid, saltando renderizado de productos.');
+        return; 
     }
 
-};
+    // 1. Cargar productos desde Supabase
+    const { data, error } = await _supabase
+        .from('productos')
+        .select('*')
+        .order('id', { ascending: true }); // Mantiene el orden 1, 2, 3...
+
+    if (error) {
+        console.error('Error al cargar productos:', error);
+        galleryGrid.innerHTML = '<p style="color: red; text-align: center;">Error al cargar los productos.</p>';
+        return;
+    }
+
+    // 2. Limpiar el contenedor (ya debería estar vacío por el paso 1.3)
+    galleryGrid.innerHTML = '';
+
+    // 3. Procesar datos y rellenar la variable global artworksData
+    // Esto es para que los Modales y el Carrito sigan funcionando.
+    artworksData = data.reduce((acc, product) => {
+        acc[product.id] = {
+            id: product.id, // ¡Importante! Guardamos el ID
+            title: { es: product.title_es, en: product.title_en },
+            // Re-creamos el string de precio para la UI
+            price: `$${product.price.toLocaleString('es-AR')} ARS`, 
+            image: product.image_url,
+            year: product.year,
+            technique: { es: product.technique_es, en: product.technique_en },
+            size: { es: product.size_es, en: product.size_en },
+            style: { es: product.style_es, en: product.style_en },
+            // ¡IMPORTANTE! Guardamos el precio numérico real
+            raw_price: product.price 
+        };
+        return acc;
+    }, {});
+
+    // 4. Construir el HTML de las tarjetas y añadirlas al DOM
+    for (const product of data) {
+        const card = document.createElement('div');
+        card.className = 'artwork-card';
+        card.setAttribute('data-artwork', product.id);
+
+        const priceString = `$${product.price.toLocaleString('es-AR')} ARS`;
+        const title = product.title_es; // Usamos español por defecto
+        const imageUrl = product.image_url.includes('http') ? product.image_url : `images/${product.image_url}`;
+
+
+        card.innerHTML = `
+            <div class="artwork-image">
+                <img src="${imageUrl}" alt="${title}">
+            </div>
+            <div class="artwork-info">
+                <h3 class="artist-name">Francesco Ponte</h3>
+                <p class="artwork-title">${title}</p>
+                <p class="artwork-price">${priceString}</p>
+                <button class="add-to-cart-btn" data-translate="add-to-cart">Agregar al carrito</button>
+            </div>
+        `;
+        galleryGrid.appendChild(card);
+    }
+
+    // 5. Actualizar los títulos de las tarjetas al idioma actual
+    // (Llamaremos a switchLanguage() después de esto en DOMContentLoaded)
+    
+    console.log('Productos cargados y renderizados desde Supabase.');
+}
 
 
 // Añade esta función nueva (después de artworksData está bien)
@@ -483,12 +480,15 @@ function updateModalContent() {
 
 
 // Inicialización
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() { // <-- CAMBIO 1
     // --- 4. MODIFICACIÓN: Llamar a loadCart() al inicio ---
     loadCart(); 
 
-    initCartFunctionality();
-    initLanguageSwitcher();
+    // ¡NUEVO! Carga los productos desde la DB antes de inicializar los botones
+    await renderProducts(); // <-- CAMBIO 2
+
+    initCartFunctionality(); // Ahora encuentra los botones creados dinámicamente
+    initLanguageSwitcher(); // Inicializa el selector de idioma
     initModal();
     initSmoothScrolling();
     initNavbarScroll(); 
@@ -597,6 +597,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if(closeShippingBtn) closeShippingBtn.addEventListener('click', closeShippingModal);
     if(shippingModal) shippingModal.addEventListener('click', (e) => { if(e.target === shippingModal) closeShippingModal(); });
     // --- FIN CÓDIGO AÑADIDO ---
+    
+    // ===== AÑADE ESTA LÍNEA AQUÍ =====
+    switchLanguage(currentLanguage); // <-- CAMBIO 3
 });
 
 // === (MODIFICADO) Detectar confirmación de email Y RESSETEO DE CONTRASEÑA ===
@@ -769,9 +772,8 @@ function renderCartItems() {
             `;
             cartItemsContainer.appendChild(cartItem);
 
-            let cleanPrice = item.price.replace(/[^\d]/g, ''); 
-            const numericPrice = parseFloat(cleanPrice); 
-            total += numericPrice;
+            // Usa el precio numérico seguro guardado al cargar
+            total += item.raw_price; // <-- CAMBIO 4
         });
         clearBtn.style.display = 'block';
     }
@@ -834,24 +836,50 @@ function switchLanguage(lang) {
             el.innerHTML = translations[lang][key]; 
         }
     });
+
+    // --- (NUEVO) TRADUCIR TÍTULOS DE TARJETAS DINÁMICAS ---
+    const artworkTitles = document.querySelectorAll('.artwork-card .artwork-title');
+    artworkTitles.forEach(titleEl => {
+        const card = titleEl.closest('.artwork-card');
+        const artworkId = card.getAttribute('data-artwork');
+        if (artworksData[artworkId]) {
+            titleEl.textContent = artworksData[artworkId].title[currentLanguage] || artworksData[artworkId].title['es'];
+        }
+    });
+    // --- FIN NUEVO BLOQUE ---
+
     updateModalContent();
     // --- 9. MODIFICACIÓN: Re-renderizar el carrito para traducir títulos ---
     renderCartItems();
 }
 
 function initModal() {
+    // ESTA LÍNEA ES DIFERENTE AHORA. No podemos seleccionar
+    // .artwork-card al inicio, porque no existen.
+    // Usamos "delegación de eventos" en el contenedor.
+    const galleryGrid = document.querySelector('.gallery-grid');
     const modal = document.getElementById('artworkModal');
     const closeBtn = document.querySelector('.modal-close');
-    const artworkCards = document.querySelectorAll('.artwork-card');
 
-    if (modal && closeBtn) {
-        artworkCards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                if (e.target.classList.contains('add-to-cart-btn')) return;
-                const artworkId = card.getAttribute('data-artwork');
-                openModal(artworkId);
-            });
+    if (modal && closeBtn && galleryGrid) { // Verificamos que galleryGrid exista
+        
+        // 1. Escuchador en el CONTENEDOR de la galería
+        galleryGrid.addEventListener('click', (e) => {
+            // 2. Vemos si hicieron clic en una tarjeta
+            const card = e.target.closest('.artwork-card');
+            
+            // Si no hicieron clic en una tarjeta, o si hicieron clic
+            // en el botón de "agregar", no hacemos nada.
+            if (!card || e.target.classList.contains('add-to-cart-btn')) {
+                return;
+            }
+            
+            // 3. Si SÍ hicieron clic en una tarjeta, abrimos el modal
+            const artworkId = card.getAttribute('data-artwork');
+            openModal(artworkId);
         });
+
+        // El resto sigue igual
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
