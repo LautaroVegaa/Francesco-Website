@@ -1353,6 +1353,86 @@ body {
     margin: 0 auto;
 }
 
+/* ================================
+   🔧 FIX RESPONSIVE MODALS MÓVIL
+   ================================ */
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-width: 420px;
+    margin: 0 auto;
+    height: auto;
+    max-height: 90vh; /* evita que el modal exceda la pantalla */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* permite scroll interno */
+    border-radius: 12px;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .modal-image {
+    width: 100%;
+    padding: 15px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-image img {
+    width: 100%;
+    height: auto;
+    max-height: 45vh; /* la imagen nunca supera la mitad del alto */
+    object-fit: contain;
+  }
+
+  .modal-info {
+    width: 100%;
+    padding: 25px 20px 30px;
+    text-align: center;
+  }
+
+  .modal-info h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .modal-price {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .modal-details p {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .modal-add-to-cart {
+    font-size: 16px;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* Evita que el fondo negro haga scroll */
+  .modal {
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-image img {
+    max-height: 40vh;
+  }
+}
+
+
 
 
 /* --- FIN DE CAMBIOS --- */
