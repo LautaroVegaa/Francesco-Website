@@ -4,5 +4,8 @@ Disallow: /historial.html
 Disallow: /success.html
 Disallow: /failure.html
 Disallow: /pending.html
+Disallow: /sitemap.xml
+
+Allow: /
 
 Sitemap: https://www.francescoretratos.com/sitemap.xml
