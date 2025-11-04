@@ -35,6 +35,61 @@ function loadCart() {
     }
 }
 
+// ====================================================
+// 🍞 NUEVA FUNCIÓN DE UTILIDAD (TOAST)
+// ====================================================
+
+/**
+ * Muestra un mensaje flotante (toast) en la parte superior.
+ * @param {string} message - El texto a mostrar.
+ * @param {boolean} [isError=false] - Si es true, se muestra en rojo (error); si no, en dorado (éxito/info).
+ */
+function showToastMessage(message, isError = false) {
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    
+    // Estilos base
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        z-index: 2000;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        opacity: 0;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    `;
+    
+    // Estilos condicionales (error o éxito)
+    if (isError) {
+        toast.style.background = '#ff4d4d'; // Rojo
+        toast.style.color = '#fff';
+    } else {
+        toast.style.background = '#C6A200'; // Dorado
+        toast.style.color = '#000';
+    }
+    
+    document.body.appendChild(toast);
+    
+    // Animación de entrada
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+    }, 100);
+
+    // Animación de salida
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(-10px)';
+        setTimeout(() => {
+            toast.remove();
+        }, 500);
+    }, 3500); // 3.5 segundos en pantalla
+}
+
 
 // ====================================================
 // 🧩 INTEGRACIÓN CON MERCADO PAGO (MODIFICADO)
@@ -67,7 +122,8 @@ async function procesarPago(shippingData) { // <-- ACEPTA shippingData
     try {
         const items = mapCartToPreferenceItems();
         if (!items.length) {
-            alert("Tu carrito está vacío.");
+            // ⬇️ REEMPLAZO DE ALERT ⬇️
+            showToastMessage("Tu carrito está vacío.", true);
             return;
         }
 
@@ -76,13 +132,15 @@ async function procesarPago(shippingData) { // <-- ACEPTA shippingData
 
         if (sessionError) {
             console.error('Error al obtener la sesión:', sessionError);
-            alert('Error de autenticación. Por favor, inicia sesión de nuevo.');
+            // ⬇️ REEMPLAZO DE ALERT ⬇️
+            showToastMessage('Error de autenticación. Por favor, inicia sesión de nuevo.', true);
             return;
         }
 
         if (!session) {
             console.error('No hay sesión activa.');
-            alert('No estás conectado. Por favor, inicia sesión para comprar.');
+            // ⬇️ REEMPLAZO DE ALERT ⬇️
+            showToastMessage('No estás conectado. Por favor, inicia sesión para comprar.', true);
             return;
         }
         // --- FIN DEL BLOQUE SIN CAMBIOS ---
@@ -106,7 +164,8 @@ async function procesarPago(shippingData) { // <-- ACEPTA shippingData
         const data = await res.json();
         if (!data.init_point) {
             console.error("Error al crear preferencia:", data);
-            alert("No se pudo iniciar el pago. Intenta nuevamente.");
+            // ⬇️ REEMPLAZO DE ALERT ⬇️
+            showToastMessage("No se pudo iniciar el pago. Intenta nuevamente.", true);
             return;
         }
 
@@ -114,7 +173,8 @@ async function procesarPago(shippingData) { // <-- ACEPTA shippingData
         window.location.href = data.init_point;
     } catch (err) {
         console.error("Error al procesar pago:", err); // Mensaje de error actualizado
-        alert("Ocurrió un error al procesar el pago."); // Mensaje de error actualizado
+        // ⬇️ REEMPLAZO DE ALERT ⬇️
+        showToastMessage("Ocurrió un error al procesar el pago.", true);
     }
 }
 
@@ -514,7 +574,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (updateError) {
-                alert('Error al guardar tu dirección. Intenta de nuevo.');
+                // Dejamos el error real en la consola para depuración
+                console.error("Error al guardar dirección (probablemente no logueado):", updateError.message); 
+                
+                // ===============================================
+                // AQUÍ ESTÁ EL CAMBIO QUE PEDISTE
+                // ===============================================
+                // ⬇️ REEMPLAZO DEL ALERT ⬇️
+                showToastMessage('❌ Por favor, inicia sesión antes de continuar con la compra.', true);
+                
+                // Cerramos el modal de envío para que no quede abierto
+                closeShippingModal(); 
                 return;
             }
 
@@ -553,38 +623,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!error && user) {
                 const fullName = user.user_metadata?.full_name || user.email.split('@')[0];
 
-                const welcomeMsg = document.createElement('div');
-                welcomeMsg.textContent = `✅ Cuenta verificada, ¡bienvenido ${fullName}!`;
-                welcomeMsg.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%) translateY(-10px);
-                    background: #C6A200;
-                    color: #000;
-                    padding: 12px 24px;
-                    border-radius: 8px;
-                    font-weight: 600;
-                    z-index: 2000;
-                    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-                    opacity: 0;
-                    transition: opacity 0.4s ease, transform 0.4s ease;
-                `;
-                document.body.appendChild(welcomeMsg);
+                // ⬇️ REEMPLAZO DE MENSAJE MANUAL ⬇️
+                showToastMessage(`✅ Cuenta verificada, ¡bienvenido ${fullName}!`);
+                
+                // Limpiamos la URL después de mostrar el mensaje
                 setTimeout(() => {
-                    welcomeMsg.style.opacity = '1';
-                    welcomeMsg.style.transform = 'translateX(-50%) translateY(0)';
-                }, 100);
-
-                setTimeout(() => {
-                    welcomeMsg.style.opacity = '0';
-                    welcomeMsg.style.transform = 'translateX(-50%) translateY(-10px)';
-                    setTimeout(() => {
-                        welcomeMsg.remove();
-                        // Limpiamos la URL
-                        history.replaceState(null, '', window.location.pathname); 
-                    }, 500);
-                }, 4000);
+                    history.replaceState(null, '', window.location.pathname); 
+                }, 500); // Damos tiempo a que el toast se muestre
             }
         }
     }
@@ -595,38 +640,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.addEventListener('DOMContentLoaded', () => {
     const userName = localStorage.getItem('welcomeUser');
     if (userName) {
-        const welcomeMsg = document.createElement('div');
-        welcomeMsg.textContent = `✅ ¡Bienvenido ${userName}!`;
-        welcomeMsg.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-10px);
-            background: #C6A200;
-            color: #000;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            z-index: 2000;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            opacity: 0;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        `;
-        document.body.appendChild(welcomeMsg);
-        setTimeout(() => {
-            welcomeMsg.style.opacity = '1';
-            welcomeMsg.style.transform = 'translateX(-50%) translateY(0)';
-        }, 100);
-
-        // 🔹 Borrar mensaje después de unos segundos
-        setTimeout(() => {
-            welcomeMsg.style.opacity = '0';
-            welcomeMsg.style.transform = 'translateX(-50%) translateY(-10px)';
-            setTimeout(() => {
-                welcomeMsg.remove();
-                localStorage.removeItem('welcomeUser');
-            }, 500);
-        }, 3500);
+        
+        // ⬇️ REEMPLAZO DE MENSAJE MANUAL ⬇️
+        showToastMessage(`✅ ¡Bienvenido ${userName}!`);
+        
+        // 🔹 Borrar el item de localStorage para que no salga en cada recarga
+        localStorage.removeItem('welcomeUser');
     }
 });
 
@@ -952,29 +971,9 @@ function initAuthFormListeners() {
 
             if (error) {
                 console.error('Error en el login:', error.message);
-                const msg = document.createElement('div');
-                msg.textContent = '❌ ' + error.message;
-                msg.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: #ff4d4d;
-                    color: #fff;
-                    padding: 12px 24px;
-                    border-radius: 8px;
-                    font-weight: 600;
-                    z-index: 2000;
-                    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-                    opacity: 0;
-                    transition: opacity 0.4s ease;
-                `;
-                document.body.appendChild(msg);
-                setTimeout(() => (msg.style.opacity = '1'), 100);
-                setTimeout(() => {
-                    msg.style.opacity = '0';
-                    setTimeout(() => msg.remove(), 500);
-                }, 4000);
+                // ⬇️ REEMPLAZO DE MENSAJE MANUAL ⬇️
+                showToastMessage('❌ ' + error.message, true);
+
             } else {
                 console.log('Login exitoso:', data.user);
 
