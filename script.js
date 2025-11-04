@@ -380,7 +380,7 @@ const artworksData = {
 
     8: { 
         title: { es: 'Liza Ramada', en: 'Liza Ramada' }, 
-        price: '$100 ARS', 
+        price: '$40.000 ARS', 
         image: 'liza-ramada.png',
         year: '2025',
         technique: { es: 'Grafito sobre papel 150 gr', en: 'Graphite on 150 gr paper' },
