@@ -143,22 +143,40 @@ Deno.serve(async (req: Request) => {
 
         // --- ¡CAMBIO 4: AÑADIMOS EMAIL PARA FRANCESCO! (Vendedor) ---
         try {
+            // --- INICIO DE BLOQUE CORREGIDO ---
+            
+            // 1. Creamos un bloque HTML específico para los datos del cliente
+            const datosClienteHtml = `
+              <hr>
+              <h3>Datos del Cliente:</h3>
+              <p>
+                <strong>Nombre:</strong> ${userName}<br>
+                <strong>Email:</strong> ${userEmail}
+              </p>
+              
+              ${shippingHtml}
+              <hr>
+            `;
+
+            // 2. Creamos el email para el vendedor
             const emailHtmlVendedor = `
               <html>
                 <body style="font-family: Arial, sans-serif; line-height: 1.6;">
                   <h2>¡Felicitaciones, tuviste una nueva venta!</h2>
-                  <p>Has recibido un nuevo pedido de: <strong>${userName}</strong> (${userEmail})</p>
+                  
+                  ${datosClienteHtml}
                   
                   <h3>Items del Pedido:</h3>
                   <ul>${itemsHtml}</ul>
                   <p><strong>Total cobrado: $${totalArs} ARS</strong></p>
                   
-                  ${shippingHtml} <hr>
+                  <hr>
                   <p>ID de la transacción: ${newOrder.mp_payment_id}</p>
                   <p>Revisá todos tus pedidos en el panel de Supabase.</p>
                 </body>
               </html>
             `;
+            // --- FIN DE BLOQUE CORREGIDO ---
 
             const resendResponseVendedor = await fetch('https://api.resend.com/emails', {
                 method: 'POST',
@@ -167,7 +185,8 @@ Deno.serve(async (req: Request) => {
                     'Authorization': `Bearer ${RESEND_API_KEY}`
                 },
                 body: JSON.stringify({
-                    from: `Notificaciones Web <${SENDER_EMAIL}>`, // Sigue saliendo de noreply@...
+                    // --- REMITENTE CORREGIDO ---
+                    from: `Francesco Ponte <${SENDER_EMAIL}>`, // Usamos el remitente que SÍ funciona
                     to: [FRANCESCO_EMAIL], // ¡Se envía a Francesco!
                     subject: `¡Nueva Venta! - Pedido de ${userName}`,
                     html: emailHtmlVendedor
