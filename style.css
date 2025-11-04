@@ -840,7 +840,7 @@ body {
 .modal-image {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* <-- CAMBIAR A 'flex-start' */
     background-color: #fafafa;
     padding: 20px;
 }
