@@ -32,7 +32,7 @@ export function showToastMessage(message, isError = false) {
 }
 
 // Funciones de Modales (Shipping, Cart, Reset)
-export function openShippingModal(user) { // Modificado para aceptar 'user'
+export function openShippingModal(user) {
     if (user && user.user_metadata.shipping_details) {
         const details = user.user_metadata.shipping_details;
         document.getElementById('shipping-address').value = details.address || '';
@@ -91,10 +91,140 @@ export function closeResetPasswordModal() {
 // Lógica de Traducción
 const translations = {
     es: {
-        'brand': 'Francesco Ponte', 'nav-home': 'HOME', 'nav-about': 'SOBRE MÍ', 'nav-projects': 'PROYECTOS', 'nav-login': 'LOGIN', 'hero-main-title': 'FRANCESCO PONTE', 'hero-subtitle': 'ARTISTA REALISTA', 'about-title': 'SOBRE MÍ', 'artist-description': 'Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista, una disciplina que descubrí como una forma de conectar con el detalle, la paciencia y la emoción detrás de cada trazo.<br>Me especializo en retratos realistas en blanco y negro realizados con grafito, principalmente de rostros de celebridades. En cada obra busco alcanzar un equilibrio entre la fidelidad a la referencia y mi propia interpretación: no intento copiar la imagen, sino darle vida a través de mi mirada y mi técnica, incorporando matices que reflejan mi esencia como artista.<br>Además de los retratos, también dibujo peces con el mismo enfoque realista, explorando las texturas, reflejos y contrastes que surgen de la naturaleza.<br>Mi objetivo es transmitir conocimiento y, al mismo tiempo, provocar una emoción en quien observa mis obras: que cada dibujo logre detener el tiempo por un instante y genere una conexión genuina.<br>Actualmente me encuentro en la búsqueda de un nuevo horizonte creativo, combinando el hiperrealismo con el surrealismo: piezas que mantienen la precisión técnica del realismo extremo, pero con contenidos imaginativos, simbólicos y conceptuales, que inviten a mirar más allá de lo evidente.', 'gallery-title': 'TRABAJA EN LÍNEA', 'add-to-cart': 'Agregar al carrito', 'modal-add-to-cart': 'AÑADIR A LA CESTA', 'footer-contact': 'CONTACTO', 'footer-social': 'REDES SOCIALES', 'modal-year': 'Año:', 'modal-technique': 'Técnica:', 'modal-technique-value': 'Grafito sobre papel 150 gr', 'modal-size': 'Tamaño:', 'modal-style': 'Estilo:', 'modal-style-value': 'Retrato Realista', 'cart-title': 'CARRITO DE COMPRA', 'cart-total': 'Total:', 'cart-checkout': 'FINALIZAR COMPRA', 'footer-form-title': 'ENVIAR UN MENSAJE', 'form-label-name': 'Nombre:', 'form-label-message': 'Mensaje:', 'form-btn-submit': 'Enviar', 'footer-privacy': 'Protección de Datos', 'footer-agb': 'Términos y Cond.', 'footer-faq': 'FAQ', 'footer-shop-info': 'Info Tienda', 'login-title': 'INICIAR SESIÓN', 'login-btn-submit': 'Ingresar', 'login-forgot-password': '¿Olvidaste tu contraseña?', 'login-register': 'Crear una cuenta', 'register-title': 'CREAR CUENTA', 'register-confirm-password': 'Confirmar Contraseña:', 'register-btn-submit': 'Registrarse', 'register-go-back': 'Ya tengo una cuenta', 'form-label-email': 'Email:', 'form-label-password': 'Contraseña:', 'reset-title': 'RESETEAR CONTRASEÑA', 'reset-btn-submit': 'Enviar enlace', 'reset-success': 'Enlace enviado. Revisa tu correo.', 'reset-error': 'Error: No se pudo enviar el enlace.', 'reset-title-new': 'Establece tu nueva contraseña', 'form-label-password-new': 'Nueva Contraseña:', 'form-label-password-confirm': 'Confirmar Contraseña:', 'reset-btn-submit-new': 'Guardar Contraseña', 'reset-password-success': '¡Contraseña actualizada con éxito!', 'reset-password-mismatch': 'Las contraseñas no coinciden.',
+        'brand': 'Francesco Ponte',
+        'nav-home': 'HOME',
+        'nav-about': 'SOBRE MÍ',
+        'nav-projects': 'PROYECTOS',
+        'nav-login': 'LOGIN',
+        'hero-main-title': 'FRANCESCO PONTE',
+        'hero-subtitle': 'ARTISTA REALISTA',
+        'about-title': 'SOBRE MÍ',
+        'artist-description': 'Me llamo Francesco Ponte, soy un artista autodidacta de Buenos Aires, Argentina. Mi trabajo se centra en el dibujo realista, una disciplina que descubrí como una forma de conectar con el detalle, la paciencia y la emoción detrás de cada trazo.<br>Me especializo en retratos realistas en blanco y negro realizados con grafito, principalmente de rostros de celebridades. En cada obra busco alcanzar un equilibrio entre la fidelidad a la referencia y mi propia interpretación: no intento copiar la imagen, sino darle vida a través de mi mirada y mi técnica, incorporando matices que reflejan mi esencia como artista.<br>Además de los retratos, también dibujo peces con el mismo enfoque realista, explorando las texturas, reflejos y contrastes que surgen de la naturaleza.<br>Mi objetivo es transmitir conocimiento y, al mismo tiempo, provocar una emoción en quien observa mis obras: que cada dibujo logre detener el tiempo por un instante y genere una conexión genuina.<br>Actualmente me encuentro en la búsqueda de un nuevo horizonte creativo, combinando el hiperrealismo con el surrealismo: piezas que mantienen la precisión técnica del realismo extremo, pero con contenidos imaginativos, simbólicos y conceptuales, que inviten a mirar más allá de lo evidente.',
+        'gallery-title': 'TRABAJA EN LÍNEA',
+        'add-to-cart': 'Agregar al carrito',
+        'modal-add-to-cart': 'AÑADIR A LA CESTA',
+        'footer-contact': 'CONTACTO',
+        'footer-social': 'REDES SOCIALES',
+        'modal-year': 'Año:',
+        'modal-technique': 'Técnica:',
+        'modal-technique-value': 'Grafito sobre papel 150 gr',
+        'modal-size': 'Tamaño:',
+        'modal-style': 'Estilo:',
+        'modal-style-value': 'Retrato Realista',
+        'cart-title': 'CARRITO DE COMPRA',
+        'cart-total': 'Total:',
+        'cart-checkout': 'FINALIZAR COMPRA',
+        'footer-form-title': 'ENVIAR UN MENSAJE',
+        'form-label-name': 'Nombre:',
+        'form-label-message': 'Mensaje:',
+        'form-btn-submit': 'Enviar',
+        'footer-privacy': 'Protección de Datos',
+        'footer-agb': 'Términos y Cond.',
+        'footer-faq': 'FAQ',
+        'footer-shop-info': 'Info Tienda',
+        'login-title': 'INICIAR SESIÓN',
+        'login-btn-submit': 'Ingresar',
+        'login-forgot-password': '¿Olvidaste tu contraseña?',
+        'login-register': 'Crear una cuenta',
+        'register-title': 'CREAR CUENTA',
+        'register-confirm-password': 'Confirmar Contraseña:',
+        'register-btn-submit': 'Registrarse',
+        'register-go-back': 'Ya tengo una cuenta',
+        'form-label-email': 'Email:',
+        'form-label-password': 'Contraseña:',
+        'reset-title': 'RESETEAR CONTRASEÑA',
+        'reset-btn-submit': 'Enviar enlace',
+        'reset-success': 'Enlace enviado. Revisa tu correo.',
+        'reset-error': 'Error: No se pudo enviar el enlace.',
+        'reset-title-new': 'Establece tu nueva contraseña',
+        'form-label-password-new': 'Nueva Contraseña:',
+        'form-label-password-confirm': 'Confirmar Contraseña:',
+        'reset-btn-submit-new': 'Guardar Contraseña',
+        'reset-password-success': '¡Contraseña actualizada con éxito!',
+        'reset-password-mismatch': 'Las contraseñas no coinciden.',
+        'cart-empty': 'Tu carrito está vacío.',
+        'menu-history': 'Historial',
+        'menu-logout': 'Cerrar sesión',
+        'cart-clear': 'Vaciar carrito',
+        'menu-history': 'Historial',
+        'menu-logout': 'Cerrar sesión',
+        'cart-clear': 'Vaciar carrito',
+        'cart-empty': 'Tu carrito está vacío.',
+        'history-title': 'MI HISTORIAL DE PEDIDOS',
+        'history-loading': 'Cargando tu historial...',
+        'info-data': 'Protección de Datos (Data Protection)',
+        'info-terms': 'Términos y Condiciones (TyC)',
+        'info-faq': 'Preguntas Frecuentes (FAQ)',
+        'info-shop': 'Información de la Tienda (Shop Info)',
+        
     },
+
     en: {
-        'brand': 'Francesco Ponte', 'nav-home': 'HOME', 'nav-about': 'ABOUT ME', 'nav-projects': 'PROJECTS', 'nav-login': 'LOGIN', 'hero-main-title': 'FRANCESCO PONTE', 'hero-subtitle': 'REALIST ARTIST', 'about-title': 'ABOUT ME', 'artist-description': 'My name is Francesco Ponte, I am a self-taught artist from Buenos Aires, Argentina. My work focuses on realistic drawing, a discipline I discovered as a way to connect with the detail, patience, and emotion behind each stroke.<br>I specialize in realistic black and white portraits made with graphite, mainly of celebrity faces. In each piece, I seek to achieve a balance between fidelity to the reference and my own interpretation: I do not try to copy the image, but to bring it to life through my gaze and my technique, incorporating nuances that reflect my essence as an artist.<br>In addition to portraits, I also draw fish with the same realistic approach, exploring the textures, reflections, and contrasts that arise from nature.<br>My goal is to transmit knowledge and, at the same time, provoke an emotion in the viewer: that each drawing manages to stop time for an instant and generate a genuine connection.<br>I am currently in search of a new creative horizon, combining hyperrealism with surrealism: pieces that maintain the technical precision of extreme realism but with imaginative, symbolic, and conceptual content, inviting viewers to look beyond the obvious.', 'gallery-title': 'WORKS ONLINE', 'add-to-cart': 'Add to cart', 'modal-add-to-cart': 'ADD TO BASKET', 'footer-contact': 'CONTACT', 'footer-social': 'SOCIAL MEDIA', 'modal-year': 'Year:', 'modal-technique': 'Technique:', 'modal-technique-value': 'Graphite on 150 gr paper', 'modal-size': 'Size:', 'modal-style': 'Style:', 'modal-style-value': 'Realistic Portrait', 'cart-title': 'SHOPPING CART', 'cart-total': 'Total:', 'cart-checkout': 'PROCEED TO CHECKOUT', 'footer-form-title': 'SEND A MESSAGE', 'form-label-name': 'Name:', 'form-label-message': 'Message:', 'form-btn-submit': 'Send', 'footer-privacy': 'Data Protection', 'footer-agb': 'Terms & Cond.', 'footer-faq': 'FAQ', 'footer-shop-info': 'Shop Info', 'login-title': 'LOGIN', 'login-btn-submit': 'Sign In', 'login-forgot-password': 'Forgot your password?', 'login-register': 'Create an account', 'register-title': 'CREATE ACCOUNT', 'register-confirm-password': 'Confirm Password:', 'register-btn-submit': 'Register', 'register-go-back': 'I already have an account', 'form-label-email': 'Email:', 'form-label-password': 'Password:', 'reset-title': 'RESET PASSWORD', 'reset-btn-submit': 'Send reset link', 'reset-success': 'Link sent. Check your email.', 'reset-error': 'Error: Could not send link.', 'reset-title-new': 'Set your new password', 'form-label-password-new': 'New Password:', 'form-label-password-confirm': 'Confirm Password:', 'reset-btn-submit-new': 'Save Password', 'reset-password-success': 'Password updated successfully!', 'reset-password-mismatch': 'Passwords do not match.',
+        'brand': 'Francesco Ponte',
+        'nav-home': 'HOME',
+        'nav-about': 'ABOUT ME',
+        'nav-projects': 'PROJECTS',
+        'nav-login': 'LOGIN',
+        'hero-main-title': 'FRANCESCO PONTE',
+        'hero-subtitle': 'REALIST ARTIST',
+        'about-title': 'ABOUT ME',
+        'artist-description': 'My name is Francesco Ponte, I am a self-taught artist from Buenos Aires, Argentina. My work focuses on realistic drawing, a discipline I discovered as a way to connect with the detail, patience, and emotion behind each stroke.<br>I specialize in realistic black and white portraits made with graphite, mainly of celebrity faces. In each piece, I seek to achieve a balance between fidelity to the reference and my own interpretation: I do not try to copy the image, but to bring it to life through my gaze and my technique, incorporating nuances that reflect my essence as an artist.<br>In addition to portraits, I also draw fish with the same realistic approach, exploring the textures, reflections, and contrasts that arise from nature.<br>My goal is to transmit knowledge and, at the same time, provoke an emotion in the viewer: that each drawing manages to stop time for an instant and generate a genuine connection.<br>I am currently in search of a new creative horizon, combining hyperrealism with surrealism: pieces that maintain the technical precision of extreme realism but with imaginative, symbolic, and conceptual content, inviting viewers to look beyond the obvious.',
+        'gallery-title': 'WORKS ONLINE',
+        'add-to-cart': 'Add to cart',
+        'modal-add-to-cart': 'ADD TO BASKET',
+        'footer-contact': 'CONTACT',
+        'footer-social': 'SOCIAL MEDIA',
+        'modal-year': 'Year:',
+        'modal-technique': 'Technique:',
+        'modal-technique-value': 'Graphite on 150 gr paper',
+        'modal-size': 'Size:',
+        'modal-style': 'Style:',
+        'modal-style-value': 'Realistic Portrait',
+        'cart-title': 'SHOPPING CART',
+        'cart-total': 'Total:',
+        'cart-checkout': 'PROCEED TO CHECKOUT',
+        'footer-form-title': 'SEND A MESSAGE',
+        'form-label-name': 'Name:',
+        'form-label-message': 'Message:',
+        'form-btn-submit': 'Send',
+        'footer-privacy': 'Data Protection',
+        'footer-agb': 'Terms & Cond.',
+        'footer-faq': 'FAQ',
+        'footer-shop-info': 'Shop Info',
+        'login-title': 'LOGIN',
+        'login-btn-submit': 'Sign In',
+        'login-forgot-password': 'Forgot your password?',
+        'login-register': 'Create an account',
+        'register-title': 'CREATE ACCOUNT',
+        'register-confirm-password': 'Confirm Password:',
+        'register-btn-submit': 'Register',
+        'register-go-back': 'I already have an account',
+        'form-label-email': 'Email:',
+        'form-label-password': 'Password:',
+        'reset-title': 'RESET PASSWORD',
+        'reset-btn-submit': 'Send reset link',
+        'reset-success': 'Link sent. Check your email.',
+        'reset-error': 'Error: Could not send link.',
+        'reset-title-new': 'Set your new password',
+        'form-label-password-new': 'New Password:',
+        'form-label-password-confirm': 'Confirm Password:',
+        'reset-btn-submit-new': 'Save Password',
+        'reset-password-success': 'Password updated successfully!',
+        'reset-password-mismatch': 'Passwords do not match.',
+        'cart-empty': 'Your cart is empty.',
+        'menu-history': 'Order history',
+        'menu-logout': 'Log out',
+        'cart-clear': 'Empty cart',
+        'menu-history': 'Order History',
+        'menu-logout': 'Log out',
+        'cart-clear': 'Empty Cart',
+        'cart-empty': 'Your cart is empty.',
+        'history-title': 'MY ORDER HISTORY',
+        'history-loading': 'Loading your order history...',
+        'info-data': 'Data Protection',
+        'info-terms': 'Terms & Conditions',
+        'info-faq': 'Frequently Asked Questions (FAQ)',
+        'info-shop': 'Shop Information',
     }
 };
 
@@ -102,11 +232,15 @@ export function getTranslation(key) {
     return translations[state.currentLanguage][key] || key;
 }
 
+// Guardar idioma en localStorage
 function switchLanguage(lang) {
     state.setCurrentLanguage(lang);
+    localStorage.setItem('lang', lang);
+
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
+
     document.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.getAttribute('data-translate');
         if (translations[lang] && translations[lang][key]) {
@@ -126,7 +260,19 @@ function switchLanguage(lang) {
 
     updateModalContent();
     renderCartItems();
+
+    // 🔹 Reaplicar traducciones dinámicas en el menú de usuario
+    const historyLink = document.querySelector('#userMenuDropdown a[href="historial.html"]');
+    const logoutLink = document.querySelector('#logoutButton');
+
+    if (historyLink && translations[lang]['menu-history']) {
+        historyLink.textContent = translations[lang]['menu-history'];
+    }
+    if (logoutLink && translations[lang]['menu-logout']) {
+        logoutLink.textContent = translations[lang]['menu-logout'];
+    }
 }
+
 
 export function initLanguageSwitcher() {
     document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -135,8 +281,15 @@ export function initLanguageSwitcher() {
             if (lang !== state.currentLanguage) switchLanguage(lang);
         });
     });
-    // Aplica el idioma inicial
-    switchLanguage(state.currentLanguage);
+
+    // Aplica el idioma guardado si existe
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) {
+        state.setCurrentLanguage(savedLang);
+        switchLanguage(savedLang);
+    } else {
+        switchLanguage(state.currentLanguage);
+    }
 }
 
 // Lógica de Modales de Obras
@@ -153,7 +306,7 @@ function updateModalContent() {
     document.getElementById('modalTechnique').textContent = artwork.technique[state.currentLanguage] || artwork.technique['es'];
     document.getElementById('modalSize').textContent = artwork.size[state.currentLanguage] || artwork.size['es'];
     document.getElementById('modalStyle').textContent = artwork.style[state.currentLanguage] || artwork.style['es'];
-    
+
     const modalImage = document.getElementById('modalImage');
     modalImage.src = artwork.image.includes('http') ? artwork.image : `images/${artwork.image}`;
     modalImage.alt = title;
@@ -186,9 +339,7 @@ export function initModal(onAddToCart) {
     if (modal && closeBtn && galleryGrid) {
         galleryGrid.addEventListener('click', (e) => {
             const card = e.target.closest('.artwork-card');
-            if (!card || e.target.classList.contains('add-to-cart-btn')) {
-                return;
-            }
+            if (!card || e.target.classList.contains('add-to-cart-btn')) return;
             const artworkId = card.getAttribute('data-artwork');
             openModal(artworkId);
         });
@@ -197,7 +348,7 @@ export function initModal(onAddToCart) {
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
     }
-    
+
     if (modalAddToCartBtn) {
         modalAddToCartBtn.addEventListener('click', () => {
             onAddToCart(state.currentOpenModalId);
@@ -212,9 +363,7 @@ export function initSmoothScrolling() {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
             if (!href) return;
-            if (href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http')) {
-                return;
-            }
+            if (href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http')) return;
             if (href.startsWith('#')) {
                 e.preventDefault();
                 const target = document.querySelector(href);

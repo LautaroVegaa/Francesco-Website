@@ -40,8 +40,8 @@
                 <div class="user-menu-container" id="userMenuContainer">
                     <a href="#" id="userNameLink" class="user-menu-toggle">USUARIO</a>
                     <div class="user-menu-dropdown" id="userMenuDropdown">
-                        <a href="historial.html">Historial</a> 
-                        <a href="#" id="logoutButton">Cerrar sesión</a>
+                        <a href="historial.html" data-translate="menu-history">Historial</a> 
+                        <a href="#" id="logoutButton" data-translate="menu-logout">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
@@ -64,8 +64,9 @@
         <section class="info-section">
             <div class="container">
 
+                <!-- Protección de Datos -->
                 <article id="proteccion" class="info-article">
-                    <h2 class="section-title">Protección de Datos (Data Protection)</h2>
+                    <h2 class="section-title" data-translate="info-data">Protección de Datos (Data Protection)</h2>
                     <p>En <strong>francescoretratos.com</strong> valoramos y respetamos la privacidad de nuestros visitantes y clientes. Toda la información personal proporcionada (nombre, correo electrónico, dirección, etc.) se utiliza únicamente para procesar pedidos, gestionar cuentas de usuario y ofrecer asistencia postventa.</p>
                     <p>Los datos personales no se comparten con terceros, salvo cuando sea necesario para completar el proceso de pago o envío (por ejemplo, Mercado Pago o servicios de mensajería). Estas plataformas aplican sus propias políticas de privacidad y protección de datos.</p>
                     <p>Podés solicitar el acceso, rectificación o eliminación de tus datos personales en cualquier momento escribiendo a 
@@ -75,8 +76,9 @@
                     <p>Al utilizar este sitio, aceptás las condiciones establecidas en esta política de privacidad.</p>
                 </article>
 
+                <!-- Términos y Condiciones -->
                 <article id="terminos" class="info-article">
-                    <h2 class="section-title">Términos y Condiciones (TyC)</h2>
+                    <h2 class="section-title" data-translate="info-terms">Términos y Condiciones (TyC)</h2>
                     <p>Los presentes Términos y Condiciones regulan el uso del sitio web <strong>francescoretratos.com</strong> y la compra de productos ofrecidos por Francesco Ponte.</p>
                     <ul>
                         <li><strong>Objeto:</strong> Este sitio comercializa <strong>copias de obras artísticas originales impresas en Fine Art</strong> (reproducciones de alta calidad en papel artístico). Cada pieza mantiene la fidelidad del original y puede incluir firma digital o numeración limitada.</li>
@@ -92,8 +94,9 @@
                     </p>
                 </article>
 
+                <!-- Preguntas Frecuentes -->
                 <article id="faq" class="info-article">
-                    <h2 class="section-title">Preguntas Frecuentes (FAQ)</h2>
+                    <h2 class="section-title" data-translate="info-faq">Preguntas Frecuentes (FAQ)</h2>
                     
                     <h3>¿Las obras son originales?</h3>
                     <p>No. Las piezas disponibles en esta tienda son <strong>reproducciones Fine Art</strong> de obras originales realizadas por Francesco Ponte. Cada impresión se produce en alta resolución sobre papel artístico certificado, garantizando calidad y durabilidad.</p>
@@ -117,8 +120,9 @@
                     </p>
                 </article>
 
+                <!-- Información de la Tienda -->
                 <article id="tienda" class="info-article">
-                    <h2 class="section-title">Información de la Tienda (Shop Info)</h2>
+                    <h2 class="section-title" data-translate="info-shop">Información de la Tienda (Shop Info)</h2>
                     <p>Bienvenido a la tienda oficial de <strong>Francesco Ponte</strong>. Todas las piezas disponibles son <strong>copias Fine Art</strong> impresas a partir de obras originales del artista. Estas reproducciones se realizan con tintas pigmentadas y papel artístico de alta calidad, garantizando una durabilidad superior y una fidelidad visual excepcional.</p>
                     <p>El proceso de compra es completamente seguro. Podés seleccionar la obra que desees, agregarla al carrito y realizar el pago mediante Mercado Pago. Una vez confirmado, recibirás un correo con los detalles del pedido y el número de seguimiento.</p>
                     <p>Cada impresión se embala cuidadosamente con materiales protectores para asegurar que llegue en perfectas condiciones. En caso de recibir un producto dañado, podés contactarte dentro de los 10 días hábiles posteriores a la recepción para gestionar una reposición o reembolso.</p>
@@ -133,61 +137,62 @@
     </main>
 
     <footer id="contact" class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3 data-translate="footer-contact">CONTACTO</h3>
-                <p>Francesco Ponte</p>
-                <p>+54 9 11 3891-5370</p>
-                <p>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=francescoponte185@gmail.com&su=Consulta%20sobre%20obra%20Fine%20Art&body=Hola%20Francesco%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20tus%20obras%20Fine%20Art." 
-                    target="_blank" rel="noopener noreferrer">
-                    francescoponte185@gmail.com
-                    </a>
-                </p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 data-translate="footer-contact">CONTACTO</h3>
+                    <p>Francesco Ponte</p>
+                    <p>+54 9 11 3891-5370</p>
+                    <p>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=francescoponte185@gmail.com&su=Consulta%20sobre%20obra%20Fine%20Art&body=Hola%20Francesco%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20tus%20obras%20Fine%20Art." 
+                        target="_blank" rel="noopener noreferrer">
+                        francescoponte185@gmail.com
+                        </a>
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3 data-translate="footer-form-title">ENVIAR UN MENSAJE</h3>
+                    <form action="https://formspree.io/f/mblpkrej" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <label for="name" data-translate="form-label-name">Nombre:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-translate="form-label-email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-translate="form-label-message">Mensaje:</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" data-translate="form-btn-submit">Enviar</button>
+                    </form>
+                </div>
+
+                <div class="footer-section">
+                    <h3 data-translate="footer-social">REDES SOCIALES</h3>
+                    <div class="social-icons">
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=francescoponte185@gmail.com&su=Consulta%20sobre%20obra%20Fine%20Art&body=Hola%20Francesco%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20tus%20obras%20Fine%20Art." 
+                        target="_blank" rel="noopener noreferrer" class="social-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                        </a>
+                        <a href="https://www.instagram.com/francesco_retratos?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@franartist?si=dZCKZtAvpW-x7Clc" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a> 
+                    </div>
+                </div>
             </div>
 
-            <div class="footer-section">
-                <h3 data-translate="footer-form-title">ENVIAR UN MENSAJE</h3>
-                <form action="https://formspree.io/f/mblpkrej" method="POST" class="contact-form">
-                    <div class="form-group">
-                        <label for="name" data-translate="form-label-name">Nombre:</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" data-translate="form-label-email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message" data-translate="form-label-message">Mensaje:</label>
-                        <textarea id="message" name="message" rows="4" required></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit" data-translate="form-btn-submit">Enviar</button>
-                </form>
-            </div>
-
-            <div class="footer-section">
-                <h3 data-translate="footer-social">REDES SOCIALES</h3>
-                <div class="social-icons">
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=francescoponte185@gmail.com&su=Consulta%20sobre%20obra%20Fine%20Art&body=Hola%20Francesco%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20tus%20obras%20Fine%20Art." 
-                    target="_blank" rel="noopener noreferrer" class="social-icon">
-                    <i class="fa-solid fa-envelope"></i>
-                    </a>
-                    <a href="https://www.instagram.com/francesco_retratos?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://youtube.com/@franartist?si=dZCKZtAvpW-x7Clc" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a> 
+            <div class="footer-bottom">
+                <div class="footer-links">
+                    <a href="info.html#proteccion" data-translate="footer-privacy">Data Protection</a>
+                    <a href="info.html#terminos" data-translate="footer-agb">TyC</a>
+                    <a href="info.html#faq" data-translate="footer-faq">FAQ</a>
+                    <a href="info.html#tienda" data-translate="footer-shop-info">Shop Info</a>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="footer-links">
-                <a href="info.html#proteccion" data-translate="footer-privacy">Data Protection</a>
-                <a href="info.html#terminos" data-translate="footer-agb">TyC</a>
-                <a href="info.html#faq" data-translate="footer-faq">FAQ</a>
-                <a href="info.html#tienda" data-translate="footer-shop-info">Shop Info</a>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="js/main.js"></script>

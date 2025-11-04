@@ -12,12 +12,18 @@ import {
     initPasswordToggles,
     openShippingModal,
     closeShippingModal,
-    showToastMessage
+    showToastMessage,
 } from './ui.js';
 
 // Este es el nuevo "DOMContentLoaded"
 document.addEventListener('DOMContentLoaded', async () => {
-    
+
+   // 🔹 Aplicar idioma guardado antes de cualquier carga
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) {
+        state.setCurrentLanguage(savedLang);
+   }
+
     // 1. Cargar estado inicial (carrito)
     loadCart();
     

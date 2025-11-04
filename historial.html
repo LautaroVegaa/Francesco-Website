@@ -8,7 +8,8 @@
     <meta name="robots" content="noindex, nofollow">
     
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/historial.css"> <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/historial.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="icon" href="/favicon-fp.png" type="image/png">
     <link rel="shortcut icon" href="/favicon-fp.png" type="image/png">
@@ -26,8 +27,8 @@
                 <div class="user-menu-container" id="userMenuContainer">
                     <a href="#" id="userNameLink" class="user-menu-toggle">USUARIO</a>
                     <div class="user-menu-dropdown" id="userMenuDropdown">
-                        <a href="historial.html">Historial</a> 
-                        <a href="#" id="logoutButton">Cerrar sesión</a>
+                        <a href="historial.html" data-translate="menu-history">Historial</a> 
+                        <a href="#" id="logoutButton" data-translate="menu-logout">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
@@ -49,22 +50,21 @@
     <main>
         <section class="historial-section">
             <div class="container">
-                <h2 class="section-title">MI HISTORIAL DE PEDIDOS</h2>
+                <h2 class="section-title" data-translate="history-title">MI HISTORIAL DE PEDIDOS</h2>
                 <div id="historial-container">
                     <div id="loading-spinner">
                         <i class="fa-solid fa-spinner fa-spin"></i>
-                        <p>Cargando tu historial...</p>
+                        <p data-translate="history-loading">Cargando tu historial...</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-        <footer id="contact" class="footer"></footer>
+    <footer id="contact" class="footer"></footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/historial.js"></script>
-    </body>
+</body>
 </html>
