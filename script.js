@@ -239,8 +239,8 @@ const translations = {
         'artwork-4-title': 'Leonardo DiCaprio',
         'artwork-5-title': 'Will Smith',
         'artwork-6-title': 'Eminem',
-        'artwork-7-title': 'Obra (Placeholder)',
-        'artwork-8-title': 'Obra (Placeholder)',
+        'artwork-7-title': 'Brotola',
+        'artwork-8-title': 'Liza Ramada',
 
         // --- NUEVO: Detalles del Modal ---
         'modal-year': 'Año:',
@@ -315,8 +315,8 @@ const translations = {
         'artwork-4-title': 'Leonardo DiCaprio',
         'artwork-5-title': 'Will Smith',
         'artwork-6-title': 'Eminem',
-        'artwork-7-title': 'Work (Placeholder)',
-        'artwork-8-title': 'Work (Placeholder)',
+        'artwork-7-title': 'Brotola',
+        'artwork-8-title': 'Liza Ramada',
 
         // --- NUEVO: Detalles del Modal ---
         'modal-year': 'Year:',
