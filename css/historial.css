@@ -161,3 +161,21 @@
         padding-top: 15px;
     }
 }
+
+/* Centrado del loader en historial */
+#loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh; /* ajusta según tu diseño */
+    text-align: center;
+    color: #333;
+    font-size: 1rem;
+}
+
+#loading-spinner i {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #C6A200; /* mismo dorado del sitio */
+}

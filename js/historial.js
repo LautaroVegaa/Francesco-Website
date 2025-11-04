@@ -16,9 +16,14 @@ _supabase.auth.onAuthStateChange((event, session) => {
 async function fetchHistorial(userId) {
     const container = document.getElementById('historial-container');
 
-    // ✅ Mensaje de carga añadido
-    container.innerHTML = '<p class="loading-historial">Cargando tus pedidos...</p>';
-    
+    // 🔹 Mostramos loader centrado antes de cargar
+    container.innerHTML = `
+        <div id="loading-spinner">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <p>Cargando tus pedidos...</p>
+        </div>
+    `;
+
     try {
         const { data: pedidos, error } = await _supabase
             .from('pedidos')
@@ -28,7 +33,7 @@ async function fetchHistorial(userId) {
 
         if (error) throw error;
 
-        if (pedidos.length === 0) {
+        if (!pedidos || pedidos.length === 0) {
             container.innerHTML = '<p class="empty-historial">Aún no tienes pedidos registrados.</p>';
             return;
         }
@@ -43,7 +48,7 @@ async function fetchHistorial(userId) {
 
 function renderHistorial(pedidos) {
     const container = document.getElementById('historial-container');
-    container.innerHTML = ''; // Limpiamos el "Cargando..."
+    container.innerHTML = ''; // Limpiamos el loader
 
     pedidos.forEach(pedido => {
         const pedidoCard = document.createElement('div');
