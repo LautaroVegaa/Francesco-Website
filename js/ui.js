@@ -273,7 +273,6 @@ function switchLanguage(lang) {
     }
 }
 
-
 export function initLanguageSwitcher() {
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => {
